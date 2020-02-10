@@ -1,0 +1,7 @@
+def modules = [
+	'com.placecube.nhs.language'
+] as String[]
+
+include modules
+
+gradle.ext.groupId = 'com.placecube.nhs'
