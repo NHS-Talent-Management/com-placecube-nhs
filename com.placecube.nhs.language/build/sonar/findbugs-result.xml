@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<BugCollection version="3.0.1" sequence="0" timestamp="1581529341000" analysisTimestamp="1581529348601" release="">
+<BugCollection version="3.0.1" sequence="0" timestamp="1581529372000" analysisTimestamp="1581529381114" release="">
   <Project>
     <Jar>/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/classes/java/main/com/placecube/digitalplace/local/language/EnResourceBundle.class</Jar>
     <AuxClasspathEntry>/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/classes/java/main</AuxClasspathEntry>
@@ -14,20 +14,21 @@
     <WrkDir>/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/sonar</WrkDir>
   </Project>
   <Errors errors="0" missingClasses="0"></Errors>
-  <FindBugsSummary timestamp="Wed, 12 Feb 2020 17:42:21 +0000" total_classes="1" referenced_classes="44" total_bugs="0" total_size="9" num_packages="1" java_version="1.8.0_92" vm_version="25.92-b14" cpu_seconds="6.45" clock_seconds="1.89" peak_mbytes="569.50" alloc_mbytes="910.50" gc_seconds="0.40">
+  <FindBugsSummary timestamp="Wed, 12 Feb 2020 17:42:52 +0000" total_classes="1" referenced_classes="44" total_bugs="0" total_size="9" num_packages="1" java_version="1.8.0_92" vm_version="25.92-b14" cpu_seconds="6.79" clock_seconds="2.59" peak_mbytes="559.49" alloc_mbytes="910.50" gc_seconds="0.34">
     <FileStats path="com/placecube/digitalplace/local/language/EnResourceBundle.java" bugCount="0" size="9"/>
     <PackageStats package="com.placecube.digitalplace.local.language" total_bugs="0" total_types="1" total_size="9">
       <ClassStats class="com.placecube.digitalplace.local.language.EnResourceBundle" sourceFile="EnResourceBundle.java" interface="false" size="9" bugs="0"/>
     </PackageStats>
     <FindBugsProfile>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="433" invocations="3" avgMicrosecondsPerInvocation="144350" maxMicrosecondsPerInvocation="432736" standardDeviationMircosecondsPerInvocation="203919"/>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="230" invocations="514" avgMicrosecondsPerInvocation="448" maxMicrosecondsPerInvocation="17980" standardDeviationMircosecondsPerInvocation="1096"/>
-      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="75" invocations="44" avgMicrosecondsPerInvocation="1723" maxMicrosecondsPerInvocation="14279" standardDeviationMircosecondsPerInvocation="2987"/>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="59" invocations="518" avgMicrosecondsPerInvocation="115" maxMicrosecondsPerInvocation="457" standardDeviationMircosecondsPerInvocation="47"/>
-      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="57" invocations="145" avgMicrosecondsPerInvocation="398" maxMicrosecondsPerInvocation="4576" standardDeviationMircosecondsPerInvocation="533"/>
-      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="45" invocations="44" avgMicrosecondsPerInvocation="1044" maxMicrosecondsPerInvocation="6643" standardDeviationMircosecondsPerInvocation="1491"/>
-      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="41" invocations="480" avgMicrosecondsPerInvocation="87" maxMicrosecondsPerInvocation="1100" standardDeviationMircosecondsPerInvocation="157"/>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="39" invocations="72" avgMicrosecondsPerInvocation="549" maxMicrosecondsPerInvocation="20619" standardDeviationMircosecondsPerInvocation="2458"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="463" invocations="514" avgMicrosecondsPerInvocation="902" maxMicrosecondsPerInvocation="84408" standardDeviationMircosecondsPerInvocation="4341"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="311" invocations="3" avgMicrosecondsPerInvocation="103811" maxMicrosecondsPerInvocation="310983" standardDeviationMircosecondsPerInvocation="146492"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="102" invocations="44" avgMicrosecondsPerInvocation="2320" maxMicrosecondsPerInvocation="19092" standardDeviationMircosecondsPerInvocation="4053"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="84" invocations="518" avgMicrosecondsPerInvocation="162" maxMicrosecondsPerInvocation="4984" standardDeviationMircosecondsPerInvocation="359"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="82" invocations="145" avgMicrosecondsPerInvocation="571" maxMicrosecondsPerInvocation="14992" standardDeviationMircosecondsPerInvocation="1351"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="70" invocations="44" avgMicrosecondsPerInvocation="1598" maxMicrosecondsPerInvocation="16093" standardDeviationMircosecondsPerInvocation="2766"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="68" invocations="480" avgMicrosecondsPerInvocation="143" maxMicrosecondsPerInvocation="10816" standardDeviationMircosecondsPerInvocation="647"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="62" invocations="72" avgMicrosecondsPerInvocation="866" maxMicrosecondsPerInvocation="24421" standardDeviationMircosecondsPerInvocation="3193"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="43" invocations="44" avgMicrosecondsPerInvocation="994" maxMicrosecondsPerInvocation="14226" standardDeviationMircosecondsPerInvocation="2335"/>
     </FindBugsProfile>
   </FindBugsSummary>
   <ClassFeatures></ClassFeatures>
