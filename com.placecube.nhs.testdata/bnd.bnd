@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.testdata
 Bundle-Name: Placecube NHS Test Data
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1.SNAPSHOT
 Web-ContextPath: /com.placecube.nhs.testdata
 
 -includeresource: \
