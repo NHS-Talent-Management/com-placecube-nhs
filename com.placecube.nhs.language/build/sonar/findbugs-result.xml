@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.0.1" sequence="0" timestamp="1581526220000" analysisTimestamp="1581526232126" release="">
+  <Project>
+    <Jar>/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/classes/java/main/com/placecube/digitalplace/local/language/EnResourceBundle.class</Jar>
+    <AuxClasspathEntry>/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/classes/java/main</AuxClasspathEntry>
+    <AuxClasspathEntry>/var/lib/jenkins/.gradle/caches/modules-2/files-2.1/org.osgi/osgi.cmpn/6.0.0/a3a5269424e5ea6488d30dedce8fabca11efbc3d/osgi.cmpn-6.0.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/var/lib/jenkins/.m2/repository/org/osgi/osgi.core/5.0.0/osgi.core-5.0.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/var/lib/jenkins/.gradle/caches/modules-2/files-2.1/com.liferay.portal/com.liferay.portal.kernel/4.13.0/b2ffd3b919d153fd661fba153cb20f78c3d2bb8c/com.liferay.portal.kernel-4.13.0.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/var/lib/jenkins/tools/hudson.model.JDK/Java_SE_Development_Kit_8u92/jre/lib/rt.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/var/lib/jenkins/tools/hudson.model.JDK/Java_SE_Development_Kit_8u92/jre/lib/ext/jfxrt.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/sonar/findbugs/annotations.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/sonar/findbugs/jsr305.jar</AuxClasspathEntry>
+    <WrkDir>/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/sonar</WrkDir>
+  </Project>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Wed, 12 Feb 2020 16:50:20 +0000" total_classes="1" referenced_classes="44" total_bugs="0" total_size="9" num_packages="1" java_version="1.8.0_92" vm_version="25.92-b14" cpu_seconds="7.39" clock_seconds="3.78" peak_mbytes="578.04" alloc_mbytes="910.50" gc_seconds="0.72">
+    <FileStats path="com/placecube/digitalplace/local/language/EnResourceBundle.java" bugCount="0" size="9"/>
+    <PackageStats package="com.placecube.digitalplace.local.language" total_bugs="0" total_types="1" total_size="9">
+      <ClassStats class="com.placecube.digitalplace.local.language.EnResourceBundle" sourceFile="EnResourceBundle.java" interface="false" size="9" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="758" invocations="3" avgMicrosecondsPerInvocation="252788" maxMicrosecondsPerInvocation="757847" standardDeviationMircosecondsPerInvocation="357130"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="450" invocations="514" avgMicrosecondsPerInvocation="875" maxMicrosecondsPerInvocation="33431" standardDeviationMircosecondsPerInvocation="2945"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="163" invocations="44" avgMicrosecondsPerInvocation="3709" maxMicrosecondsPerInvocation="27968" standardDeviationMircosecondsPerInvocation="6782"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="143" invocations="145" avgMicrosecondsPerInvocation="992" maxMicrosecondsPerInvocation="18207" standardDeviationMircosecondsPerInvocation="2363"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="142" invocations="44" avgMicrosecondsPerInvocation="3243" maxMicrosecondsPerInvocation="27033" standardDeviationMircosecondsPerInvocation="6031"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="115" invocations="518" avgMicrosecondsPerInvocation="223" maxMicrosecondsPerInvocation="11718" standardDeviationMircosecondsPerInvocation="929"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical" totalMilliseconds="87" invocations="44" avgMicrosecondsPerInvocation="1978" maxMicrosecondsPerInvocation="16100" standardDeviationMircosecondsPerInvocation="4432"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="76" invocations="72" avgMicrosecondsPerInvocation="1066" maxMicrosecondsPerInvocation="43911" standardDeviationMircosecondsPerInvocation="5309"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="72" invocations="480" avgMicrosecondsPerInvocation="150" maxMicrosecondsPerInvocation="8918" standardDeviationMircosecondsPerInvocation="695"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="56" invocations="44" avgMicrosecondsPerInvocation="1289" maxMicrosecondsPerInvocation="13164" standardDeviationMircosecondsPerInvocation="2632"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>

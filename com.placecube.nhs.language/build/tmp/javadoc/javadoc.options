@@ -1,0 +1,6 @@
+-classpath '/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/classes/java/main:/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/resources/main:/var/lib/jenkins/.gradle/caches/modules-2/files-2.1/org.osgi/osgi.cmpn/6.0.0/a3a5269424e5ea6488d30dedce8fabca11efbc3d/osgi.cmpn-6.0.0.jar:/var/lib/jenkins/.m2/repository/org/osgi/osgi.core/5.0.0/osgi.core-5.0.0.jar:/var/lib/jenkins/.gradle/caches/modules-2/files-2.1/com.liferay.portal/com.liferay.portal.kernel/4.13.0/b2ffd3b919d153fd661fba153cb20f78c3d2bb8c/com.liferay.portal.kernel-4.13.0.jar'
+-d '/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/build/docs/javadoc'
+-doctitle 'Placecube NHS Language 1.0.0 API'
+-quiet 
+-windowtitle 'Placecube NHS Language 1.0.0 API'
+'/var/lib/jenkins/workspace/NHS/com-placececube-nhs/com.placecube.nhs.language/src/main/java/com/placecube/digitalplace/local/language/EnResourceBundle.java'
