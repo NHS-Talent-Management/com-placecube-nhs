@@ -1,0 +1,116 @@
+ {
+	"groups": [
+		{
+			"groupName": "Nursing",
+			"type": "restricted",
+			"categories": [
+				{
+					"categoryName": "Nursing"
+				}
+			]
+		},
+		{
+			"groupName": "Psychology",
+			"type": "restricted",
+			
+			"categories": [
+				{
+					"categoryName": "Psychology"
+				}
+			]
+		},
+		{
+			"groupName": "Medical",
+			"type": "restricted",
+			
+			"categories": [
+				{
+					"categoryName": "Medical"
+				}
+			]
+		},
+		{
+			"groupName": "Pharmacy",
+			"type": "restricted",
+			"categories": [
+				{
+					"categoryName": "Pharmacy"
+				}
+			]
+		},
+		{
+			"groupName": "Biomedical Science",
+			"type": "restricted",
+			"categories": [
+				{
+					"categoryName": "Biomedical Science"
+				}
+			]
+		},
+		{
+			"groupName": "Midwifery",
+			"type": "restricted",
+			"categories": [
+				{
+					"categoryName": "Midwifery"
+				}
+			],
+			"childGroups": [
+				{
+					"groupName": "Diabetes",
+					"type": "restricted",
+					"categories": [
+						{
+							"categoryName": "Midwifery"
+						}
+					]
+				},
+				{
+					"groupName": "Cardiology",
+					"type": "restricted",
+					"categories": [
+						{
+							"categoryName": "Midwifery"
+						}
+					]
+				},
+				{
+					"groupName": "Bereavement",
+					"type": "restricted",
+					"categories": [
+						{
+							"categoryName": "Midwifery"
+						}
+					]
+				},
+				{
+					"groupName": "Midwifery Practice",
+					"type": "restricted",
+					"categories": [
+						{
+							"categoryName": "Midwifery"
+						}
+					]
+				}
+			]
+		},
+		{
+			"groupName": "Radiology",
+			"type": "restricted",
+			"categories": [
+				{
+					"categoryName": "Radiology"
+				}
+			]
+		},
+		{
+			"groupName": "Doctor",
+			"type": "restricted",
+			"categories": [
+				{
+					"categoryName": "Doctor"
+				}
+			]
+		}
+	]
+}

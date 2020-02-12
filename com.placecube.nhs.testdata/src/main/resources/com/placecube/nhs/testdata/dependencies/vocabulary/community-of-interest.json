@@ -1,0 +1,29 @@
+ {
+	"vocabularyName": "Community of Interest",
+	"categories": [
+		{
+			"categoryName": "Nursing"
+		},
+		{
+			"categoryName": "Psychology"
+		},
+		{
+			"categoryName": "Medical"
+		},
+		{
+			"categoryName": "Pharmacy"
+		},
+		{
+			"categoryName": "Biomedical Science"
+		},
+		{
+			"categoryName": "Midwifery"
+		},
+		{
+			"categoryName": "Radiology"
+		},
+		{
+			"categoryName": "Doctor"
+		}
+	]
+}
