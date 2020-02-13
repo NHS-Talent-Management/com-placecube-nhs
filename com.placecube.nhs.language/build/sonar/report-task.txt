@@ -1,5 +1,5 @@
 projectKey=com-placececube-nhs:com.placecube.nhs.language
 serverUrl=https://build.pfiks.com/sonar
 dashboardUrl=https://build.pfiks.com/sonar/dashboard/index/com-placececube-nhs:com.placecube.nhs.language
-ceTaskId=AXA9X3HzvMo8XyToxl-K
-ceTaskUrl=https://build.pfiks.com/sonar/api/ce/task?id=AXA9X3HzvMo8XyToxl-K
+ceTaskId=AXA9YFfIvMo8XyToxl-N
+ceTaskUrl=https://build.pfiks.com/sonar/api/ce/task?id=AXA9YFfIvMo8XyToxl-N
