@@ -39,6 +39,9 @@ public class CommunityListingService {
 
 		for (Group group : groups) {
 			results.add(Community.init(group, locale));
+			for (Group children : group.getChildren(true)) {
+				results.add(Community.init(children, locale));
+			}
 		}
 
 		results.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
