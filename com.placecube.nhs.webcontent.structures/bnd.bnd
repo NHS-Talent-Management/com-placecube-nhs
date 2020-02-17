@@ -1,0 +1,5 @@
+Bundle-Category: Placecube
+Bundle-Name: Placecube NHS WebContent
+Bundle-SymbolicName: com.placecube.nhs.webcontent.structures
+Bundle-Version: 1.0.0
+Export-Package: com.placecube.nhs.webcontent.structures.constants

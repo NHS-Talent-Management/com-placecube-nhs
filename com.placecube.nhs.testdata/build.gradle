@@ -1,4 +1,6 @@
 dependencies {
+	compile project (':com.placecube.nhs.grouptypes')
+	
 	compile group: 'com.liferay', name: 'com.liferay.petra.string', version: '3.0.0'
 	compile group: 'com.liferay', name: 'com.liferay.portal.instance.lifecycle.api'
 	compile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel'

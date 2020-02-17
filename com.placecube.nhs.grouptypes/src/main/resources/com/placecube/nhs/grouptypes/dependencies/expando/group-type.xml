@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<expandoField>
+	<name>group-type</name>
+	<type>15</type>
+	<hidden>true</hidden>
+	<visibleOnUpdate>true</visibleOnUpdate>
+	<rolePermission roleName="Guest">
+		<view>true</view>
+		<update>false</update>
+	</rolePermission>
+	<rolePermission roleName="User">
+		<view>true</view>
+		<update>true</update>
+	</rolePermission>
+</expandoField>

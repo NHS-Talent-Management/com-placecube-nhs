@@ -1,9 +1,12 @@
 package com.placecube.nhs.testdata.service;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.placecube.nhs.grouptypes.constants.GroupTypeExpando;
 
 @Component(immediate = true, service = ImportUtil.class)
 public class ImportUtil {
@@ -59,34 +63,45 @@ public class ImportUtil {
 		return jsonObject.getJSONArray(arrayValue);
 	}
 
-	public long importGroup(JSONObject groupJSON, long parentGroupId, List<AssetCategory> categories, ServiceContext serviceContext) {
+	public void importGroup(JSONObject groupJSON, List<AssetCategory> categories, ServiceContext serviceContext) {
 		try {
 			String groupName = groupJSON.getString("groupName");
 
 			Group group = groupLocalService.fetchGroup(serviceContext.getCompanyId(), groupName);
 			if (Validator.isNull(group)) {
-				group = addGroup(groupJSON, parentGroupId, categories, serviceContext, groupName);
+				addGroup(groupJSON, categories, serviceContext, groupName);
 			}
-			return group.getGroupId();
 		} catch (PortalException e) {
 			LOG.debug(e);
 			LOG.error(e.getMessage());
-			return GroupConstants.DEFAULT_PARENT_GROUP_ID;
 		}
 	}
 
-	private Group addGroup(JSONObject group, long parentGroupId, List<AssetCategory> categories, ServiceContext serviceContext, String groupName) throws PortalException {
+	private void addGroup(JSONObject group, List<AssetCategory> categories, ServiceContext serviceContext, String groupName) throws PortalException {
 		LOG.info("Importing group : " + groupName);
 		String typeLabel = group.getString("type");
 		int type = Validator.isNull(typeLabel) || "open".equalsIgnoreCase(typeLabel) ? GroupConstants.TYPE_SITE_OPEN : GroupConstants.TYPE_SITE_RESTRICTED;
-		serviceContext.setAssetCategoryIds(getCategoryIds(categories, group));
-		return groupLocalService.addGroup(serviceContext.getUserId(), parentGroupId, Group.class.getName(), 0, GroupConstants.DEFAULT_LIVE_GROUP_ID,
+
+		configureServiceContext(group, categories, serviceContext);
+
+		groupLocalService.addGroup(serviceContext.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, Group.class.getName(), 0, GroupConstants.DEFAULT_LIVE_GROUP_ID,
 				Collections.singletonMap(serviceContext.getLocale(), groupName), null, type, true, 0, null, true, true, serviceContext);
 	}
 
-	private long[] getCategoryIds(List<AssetCategory> assetCategories, JSONObject mappingJsonObject) {
+	private void configureServiceContext(JSONObject group, List<AssetCategory> categories, ServiceContext serviceContext) {
+		serviceContext.setAssetCategoryIds(getCategoryIds(categories, group));
+
+		String groupType = group.getString("expando-group-type");
+		if (Validator.isNotNull(groupType)) {
+			Map<String, Serializable> expandoBridgeAttributes = new HashMap<>();
+			expandoBridgeAttributes.put(GroupTypeExpando.FIELD_NAME, groupType);
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+	}
+
+	private long[] getCategoryIds(List<AssetCategory> assetCategories, JSONObject groupJSONObject) {
 		Set<Long> assetCategoryIdSet = new HashSet<>();
-		JSONArray categories = mappingJsonObject.getJSONArray("categories");
+		JSONArray categories = groupJSONObject.getJSONArray("categories");
 		for (int i = 0; i < categories.length(); i++) {
 			JSONObject category = categories.getJSONObject(i);
 			String categoryName = category.getString("categoryName");

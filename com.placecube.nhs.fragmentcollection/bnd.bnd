@@ -1,0 +1,6 @@
+Bundle-SymbolicName: com.placecube.nhs.fragmentcollection
+Bundle-Name: Placecube NHS Fragment Collection
+Bundle-Version: 1.0.0
+
+Web-ContextPath: /com.placecube.nhs.fragmentcollection
+-dsannotations-options: inherit

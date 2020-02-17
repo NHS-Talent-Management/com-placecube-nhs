@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.pfiks.expando.creator.ExpandoColumnCreator;
 import com.placecube.nhs.testdata.service.TestDataImportService;
 
 @Component(immediate = true, service = PortalInstanceLifecycleListener.class)
@@ -18,9 +19,14 @@ public class TestDataLifecycleListener extends BasePortalInstanceLifecycleListen
 	@Reference
 	private TestDataImportService testDataImportService;
 
+	@Reference(target = "(expandocolumn.creator=group.grouptype)")
+	private ExpandoColumnCreator expandoColumnCreator;
+
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		Group globalGroup = company.getGroup();
+
+		expandoColumnCreator.create(company);
 
 		ServiceContext serviceContext = testDataImportService.getServiceContext(globalGroup);
 

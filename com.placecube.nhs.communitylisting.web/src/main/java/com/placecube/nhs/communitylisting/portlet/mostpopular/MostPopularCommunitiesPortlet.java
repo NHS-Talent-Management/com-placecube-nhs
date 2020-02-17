@@ -1,7 +1,6 @@
 package com.placecube.nhs.communitylisting.portlet.mostpopular;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -14,12 +13,14 @@ import org.osgi.service.component.annotations.Reference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.placecube.nhs.communitylisting.constants.PortletKeys;
-import com.placecube.nhs.communitylisting.model.Community;
 import com.placecube.nhs.communitylisting.portlet.mostpopular.configuration.MostPopularCommunityPortletInstanceConfiguration;
 import com.placecube.nhs.communitylisting.service.CommunityListingService;
+import com.placecube.nhs.communitylisting.service.ConfigurationService;
+import com.placecube.nhs.grouptypes.constants.GroupType;
 
 @Component(immediate = true, property = { "com.liferay.fragment.entry.processor.portlet.alias=communitylisting-mostpopular",
 		"com.liferay.portlet.css-class-wrapper=portlet-communitylisting portlet-communitylisting-most-popular", "com.liferay.portlet.display-category=category.nhs",
@@ -31,6 +32,9 @@ public class MostPopularCommunitiesPortlet extends MVCPortlet {
 	private static final Log LOG = LogFactoryUtil.getLog(MostPopularCommunitiesPortlet.class);
 
 	@Reference
+	private ConfigurationService configurationService;
+
+	@Reference
 	private CommunityListingService communityListingService;
 
 	@Override
@@ -38,15 +42,20 @@ public class MostPopularCommunitiesPortlet extends MVCPortlet {
 		try {
 			ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			MostPopularCommunityPortletInstanceConfiguration mostPopularConfiguration = communityListingService.getMostPopularConfiguration(themeDisplay);
+			MostPopularCommunityPortletInstanceConfiguration configuration = configurationService.getMostPopularConfiguration(themeDisplay, false);
+			String groupType = configuration.groupType();
 
-			List<Community> communities = communityListingService.getMostPopularCommunities(themeDisplay, mostPopularConfiguration.maxItemsToDisplay());
-			renderRequest.setAttribute("communities", communities);
-			renderRequest.setAttribute("browseAllURL", mostPopularConfiguration.browseAllURL());
+			if (GroupType.COMMUNITY_OF_INTEREST.getValue().equals(groupType)) {
+				renderRequest.setAttribute("communities", communityListingService.getMostPopularCommunitiesOfInterest(themeDisplay, configuration.maxItemsToDisplay()));
+
+			} else if (GroupType.COMMUNITY_OF_PRACTICE.getValue().equals(groupType)) {
+				renderRequest.setAttribute("communities", communityListingService.getMostPopularCommunitiesOfPractice(themeDisplay, configuration.maxItemsToDisplay()));
+			}
 
 		} catch (Exception e) {
 			LOG.debug(e);
 			LOG.error(e.getMessage());
+			SessionErrors.add(renderRequest, e.getClass());
 		}
 
 		super.render(renderRequest, renderResponse);

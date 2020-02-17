@@ -8,8 +8,8 @@ import aQute.bnd.annotation.metatype.Meta;
 @Meta.OCD(id = "com.placecube.nhs.communitylisting.mostpopular.configuration.MostPopularCommunityPortletInstanceConfiguration", localization = "content/Language", name = "communitylisting-mostpopular-portlet-instance-configuration-name")
 public interface MostPopularCommunityPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "", name = "browse-all-url", required = false)
-	String browseAllURL();
+	@Meta.AD(deflt = "", name = "group-type", required = false)
+	String groupType();
 
 	@Meta.AD(deflt = "8", name = "max-items-to-display", required = false)
 	Integer maxItemsToDisplay();

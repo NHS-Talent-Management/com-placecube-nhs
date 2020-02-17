@@ -10,11 +10,18 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<aui:input name="browseAllURL" type="text" value="${configuration.browseAllURL()}"/>
+	<aui:select name="groupType" required="true">
+		<c:forEach items="${availableGroupTypes}" var="availableGroupType">
+			<aui:option value="${availableGroupType.getValue()}" selected="${configuration.groupType().equals(availableGroupType.getValue())}">
+				<liferay-ui:message key="${availableGroupType.getValue()}"/>
+			</aui:option>
+		</c:forEach>
+	</aui:select>
 	
 	<aui:input name="maxItemsToDisplay" type="number" value="${configuration.maxItemsToDisplay()}"  >
 		<aui:validator name="min">1</aui:validator>
 	</aui:input>
+	
 
 	<aui:button-row>
 		<aui:button type="submit" />

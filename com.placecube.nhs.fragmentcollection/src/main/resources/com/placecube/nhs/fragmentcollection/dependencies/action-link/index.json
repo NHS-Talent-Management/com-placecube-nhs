@@ -1,0 +1,22 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "#",
+					"label": "url",
+					"name": "url",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "Go Somewhere",
+					"label": "label",
+					"name": "label",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

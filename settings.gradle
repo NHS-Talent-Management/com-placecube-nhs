@@ -1,7 +1,13 @@
 def modules = [
 	'com.placecube.nhs.communitylisting.web',
+	'com.placecube.nhs.fragmentcollection',
+	'com.placecube.nhs.grouptypes',
+	'com.placecube.nhs.indexer.group',
 	'com.placecube.nhs.language',
-	'com.placecube.nhs.testdata'
+	'com.placecube.nhs.search.utils',
+	'com.placecube.nhs.taglib.az',
+	'com.placecube.nhs.webcontent.listing.web',
+	'com.placecube.nhs.webcontent.structures'
 ] as String[]
 
 include modules

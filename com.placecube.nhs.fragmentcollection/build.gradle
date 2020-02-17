@@ -1,0 +1,4 @@
+dependencies {
+	compile group: 'com.liferay', name: 'com.liferay.fragment.api'
+	compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+}
