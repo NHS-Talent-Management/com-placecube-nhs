@@ -17,9 +17,14 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.placecube.nhs.communitylisting.constants.PortletKeys;
 import com.placecube.nhs.communitylisting.service.CommunityListingService;
+import com.placecube.nhs.communitylisting.service.ConfigurationService;
+import com.placecube.nhs.grouptypes.constants.GroupType;
 
 @Component(immediate = true, property = "javax.portlet.name=" + PortletKeys.MOST_POPULAR, service = ConfigurationAction.class)
 public class MostPopularCommunitiesConfigurationAction extends DefaultConfigurationAction {
+
+	@Reference
+	private ConfigurationService configurationService;
 
 	@Reference
 	private CommunityListingService communityListingService;
@@ -28,14 +33,15 @@ public class MostPopularCommunitiesConfigurationAction extends DefaultConfigurat
 	public void include(PortletConfig portletConfig, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay) httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		httpServletRequest.setAttribute("configuration", communityListingService.getMostPopularConfiguration(themeDisplay));
+		httpServletRequest.setAttribute("availableGroupTypes", GroupType.values());
+		httpServletRequest.setAttribute("configuration", configurationService.getMostPopularConfiguration(themeDisplay, true));
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
 	@Override
 	public void processAction(PortletConfig portletConfig, ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
-		setPreference(actionRequest, "browseAllURL", ParamUtil.getString(actionRequest, "browseAllURL"));
+		setPreference(actionRequest, "groupType", ParamUtil.getString(actionRequest, "groupType"));
 		setPreference(actionRequest, "maxItemsToDisplay", String.valueOf(ParamUtil.getInteger(actionRequest, "maxItemsToDisplay")));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);

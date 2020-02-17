@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -108,13 +107,7 @@ public class TestDataImportService {
 		List<AssetCategory> categories = assetVocabulary.getCategories();
 		for (int rootGroupIndex = 0; rootGroupIndex < groupsToImport.length(); rootGroupIndex++) {
 			JSONObject rootGroupToImport = groupsToImport.getJSONObject(rootGroupIndex);
-			long groupId = importUtil.importGroup(rootGroupToImport, GroupConstants.DEFAULT_PARENT_GROUP_ID, categories, serviceContext);
-			JSONArray childGroups = rootGroupToImport.getJSONArray("childGroups");
-			if (Validator.isNotNull(childGroups)) {
-				for (int childGroupIndex = 0; childGroupIndex < childGroups.length(); childGroupIndex++) {
-					importUtil.importGroup(childGroups.getJSONObject(childGroupIndex), groupId, categories, serviceContext);
-				}
-			}
+			importUtil.importGroup(rootGroupToImport, categories, serviceContext);
 		}
 	}
 

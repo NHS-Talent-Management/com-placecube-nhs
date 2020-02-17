@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name><![CDATA[Course]]></name>
+		<description><![CDATA[Course]]></description>
+		<definition>
+			<![CDATA[
+				{
+				    "availableLanguageIds": [
+				        "[$LOCALE_DEFAULT$]"
+				    ],
+				    "defaultLanguageId": "[$LOCALE_DEFAULT$]",
+				    "fields": [
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Author"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "string",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "Author",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": false,
+				            "showLabel": true,
+				            "type": "text"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Description"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "html",
+				            "fieldNamespace": "ddm",
+				            "indexType": "text",
+				            "localizable": true,
+				            "name": "Description",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": false,
+				            "showLabel": true,
+				            "type": "ddm-text-html"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Created"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "date",
+				            "fieldNamespace": "ddm",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "Created",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": true,
+				            "showLabel": true,
+				            "type": "ddm-date"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Last major update"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "date",
+				            "fieldNamespace": "ddm",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "LastMajorUpdate",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": false,
+				            "showLabel": true,
+				            "type": "ddm-date"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Provider"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "string",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "Provider",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": false,
+				            "showLabel": true,
+				            "type": "text"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Provider Course URL"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "string",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "ProviderCourseURL",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": true,
+				            "showLabel": true,
+				            "type": "text"
+				        }
+				    ]
+				}
+			]]>
+		</definition>
+		<template>
+			<cacheable>true</cacheable>
+			<file-name>COURSE-DISPLAY.ftl</file-name>
+		</template>
+	</structure>
+</root>

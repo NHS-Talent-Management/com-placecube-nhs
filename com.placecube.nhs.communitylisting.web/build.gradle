@@ -1,4 +1,9 @@
 dependencies {
+	compile project (':com.placecube.nhs.grouptypes')
+	compile project (':com.placecube.nhs.indexer.group')
+	compile project (':com.placecube.nhs.search.utils')
+	compile project (':com.placecube.nhs.taglib.az')
+	
 	compile group: 'biz.aQute.bnd', name: 'biz.aQute.bndlib'
 	compile group: 'com.liferay', name: 'com.liferay.portal.configuration.metatype.api'
 	compile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel'

@@ -1,0 +1,10 @@
+Bundle-Category: Placecube
+Bundle-Name: Placecube NHS Group Types
+Bundle-SymbolicName: com.placecube.nhs.grouptypes
+Bundle-Version: 1.0.0
+Export-Package: \
+	com.placecube.nhs.grouptypes.constants,\
+	com.placecube.nhs.grouptypes.service
+-privatepackage: \
+	com.placecube.nhs.grouptypes.expando,\
+	com.placecube.nhs.grouptypes.lifecycle
