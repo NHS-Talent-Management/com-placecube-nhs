@@ -18,6 +18,8 @@
 		</c:forEach>
 	</aui:select>
 	
+	<aui:input type="toggle-switch" name="compactDisplay" value="${configuration.compactDisplay()}"/>
+	
 	<aui:input name="maxItemsToDisplay" type="number" value="${configuration.maxItemsToDisplay()}"  >
 		<aui:validator name="min">1</aui:validator>
 	</aui:input>

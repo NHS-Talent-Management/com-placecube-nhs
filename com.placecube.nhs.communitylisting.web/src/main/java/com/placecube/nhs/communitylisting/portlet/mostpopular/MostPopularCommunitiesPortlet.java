@@ -51,6 +51,7 @@ public class MostPopularCommunitiesPortlet extends MVCPortlet {
 			} else if (GroupType.COMMUNITY_OF_PRACTICE.getValue().equals(groupType)) {
 				renderRequest.setAttribute("communities", communityListingService.getMostPopularCommunitiesOfPractice(themeDisplay, configuration.maxItemsToDisplay()));
 			}
+			renderRequest.setAttribute("compactDisplay", configuration.compactDisplay());
 
 		} catch (Exception e) {
 			LOG.debug(e);

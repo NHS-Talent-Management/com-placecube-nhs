@@ -42,6 +42,7 @@ public class MostPopularCommunitiesConfigurationAction extends DefaultConfigurat
 	@Override
 	public void processAction(PortletConfig portletConfig, ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
 		setPreference(actionRequest, "groupType", ParamUtil.getString(actionRequest, "groupType"));
+		setPreference(actionRequest, "compactDisplay", String.valueOf(ParamUtil.getBoolean(actionRequest, "compactDisplay")));
 		setPreference(actionRequest, "maxItemsToDisplay", String.valueOf(ParamUtil.getInteger(actionRequest, "maxItemsToDisplay")));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);

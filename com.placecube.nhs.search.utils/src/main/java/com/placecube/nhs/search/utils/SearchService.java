@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.generic.StringQuery;
+import com.liferay.portal.kernel.util.Validator;
 
 @Component(immediate = true, service = SearchService.class)
 public class SearchService {
@@ -52,12 +53,12 @@ public class SearchService {
 
 	public BooleanClause<Query> getStringQuery(String fieldName, String[] fieldValues, BooleanClauseOccur match) {
 		String stringQuery = getOrQuery(fieldName, fieldValues);
-		return BooleanClauseFactoryUtil.create(new StringQuery("+(" + stringQuery + ")"), BooleanClauseOccur.MUST.toString());
+		return getStringQuery(stringQuery);
 	}
 
 	public BooleanClause<Query> getStringQuery(String fieldName, long[] fieldValues, BooleanClauseOccur match) {
 		String stringQuery = getOrQuery(fieldName, fieldValues);
-		return BooleanClauseFactoryUtil.create(new StringQuery("+(" + stringQuery + ")"), BooleanClauseOccur.MUST.toString());
+		return getStringQuery(stringQuery);
 	}
 
 	public Document[] getSearchResults(SearchContext searchContext, String indexerClassName) throws SearchException {
@@ -79,6 +80,13 @@ public class SearchService {
 			fieldValueQueries.add("(" + fieldName + ":" + value + ")");
 		}
 		return fieldValueQueries.stream().collect(Collectors.joining(" OR "));
+	}
+
+	private BooleanClause<Query> getStringQuery(String stringQuery) {
+		if (Validator.isNotNull(stringQuery)) {
+			return BooleanClauseFactoryUtil.create(new StringQuery("+(" + stringQuery + ")"), BooleanClauseOccur.MUST.toString());
+		}
+		return null;
 	}
 
 }
