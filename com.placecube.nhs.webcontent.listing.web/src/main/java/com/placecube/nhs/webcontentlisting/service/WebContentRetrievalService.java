@@ -10,6 +10,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -51,18 +52,17 @@ public class WebContentRetrievalService {
 	}
 
 	public AZEntry getAZEntryFromSearchResult(Document document, ThemeDisplay themeDisplay) throws PortalException {
-		long groupId = GetterUtil.getLong(document.get("groupId"));
-		String articleId = GetterUtil.getString(document.get("articleId"));
+		long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+		String articleId = GetterUtil.getString(document.get(Field.ARTICLE_ID));
 		JournalArticle journalArticle = journalArticleLocalService.getLatestArticle(groupId, articleId);
 		String viewURL = themeDisplay.getURLCurrent() + journalContentRendererService.getFriendlyURL(journalArticle);
 		return AZEntry.init(journalArticle.getTitle(themeDisplay.getLanguageId()), viewURL);
 	}
 
-	public JournalArticleDisplay getJournalArticleDisplayFromSearchResult(Document document, ThemeDisplay themeDisplay, String templateKey) throws PortalException {
-		long groupId = GetterUtil.getLong(document.get("groupId"));
-		String articleId = GetterUtil.getString(document.get("articleId"));
-		JournalArticle journalArticle = journalArticleLocalService.getLatestArticle(groupId, articleId);
-		return journalContent.getDisplay(journalArticle, templateKey, null, themeDisplay.getLanguageId(), 0, null, themeDisplay);
+	public JournalArticleDisplay getJournalArticleDisplayFromSearchResult(Document document, ThemeDisplay themeDisplay, String templateKey) {
+		long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+		String articleId = GetterUtil.getString(document.get(Field.ARTICLE_ID));
+		return journalContent.getDisplay(groupId, articleId, templateKey, null, themeDisplay.getLanguageId(), 0, null, themeDisplay);
 	}
 
 }
