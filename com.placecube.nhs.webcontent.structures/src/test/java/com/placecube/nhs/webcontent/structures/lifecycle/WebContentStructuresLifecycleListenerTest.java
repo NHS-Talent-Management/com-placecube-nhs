@@ -46,6 +46,7 @@ public class WebContentStructuresLifecycleListenerTest extends PowerMockito {
 		webContentStructuresLifecycleListener.portalInstanceRegistered(mockCompany);
 
 		verify(mockImportService, times(1)).addStructureAndTemplates(mockServiceContext, WebContentStructure.COURSE);
+		verify(mockImportService, times(1)).addStructureAndTemplates(mockServiceContext, WebContentStructure.JOB);
 	}
 
 }

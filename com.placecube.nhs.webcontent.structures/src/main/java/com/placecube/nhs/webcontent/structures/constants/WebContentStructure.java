@@ -2,7 +2,9 @@ package com.placecube.nhs.webcontent.structures.constants;
 
 public enum WebContentStructure {
 
-	COURSE("COURSE", "COURSE", "COURSE-LISTING");
+	COURSE("COURSE", "COURSE", "COURSE-LISTING"),
+
+	JOB("JOB", "JOB", "JOB-LISTING");
 
 	private final String structureKey;
 	private final String fullDisplayTemplateKey;

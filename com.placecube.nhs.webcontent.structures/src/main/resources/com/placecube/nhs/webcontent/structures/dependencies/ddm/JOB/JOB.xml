@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name><![CDATA[Job]]></name>
+		<description><![CDATA[Job]]></description>
+		<definition>
+			<![CDATA[
+				{
+				    "availableLanguageIds": [
+				        "[$LOCALE_DEFAULT$]"
+				    ],
+				    "defaultLanguageId": "[$LOCALE_DEFAULT$]",
+				    "fields": [
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Job Reference"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "string",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "JobReference",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": true,
+				            "showLabel": true,
+				            "type": "text"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Employer"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "string",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "Employer",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": true,
+				            "showLabel": true,
+				            "type": "text"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Department"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "string",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "Department",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": true,
+				            "showLabel": true,
+				            "type": "text"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Location"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "string",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "Location",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": true,
+				            "showLabel": true,
+				            "type": "text"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Salary From"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "number",
+				            "fieldNamespace": "ddm",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "SalaryFrom",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": true,
+				            "showLabel": true,
+				            "type": "ddm-number"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Salary To"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "number",
+				            "fieldNamespace": "ddm",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "SalaryTo",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": true,
+				            "showLabel": true,
+				            "type": "ddm-number"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Description"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "html",
+				            "fieldNamespace": "ddm",
+				            "indexType": "text",
+				            "localizable": true,
+				            "name": "Description",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": false,
+				            "showLabel": true,
+				            "type": "ddm-text-html"
+				        },
+				        {
+				            "label": {
+				                "[$LOCALE_DEFAULT$]": "Apply URL"
+				            },
+				            "predefinedValue": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "style": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "tip": {
+				                "[$LOCALE_DEFAULT$]": ""
+				            },
+				            "dataType": "string",
+				            "indexType": "keyword",
+				            "localizable": true,
+				            "name": "ApplyURL",
+				            "readOnly": false,
+				            "repeatable": false,
+				            "required": true,
+				            "showLabel": true,
+				            "type": "text"
+				        }
+				    ]
+				}
+			]]>
+		</definition>
+		<template>
+			<cacheable>true</cacheable>
+			<file-name>JOB-DISPLAY.ftl</file-name>
+		</template>
+	</structure>
+</root>

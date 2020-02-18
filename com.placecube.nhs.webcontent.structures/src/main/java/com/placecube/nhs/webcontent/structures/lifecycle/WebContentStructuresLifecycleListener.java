@@ -25,6 +25,7 @@ public class WebContentStructuresLifecycleListener extends BasePortalInstanceLif
 		ServiceContext serviceContext = importService.getServiceContext(globalGroup);
 
 		importService.addStructureAndTemplates(serviceContext, WebContentStructure.COURSE);
+		importService.addStructureAndTemplates(serviceContext, WebContentStructure.JOB);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
