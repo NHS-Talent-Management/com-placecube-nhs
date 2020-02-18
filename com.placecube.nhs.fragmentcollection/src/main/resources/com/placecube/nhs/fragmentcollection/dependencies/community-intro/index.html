@@ -1,0 +1,28 @@
+[#assign scopeGroup = themeDisplay.getScopeGroup() /]
+<div class="community-details nhsuk-u-margin-bottom-3">
+ 
+  <div class="row">
+  
+    <div class="col-md-3 col-xs-12">
+      [#assign groupLogo = scopeGroup.getLogoURL(themeDisplay, false)!"" /]
+      
+      [#if groupLogo?has_content]
+        <img src="${groupLogo}" alt="logo" />
+      [#else]
+        <img src="/o/com.placecube.nhs.fragmentcollection/images/icon-community.png" alt="logo" />
+      [/#if]
+      
+    </div>
+    
+    <div class="col-md-8 col-xs-12">
+      <h1>
+        ${scopeGroup.getName(locale)}
+      </h1>
+      <div class="text-muted">
+         ${scopeGroup.getDescription(locale)}
+      </div>
+    </div>
+    
+  </div>
+  
+</div>
