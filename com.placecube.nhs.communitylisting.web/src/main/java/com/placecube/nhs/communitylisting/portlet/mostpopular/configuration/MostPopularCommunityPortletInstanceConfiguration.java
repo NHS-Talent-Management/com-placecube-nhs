@@ -13,4 +13,7 @@ public interface MostPopularCommunityPortletInstanceConfiguration {
 
 	@Meta.AD(deflt = "8", name = "max-items-to-display", required = false)
 	Integer maxItemsToDisplay();
+
+	@Meta.AD(deflt = "true", name = "compact-display", required = false)
+	boolean compactDisplay();
 }
