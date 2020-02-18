@@ -35,7 +35,7 @@ public class AZWebContentPortlet extends MVCPortlet {
 		try {
 			ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			AZWebContentPortletInstanceConfiguration azConfiguration = webcontentListingService.getAZConfiguration(themeDisplay);
+			AZWebContentPortletInstanceConfiguration azConfiguration = webcontentListingService.getAZConfiguration(themeDisplay, false);
 
 			renderRequest.setAttribute("articles", webcontentListingService.getAllWebContents(themeDisplay, azConfiguration.structureKey()));
 		} catch (Exception e) {

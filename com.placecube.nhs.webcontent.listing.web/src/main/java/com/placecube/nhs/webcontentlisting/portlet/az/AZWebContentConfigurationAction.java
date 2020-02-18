@@ -28,7 +28,7 @@ public class AZWebContentConfigurationAction extends DefaultConfigurationAction 
 	public void include(PortletConfig portletConfig, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay) httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		httpServletRequest.setAttribute("configuration", webContentListingService.getAZConfiguration(themeDisplay));
+		httpServletRequest.setAttribute("configuration", webContentListingService.getAZConfiguration(themeDisplay, true));
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}

@@ -36,19 +36,19 @@ public class WebContentListingService {
 	@Reference
 	private GroupLocalService groupLocalService;
 
-	public AZWebContentPortletInstanceConfiguration getAZConfiguration(ThemeDisplay themeDisplay) throws ConfigurationException {
+	public AZWebContentPortletInstanceConfiguration getAZConfiguration(ThemeDisplay themeDisplay, boolean skipValidation) throws ConfigurationException {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 		AZWebContentPortletInstanceConfiguration configuration = portletDisplay.getPortletInstanceConfiguration(AZWebContentPortletInstanceConfiguration.class);
-		if (Validator.isNotNull(configuration.structureKey())) {
+		if (skipValidation || Validator.isNotNull(configuration.structureKey())) {
 			return configuration;
 		}
 		throw new ConfigurationException("Invalid configuration");
 	}
 
-	public MostPopularWebContentPortletInstanceConfiguration getMostPopularConfiguration(ThemeDisplay themeDisplay) throws ConfigurationException {
+	public MostPopularWebContentPortletInstanceConfiguration getMostPopularConfiguration(ThemeDisplay themeDisplay, boolean skipValidation) throws ConfigurationException {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 		MostPopularWebContentPortletInstanceConfiguration configuration = portletDisplay.getPortletInstanceConfiguration(MostPopularWebContentPortletInstanceConfiguration.class);
-		if (Validator.isNotNull(configuration.structureKey()) && Validator.isNotNull(configuration.templateKey()) && configuration.maxItemsToDisplay() > 0) {
+		if (skipValidation || Validator.isNotNull(configuration.structureKey()) && Validator.isNotNull(configuration.templateKey()) && configuration.maxItemsToDisplay() > 0) {
 			return configuration;
 		}
 		throw new ConfigurationException("Invalid configuration");

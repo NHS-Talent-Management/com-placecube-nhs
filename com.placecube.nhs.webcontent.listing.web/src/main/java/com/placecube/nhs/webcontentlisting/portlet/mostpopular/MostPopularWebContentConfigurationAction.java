@@ -28,7 +28,7 @@ public class MostPopularWebContentConfigurationAction extends DefaultConfigurati
 	public void include(PortletConfig portletConfig, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay) httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		httpServletRequest.setAttribute("configuration", communityListingService.getMostPopularConfiguration(themeDisplay));
+		httpServletRequest.setAttribute("configuration", communityListingService.getMostPopularConfiguration(themeDisplay, true));
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}

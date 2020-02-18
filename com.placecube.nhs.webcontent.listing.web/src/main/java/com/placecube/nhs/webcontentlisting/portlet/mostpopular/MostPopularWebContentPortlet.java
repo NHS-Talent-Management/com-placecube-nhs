@@ -36,7 +36,7 @@ public class MostPopularWebContentPortlet extends MVCPortlet {
 		try {
 			ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			MostPopularWebContentPortletInstanceConfiguration mostPopularConfiguration = webcontentListingService.getMostPopularConfiguration(themeDisplay);
+			MostPopularWebContentPortletInstanceConfiguration mostPopularConfiguration = webcontentListingService.getMostPopularConfiguration(themeDisplay, false);
 
 			renderRequest.setAttribute("journalArticleDisplays", webcontentListingService.getMostPopularWebContents(themeDisplay, mostPopularConfiguration.maxItemsToDisplay(),
 					mostPopularConfiguration.structureKey(), mostPopularConfiguration.templateKey()));
