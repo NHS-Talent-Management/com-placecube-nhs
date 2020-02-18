@@ -40,7 +40,7 @@ public class ImportService {
 	@Reference
 	private Portal portal;
 
-	public ServiceContext getServiceContext(Group group) throws PortalException {
+	public ServiceContext getServiceContext(Group group) {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
