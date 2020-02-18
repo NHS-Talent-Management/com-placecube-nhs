@@ -24,7 +24,7 @@ import com.placecube.nhs.grouptypes.constants.GroupType;
 
 @Component(immediate = true, property = { "com.liferay.fragment.entry.processor.portlet.alias=communitylisting-mostpopular",
 		"com.liferay.portlet.css-class-wrapper=portlet-communitylisting portlet-communitylisting-most-popular", "com.liferay.portlet.display-category=category.nhs",
-		"com.liferay.portlet.instanceable=false", "javax.portlet.resource-bundle=content.Language", "javax.portlet.init-param.template-path=/",
+		"com.liferay.portlet.instanceable=true", "javax.portlet.resource-bundle=content.Language", "javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/most-popular/view.jsp", "javax.portlet.security-role-ref=power-user,user", "javax.portlet.name=" + PortletKeys.MOST_POPULAR,
 		"javax.portlet.init-param.add-process-action-success-action=false" }, service = Portlet.class)
 public class MostPopularCommunitiesPortlet extends MVCPortlet {
