@@ -51,11 +51,11 @@ public class WebContentRetrievalService {
 		return searchService.getSearchResults(searchContext, JournalArticle.class.getName());
 	}
 
-	public AZEntry getAZEntryFromSearchResult(Document document, ThemeDisplay themeDisplay) throws PortalException {
+	public AZEntry getAZEntryFromSearchResult(Document document, ThemeDisplay themeDisplay, String currentPageURL) throws PortalException {
 		long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
 		String articleId = GetterUtil.getString(document.get(Field.ARTICLE_ID));
 		JournalArticle journalArticle = journalArticleLocalService.getLatestArticle(groupId, articleId);
-		String viewURL = themeDisplay.getURLCurrent() + journalContentRendererService.getFriendlyURL(journalArticle);
+		String viewURL = currentPageURL + journalContentRendererService.getFriendlyURL(journalArticle);
 		return AZEntry.init(journalArticle.getTitle(themeDisplay.getLanguageId()), viewURL);
 	}
 

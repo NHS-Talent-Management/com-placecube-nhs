@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.placecube.nhs.webcontentlisting.constants.PortletKeys;
 import com.placecube.nhs.webcontentlisting.portlet.az.configuration.AZWebContentPortletInstanceConfiguration;
@@ -28,6 +29,9 @@ public class AZWebContentPortlet extends MVCPortlet {
 	private static final Log LOG = LogFactoryUtil.getLog(AZWebContentPortlet.class);
 
 	@Reference
+	private Portal portal;
+
+	@Reference
 	private WebContentListingService webcontentListingService;
 
 	@Override
@@ -37,7 +41,9 @@ public class AZWebContentPortlet extends MVCPortlet {
 
 			AZWebContentPortletInstanceConfiguration azConfiguration = webcontentListingService.getAZConfiguration(themeDisplay, false);
 
-			renderRequest.setAttribute("articles", webcontentListingService.getAllWebContents(themeDisplay, azConfiguration.structureKey()));
+			String currentPageURL = portal.getLayoutFullURL(themeDisplay.getLayout(), themeDisplay);
+
+			renderRequest.setAttribute("articles", webcontentListingService.getAllWebContents(themeDisplay, currentPageURL, azConfiguration.structureKey()));
 		} catch (Exception e) {
 			LOG.debug(e);
 			LOG.error(e.getMessage());

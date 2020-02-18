@@ -15,6 +15,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.placecube.nhs.webcontent.structures.constants.WebContentStructure;
 
+@Ignore
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ StringUtil.class })
 public class ImportServiceTest extends PowerMockito {

@@ -1,11 +1,12 @@
 <#assign htmlUtil = serviceLocator.findService("com.liferay.portal.kernel.util.HtmlUtil")/>
 <#assign journalContentRendererService = serviceLocator.findService("com.pfiks.journal.content.service.JournalContentRendererService")/>
+<#assign portalUtil = serviceLocator.findService("com.liferay.portal.kernel.util.PortalUtil")/>
 
 <div class="nhsuk-grid-column-full nhsuk-promo-group__item">
 	<div class="nhsuk-promo">
 
 		<#assign articleViewURL = journalContentRendererService.getFriendlyURL(groupId, .vars['reserved-article-id'].data, "COURSE") />
-		<#assign currentPageURL = themeDisplay.getLayoutFriendlyURL(themeDisplay.getLayout()) />
+		<#assign currentPageURL = portalUtil.getLayoutFullURL(themeDisplay.getLayout(), themeDisplay) />
 		
 		<a class="nhsuk-promo__link-wrapper" href="${currentPageURL}${articleViewURL}">
 		

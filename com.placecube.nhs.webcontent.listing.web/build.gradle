@@ -10,7 +10,7 @@ dependencies {
 	compile group: 'javax.portlet', name: 'portlet-api'
 	compile group: 'javax.servlet', name: 'javax.servlet-api'
 	compile group: 'org.osgi', name: 'org.osgi.service.component.annotations'
-	compile group: 'com.pfiks.journal', name: 'com.pfiks.journalcontent.renderer.web', version: '2.0.0'
+	compile group: 'com.pfiks.journal', name: 'com.pfiks.journalcontent.renderer.web', version: '3.0.0'
 	
 	testCompile group: 'com.liferay', name: 'com.liferay.petra.lang'
 	testCompile group: 'com.liferay', name: 'com.liferay.petra.string'

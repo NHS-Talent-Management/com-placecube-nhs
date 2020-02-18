@@ -153,13 +153,12 @@ public class WebContentRetrievalServiceTest extends PowerMockito {
 		when(mockDocument.get(Field.GROUP_ID)).thenReturn(String.valueOf(GROUP_ID));
 		when(mockDocument.get(Field.ARTICLE_ID)).thenReturn(ARTICLE_ID);
 		when(mockJournalArticleLocalService.getLatestArticle(GROUP_ID, ARTICLE_ID)).thenReturn(mockJournalArticle);
-		when(mockThemeDisplay.getURLCurrent()).thenReturn(currentURL);
 		when(mockJournalContentRendererService.getFriendlyURL(mockJournalArticle)).thenReturn(journalURL);
 		when(mockThemeDisplay.getLanguageId()).thenReturn(languageId);
 		when(mockJournalArticle.getTitle(languageId)).thenReturn(title);
 		when(AZEntry.init(title, currentURL + journalURL)).thenReturn(mockAZEntry);
 
-		AZEntry result = webContentRetrievalService.getAZEntryFromSearchResult(mockDocument, mockThemeDisplay);
+		AZEntry result = webContentRetrievalService.getAZEntryFromSearchResult(mockDocument, mockThemeDisplay, currentURL);
 
 		assertThat(result, sameInstance(mockAZEntry));
 	}

@@ -54,14 +54,14 @@ public class WebContentListingService {
 		throw new ConfigurationException("Invalid configuration");
 	}
 
-	public List<AZEntry> getAllWebContents(ThemeDisplay themeDisplay, String structureKey) throws SearchException {
+	public List<AZEntry> getAllWebContents(ThemeDisplay themeDisplay, String currentPageURL, String structureKey) throws SearchException {
 		List<AZEntry> results = new ArrayList<>();
 
 		SearchContext searchContext = webContentRetrievalService.getSearchContext(themeDisplay.getCompanyId(), structureKey, -1);
 		Document[] searchResults = webContentRetrievalService.getSearchResults(searchContext);
 		for (Document document : searchResults) {
 			try {
-				results.add(webContentRetrievalService.getAZEntryFromSearchResult(document, themeDisplay));
+				results.add(webContentRetrievalService.getAZEntryFromSearchResult(document, themeDisplay, currentPageURL));
 			} catch (Exception e) {
 				LOG.debug(e);
 			}

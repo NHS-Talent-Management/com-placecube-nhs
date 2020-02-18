@@ -203,9 +203,5 @@
 				}
 			]]>
 		</definition>
-		<template>
-			<cacheable>true</cacheable>
-			<file-name>JOB-DISPLAY.ftl</file-name>
-		</template>
 	</structure>
 </root>

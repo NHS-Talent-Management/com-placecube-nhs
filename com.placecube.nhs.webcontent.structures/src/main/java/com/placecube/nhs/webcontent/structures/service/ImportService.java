@@ -63,20 +63,20 @@ public class ImportService {
 
 		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(groupId, journalClassNameId, webContentStructure.getStructureKey());
 
-		createListingTemplate(serviceContext, webContentStructure, journalClassNameId, ddmStructure);
+		createTemplate(serviceContext, webContentStructure.getStructureKey(), webContentStructure.getFullDisplayTemplateKey(), journalClassNameId, ddmStructure);
+		createTemplate(serviceContext, webContentStructure.getStructureKey(), webContentStructure.getListingTemplateKey(), journalClassNameId, ddmStructure);
 	}
 
-	private void createListingTemplate(ServiceContext serviceContext, WebContentStructure webContentStructure, long journalClassNameId, DDMStructure ddmStructure) throws IOException, PortalException {
+	private void createTemplate(ServiceContext serviceContext, String structureKey, String templateKey, long journalClassNameId, DDMStructure ddmStructure) throws IOException, PortalException {
 		long structureClassNameId = portal.getClassNameId(DDMStructure.class.getName());
-		DDMTemplate listingTemplate = ddmTemplateLocalService.fetchTemplate(serviceContext.getScopeGroupId(), structureClassNameId, webContentStructure.getListingTemplateKey());
+		DDMTemplate template = ddmTemplateLocalService.fetchTemplate(serviceContext.getScopeGroupId(), structureClassNameId, templateKey);
 
-		if (Validator.isNull(listingTemplate)) {
-			String templateName = ddmStructure.getName(serviceContext.getLocale()) + " Listing";
-			Map<Locale, String> nameMap = Collections.singletonMap(serviceContext.getLocale(), templateName);
-			String script = StringUtil.read(getClass().getClassLoader(), BASE_IMPORT_PATH + webContentStructure.getStructureKey() + "/" + webContentStructure.getListingTemplateKey() + ".ftl");
+		if (Validator.isNull(template)) {
+			Map<Locale, String> nameMap = Collections.singletonMap(serviceContext.getLocale(), templateKey);
+			String script = StringUtil.read(getClass().getClassLoader(), BASE_IMPORT_PATH + structureKey + "/" + templateKey + ".ftl");
 
-			ddmTemplateLocalService.addTemplate(serviceContext.getUserId(), serviceContext.getScopeGroupId(), structureClassNameId, ddmStructure.getStructureId(), journalClassNameId,
-					webContentStructure.getListingTemplateKey(), nameMap, null, "display", null, "ftl", script, true, false, StringPool.BLANK, null, serviceContext);
+			ddmTemplateLocalService.addTemplate(serviceContext.getUserId(), serviceContext.getScopeGroupId(), structureClassNameId, ddmStructure.getStructureId(), journalClassNameId, templateKey,
+					nameMap, null, "display", null, "ftl", script, true, false, StringPool.BLANK, null, serviceContext);
 		}
 	}
 }

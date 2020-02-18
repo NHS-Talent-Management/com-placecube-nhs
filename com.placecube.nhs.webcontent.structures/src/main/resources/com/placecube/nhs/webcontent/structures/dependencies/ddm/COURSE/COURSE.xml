@@ -157,9 +157,5 @@
 				}
 			]]>
 		</definition>
-		<template>
-			<cacheable>true</cacheable>
-			<file-name>COURSE-DISPLAY.ftl</file-name>
-		</template>
 	</structure>
 </root>
