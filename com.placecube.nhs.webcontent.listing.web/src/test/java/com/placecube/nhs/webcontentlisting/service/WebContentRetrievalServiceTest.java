@@ -89,7 +89,7 @@ public class WebContentRetrievalServiceTest extends PowerMockito {
 	public void getSearchContext_WhenNoError_ThenReturnsTheSearchContext() {
 		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
 
-		SearchContext result = webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS);
+		SearchContext result = webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, null);
 
 		assertThat(result, sameInstance(mockSearchContext));
 	}
@@ -98,7 +98,7 @@ public class WebContentRetrievalServiceTest extends PowerMockito {
 	public void getSearchContext_WhenMaxItemsIsNotGreaterThanZero_ThenDoesNotConfigureStartAndEnd() {
 		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
 
-		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, 0);
+		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, 0, null);
 
 		verify(mockSearchContext, never()).setStart(anyInt());
 		verify(mockSearchContext, never()).setEnd(anyInt());
@@ -108,7 +108,7 @@ public class WebContentRetrievalServiceTest extends PowerMockito {
 	public void getSearchContext_WhenMaxItemsIsGreaterThanZero_ThenConfigureStartAndEnd() {
 		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
 
-		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS);
+		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, null);
 
 		verify(mockSearchContext, times(1)).setStart(0);
 		verify(mockSearchContext, times(1)).setEnd(MAX_ITEMS);
@@ -118,7 +118,7 @@ public class WebContentRetrievalServiceTest extends PowerMockito {
 	public void getSearchContext_WhenNoError_ThenConfiguresJournalArticleAsEntryClassNames() {
 		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
 
-		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS);
+		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, new long[0]);
 
 		verify(mockSearchContext, times(1)).setEntryClassNames(new String[] { JournalArticle.class.getName() });
 		verify(mockSearchContext, times(1)).setEnd(MAX_ITEMS);
@@ -129,7 +129,7 @@ public class WebContentRetrievalServiceTest extends PowerMockito {
 		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
 		when(mockSearchService.getStringQuery("ddmStructureKey", STRUCTURE_KEY, BooleanClauseOccur.MUST)).thenReturn(mockBooleanClause);
 
-		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS);
+		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, null);
 
 		verify(mockSearchService, times(1)).configureBooleanClauses(mockSearchContext, mockBooleanClause);
 	}
