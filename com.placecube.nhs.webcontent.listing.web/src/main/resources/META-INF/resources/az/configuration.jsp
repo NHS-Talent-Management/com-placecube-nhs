@@ -12,6 +12,8 @@
 
 	<aui:input name="structureKey" type="text" value="${configuration.structureKey()}" required="true"/>
 	
+	<aui:input type="toggle-switch" name="matchingCategories" value="${configuration.matchingCategories()}"/>
+	
 	<aui:button-row>
 		<aui:button type="submit" />
 	</aui:button-row>

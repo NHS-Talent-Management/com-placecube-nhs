@@ -39,11 +39,13 @@ public class AZWebContentPortlet extends MVCPortlet {
 		try {
 			ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			AZWebContentPortletInstanceConfiguration azConfiguration = webcontentListingService.getAZConfiguration(themeDisplay, false);
+			AZWebContentPortletInstanceConfiguration configuration = webcontentListingService.getAZConfiguration(themeDisplay, false);
 
 			String currentPageURL = portal.getLayoutFullURL(themeDisplay.getLayout(), themeDisplay);
 
-			renderRequest.setAttribute("articles", webcontentListingService.getAllWebContents(themeDisplay, currentPageURL, azConfiguration.structureKey()));
+			long[] groupIds = webcontentListingService.getGroupIdsToFilter(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), configuration.matchingCategories());
+
+			renderRequest.setAttribute("articles", webcontentListingService.getAllWebContents(themeDisplay, currentPageURL, configuration.structureKey(), groupIds));
 		} catch (Exception e) {
 			LOG.debug(e);
 			LOG.error(e.getMessage());

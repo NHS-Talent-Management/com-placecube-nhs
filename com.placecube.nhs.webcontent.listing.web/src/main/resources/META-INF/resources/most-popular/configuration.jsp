@@ -17,6 +17,8 @@
 	<aui:input name="maxItemsToDisplay" type="number" value="${configuration.maxItemsToDisplay()}"  >
 		<aui:validator name="min">1</aui:validator>
 	</aui:input>
+	
+	<aui:input type="toggle-switch" name="matchingCategories" value="${configuration.matchingCategories()}"/>
 
 	<aui:button-row>
 		<aui:button type="submit" />

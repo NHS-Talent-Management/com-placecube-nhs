@@ -38,6 +38,7 @@ public class MostPopularWebContentConfigurationAction extends DefaultConfigurati
 		setPreference(actionRequest, "structureKey", ParamUtil.getString(actionRequest, "structureKey"));
 		setPreference(actionRequest, "templateKey", ParamUtil.getString(actionRequest, "templateKey"));
 		setPreference(actionRequest, "maxItemsToDisplay", String.valueOf(ParamUtil.getInteger(actionRequest, "maxItemsToDisplay")));
+		setPreference(actionRequest, "matchingCategories", String.valueOf(ParamUtil.getBoolean(actionRequest, "matchingCategories")));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.pfiks.journal.content.service.JournalContentRendererService;
 import com.placecube.nhs.search.utils.SearchService;
@@ -34,11 +35,14 @@ public class WebContentRetrievalService {
 	@Reference
 	private SearchService searchService;
 
-	public SearchContext getSearchContext(long companyId, String structureKey, int maxItemsToDisplay) {
+	public SearchContext getSearchContext(long companyId, String structureKey, int maxItemsToDisplay, long[] groupIds) {
 		SearchContext searchContext = searchService.getSearchContext(companyId);
 		if (maxItemsToDisplay > 0) {
 			searchContext.setStart(0);
 			searchContext.setEnd(maxItemsToDisplay);
+		}
+		if (ArrayUtil.isNotEmpty(groupIds)) {
+			searchContext.setGroupIds(groupIds);
 		}
 		searchContext.setEntryClassNames(new String[] { JournalArticle.class.getName() });
 		searchContext.setSorts(searchService.getSortOnDate(Field.CREATE_DATE, true));

@@ -36,6 +36,7 @@ public class AZWebContentConfigurationAction extends DefaultConfigurationAction 
 	@Override
 	public void processAction(PortletConfig portletConfig, ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
 		setPreference(actionRequest, "structureKey", ParamUtil.getString(actionRequest, "structureKey"));
+		setPreference(actionRequest, "matchingCategories", String.valueOf(ParamUtil.getBoolean(actionRequest, "matchingCategories")));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

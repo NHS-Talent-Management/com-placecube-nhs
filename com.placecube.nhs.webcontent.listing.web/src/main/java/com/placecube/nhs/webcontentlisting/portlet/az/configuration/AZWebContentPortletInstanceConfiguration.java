@@ -8,6 +8,9 @@ import aQute.bnd.annotation.metatype.Meta;
 @Meta.OCD(id = "com.placecube.nhs.webcontentlisting.az.configuration.AZWebContentPortletInstanceConfiguration", localization = "content/Language", name = "webcontentlisting-az-portlet-instance-configuration-name")
 public interface AZWebContentPortletInstanceConfiguration {
 
+	@Meta.AD(deflt = "false", name = "matching-categories", required = false)
+	boolean matchingCategories();
+
 	@Meta.AD(deflt = "", name = "structure-key", required = false)
 	String structureKey();
 
