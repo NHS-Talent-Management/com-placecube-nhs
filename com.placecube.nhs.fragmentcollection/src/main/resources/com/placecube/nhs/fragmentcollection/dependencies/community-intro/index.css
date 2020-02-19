@@ -1,4 +1,8 @@
-.community-details img{
+.community-details .logo-row img {
     max-width: 100%;
     height: auto;
+}
+
+.community-details .logo-row {
+	text-align: center;
 }
