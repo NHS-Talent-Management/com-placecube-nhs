@@ -11,11 +11,13 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -64,6 +66,10 @@ public class SearchService {
 	public Document[] getSearchResults(SearchContext searchContext, String indexerClassName) throws SearchException {
 		Hits hits = indexerRegistry.getIndexer(indexerClassName).search(searchContext);
 		return hits.getDocs();
+	}
+
+	public Sort getSortOnDate(String fieldName, boolean reverse) {
+		return new Sort(Field.getSortableFieldName(fieldName), Sort.LONG_TYPE, reverse);
 	}
 
 	private String getOrQuery(String fieldName, long[] fieldValues) {

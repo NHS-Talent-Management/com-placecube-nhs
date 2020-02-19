@@ -41,6 +41,7 @@ public class WebContentRetrievalService {
 			searchContext.setEnd(maxItemsToDisplay);
 		}
 		searchContext.setEntryClassNames(new String[] { JournalArticle.class.getName() });
+		searchContext.setSorts(searchService.getSortOnDate(Field.CREATE_DATE, true));
 
 		searchService.configureBooleanClauses(searchContext, searchService.getStringQuery("ddmStructureKey", structureKey, BooleanClauseOccur.MUST));
 
