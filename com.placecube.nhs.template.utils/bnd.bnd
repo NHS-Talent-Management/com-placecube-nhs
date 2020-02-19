@@ -1,5 +1,5 @@
 Bundle-SymbolicName: com.placecube.nhs.template.utils
 Bundle-Name: Placecube NHS - Template Utils
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1.SNAPSHOT
 
 Export-Package: com.placecube.nhs.template.utils
