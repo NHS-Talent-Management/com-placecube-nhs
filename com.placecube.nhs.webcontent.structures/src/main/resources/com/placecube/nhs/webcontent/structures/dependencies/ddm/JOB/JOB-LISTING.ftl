@@ -1,11 +1,11 @@
 <#assign journalContentRendererService = serviceLocator.findService("com.pfiks.journal.content.service.JournalContentRendererService")/>
-<#assign portalUtil = serviceLocator.findService("com.liferay.portal.kernel.util.PortalUtil")/>
+<#assign urlService = serviceLocator.findService("com.placecube.nhs.template.utils.URLService")/>
 
 <div class="nhsuk-grid-column-full nhsuk-promo-group__item">
 	<div class="nhsuk-promo">
 
 		<#assign articleViewURL = journalContentRendererService.getFriendlyURL(groupId, .vars['reserved-article-id'].data, "JOB") />
-		<#assign currentPageURL = portalUtil.getLayoutFullURL(themeDisplay.getLayout(), themeDisplay) />
+		<#assign currentPageURL = urlService.getCurrentFullURL(themeDisplay) />
 		
 		<a class="nhsuk-promo__link-wrapper" href="${currentPageURL}${articleViewURL}">
 		
