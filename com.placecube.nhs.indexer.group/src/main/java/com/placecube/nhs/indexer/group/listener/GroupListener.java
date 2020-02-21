@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchException;
 
 @Component(immediate = true, service = ModelListener.class)
 public class GroupListener extends BaseModelListener<Group> {
@@ -23,7 +22,7 @@ public class GroupListener extends BaseModelListener<Group> {
 	public void onAfterRemove(Group group) {
 		try {
 			indexerRegistry.getIndexer(Group.class.getName()).delete(group);
-		} catch (SearchException e) {
+		} catch (Exception e) {
 			LOG.debug(e);
 			LOG.error("Unable to remove group from index  " + e.getMessage());
 		}
