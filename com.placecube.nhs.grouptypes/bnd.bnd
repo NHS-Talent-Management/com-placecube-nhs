@@ -1,7 +1,7 @@
 Bundle-Category: Placecube
 Bundle-Name: Placecube NHS Group Types
 Bundle-SymbolicName: com.placecube.nhs.grouptypes
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2.SNAPSHOT
 Export-Package: \
 	com.placecube.nhs.grouptypes.constants,\
 	com.placecube.nhs.grouptypes.service
