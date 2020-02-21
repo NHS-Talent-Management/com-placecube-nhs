@@ -27,7 +27,7 @@ public class RegistrationSetupService {
 	}
 
 	public JournalFolder addFolder(ServiceContext serviceContext) throws PortalException {
-		return journalArticleCreationService.getOrCreateJournalFolder("Create Account Portlet", serviceContext);
+		return journalArticleCreationService.getOrCreateJournalFolder("Registration Portlet", serviceContext);
 	}
 
 	public ServiceContext getServiceContext(Group group) {

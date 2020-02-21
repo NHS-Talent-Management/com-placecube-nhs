@@ -82,7 +82,7 @@ public class RegistrationSetupServiceTest extends PowerMockito {
 
 	@Test
 	public void addFolder_WhenNoError_ThenReturnsTheFolder() throws PortalException {
-		when(mockJournalArticleCreationService.getOrCreateJournalFolder("Create Account Portlet", mockServiceContext)).thenReturn(mockJournalFolder);
+		when(mockJournalArticleCreationService.getOrCreateJournalFolder("Registration Portlet", mockServiceContext)).thenReturn(mockJournalFolder);
 
 		JournalFolder result = registrationSetupService.addFolder(mockServiceContext);
 
@@ -91,7 +91,7 @@ public class RegistrationSetupServiceTest extends PowerMockito {
 
 	@Test(expected = PortalException.class)
 	public void addFolder_WhenExceptionCreatingTheFolder_ThenThrowsPortalException() throws PortalException {
-		when(mockJournalArticleCreationService.getOrCreateJournalFolder("Create Account Portlet", mockServiceContext)).thenThrow(new PortalException());
+		when(mockJournalArticleCreationService.getOrCreateJournalFolder("Registration Portlet", mockServiceContext)).thenThrow(new PortalException());
 
 		registrationSetupService.addFolder(mockServiceContext);
 	}
