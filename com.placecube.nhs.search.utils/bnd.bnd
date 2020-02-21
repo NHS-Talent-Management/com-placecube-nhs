@@ -1,5 +1,5 @@
 Bundle-SymbolicName: com.placecube.nhs.search.utils
 Bundle-Name: Placecube NHS - Search Utils
-Bundle-Version: 1.1.1.SNAPSHOT
+Bundle-Version: 1.1.1
 
 Export-Package: com.placecube.nhs.search.utils

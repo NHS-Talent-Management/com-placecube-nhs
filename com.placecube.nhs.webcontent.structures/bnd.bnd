@@ -1,5 +1,5 @@
 Bundle-Category: Placecube
 Bundle-Name: Placecube NHS WebContent
 Bundle-SymbolicName: com.placecube.nhs.webcontent.structures
-Bundle-Version: 1.1.4.SNAPSHOT
+Bundle-Version: .SNAPSHOT
 Export-Package: com.placecube.nhs.webcontent.structures.constants

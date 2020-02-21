@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<root available-locales="[$AVAILABLE_LOCALES$]" default-locale="[$LOCALE_DEFAULT$]">
+	<dynamic-element name="content" type="text_area" index-type="text" instance-id="fbyg">
+		<dynamic-content language-id="[$LOCALE_DEFAULT$]">
+			<![CDATA[
+				<div class="registration-confirmation-message text-center">
+					<p class="nhsuk-body-l">Thank you</p>
+					<p class="nhsuk-body">Thank you for registering. You will receive an email shortly with confirmation details.</p>
+					<a href="/c/portal/login" class="nhsuk-button go-to-login-page">GO TO LOGIN PAGE</a>
+				</div>
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

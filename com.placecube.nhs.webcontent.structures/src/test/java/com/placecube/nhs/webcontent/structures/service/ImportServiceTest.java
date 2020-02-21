@@ -2,42 +2,29 @@ package com.placecube.nhs.webcontent.structures.service;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.placecube.nhs.webcontent.structures.constants.WebContentStructure;
 
-@Ignore
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ StringUtil.class })
 public class ImportServiceTest extends PowerMockito {
@@ -48,9 +35,6 @@ public class ImportServiceTest extends PowerMockito {
 	private static final Long COMPANY_ID = 3l;
 	private static final Long ARTICLE_CLASS_NAME_ID = 4l;
 	private static final Long STRUCTURE_CLASS_NAME_ID = 5l;
-	private static final Long STRUCTURE_ID = 6l;
-	private static final String STRUCTURE_NAME = "structureNameVal";
-	private static final Locale LOCALE = Locale.CANADA_FRENCH;
 
 	@InjectMocks
 	private ImportService importService;
@@ -62,7 +46,7 @@ public class ImportServiceTest extends PowerMockito {
 	private DefaultDDMStructureHelper mockDefaultDDMStructureHelper;
 
 	@Mock
-	private DDMTemplateLocalService mockDDMTemplateLocalService;
+	private ImportUtil mockImportUtil;
 
 	@Mock
 	private Portal mockPortal;
@@ -72,9 +56,6 @@ public class ImportServiceTest extends PowerMockito {
 
 	@Mock
 	private ServiceContext mockServiceContext;
-
-	@Mock
-	private DDMTemplate mockDDMTemplate;
 
 	@Mock
 	private Group mockGroup;
@@ -102,46 +83,23 @@ public class ImportServiceTest extends PowerMockito {
 	}
 
 	@Test
-	public void addStructureAndTemplates_WhenTemplateFound_ThenCreatesTheStructureButDoesNotCreateTemplate() throws Exception {
+	public void addStructureAndTemplates_WhenNoError_ThenCreatesTheStructureAndTheTemplates() throws Exception {
 		WebContentStructure webContentStructure = WebContentStructure.COURSE;
 		when(mockPortal.getClassNameId(JournalArticle.class)).thenReturn(ARTICLE_CLASS_NAME_ID);
 		when(mockPortal.getClassNameId(DDMStructure.class.getName())).thenReturn(STRUCTURE_CLASS_NAME_ID);
 		when(mockServiceContext.getUserId()).thenReturn(USER_ID);
 		when(mockServiceContext.getScopeGroupId()).thenReturn(GROUP_ID);
 		when(mockDDMStructureLocalService.getStructure(GROUP_ID, ARTICLE_CLASS_NAME_ID, webContentStructure.getStructureKey())).thenReturn(mockDDMStructure);
-		when(mockDDMTemplateLocalService.fetchTemplate(GROUP_ID, STRUCTURE_CLASS_NAME_ID, webContentStructure.getListingTemplateKey())).thenReturn(mockDDMTemplate);
 
 		importService.addStructureAndTemplates(mockServiceContext, webContentStructure);
 
-		verify(mockDefaultDDMStructureHelper, times(1)).addDDMStructures(USER_ID, GROUP_ID, ARTICLE_CLASS_NAME_ID, ImportService.class.getClassLoader(),
+		InOrder inOrder = Mockito.inOrder(mockDefaultDDMStructureHelper, mockImportUtil);
+		inOrder.verify(mockDefaultDDMStructureHelper, times(1)).addDDMStructures(USER_ID, GROUP_ID, ARTICLE_CLASS_NAME_ID, ImportService.class.getClassLoader(),
 				"com/placecube/nhs/webcontent/structures/dependencies/ddm/" + webContentStructure.getStructureKey() + "/" + webContentStructure.getStructureKey() + ".xml", mockServiceContext);
-		verify(mockDDMTemplateLocalService, never()).addTemplate(anyLong(), anyLong(), anyLong(), anyLong(), anyLong(), anyString(), any(), any(), anyString(), any(), anyString(), anyString(),
-				anyBoolean(), anyBoolean(), anyString(), any(), any(ServiceContext.class));
-	}
-
-	@Test
-	public void addStructureAndTemplates_WhenTemplateNotFound_ThenCreateTheStructureAndTheTemplate() throws Exception {
-		WebContentStructure webContentStructure = WebContentStructure.COURSE;
-		when(mockPortal.getClassNameId(JournalArticle.class)).thenReturn(ARTICLE_CLASS_NAME_ID);
-		when(mockPortal.getClassNameId(DDMStructure.class.getName())).thenReturn(STRUCTURE_CLASS_NAME_ID);
-		when(mockServiceContext.getUserId()).thenReturn(USER_ID);
-		when(mockServiceContext.getScopeGroupId()).thenReturn(GROUP_ID);
-		when(mockDDMStructureLocalService.getStructure(GROUP_ID, ARTICLE_CLASS_NAME_ID, webContentStructure.getStructureKey())).thenReturn(mockDDMStructure);
-		when(mockDDMTemplateLocalService.fetchTemplate(GROUP_ID, STRUCTURE_CLASS_NAME_ID, webContentStructure.getListingTemplateKey())).thenReturn(null);
-		when(mockDDMStructure.getStructureId()).thenReturn(STRUCTURE_ID);
-		when(mockServiceContext.getLocale()).thenReturn(LOCALE);
-		when(mockDDMStructure.getName(LOCALE)).thenReturn(STRUCTURE_NAME);
-		Map<Locale, String> nameMap = Collections.singletonMap(LOCALE, STRUCTURE_NAME + " Listing");
-		String script = "scriptValue";
-		when(StringUtil.read(getClass().getClassLoader(),
-				"com/placecube/nhs/webcontent/structures/dependencies/ddm/" + webContentStructure.getStructureKey() + "/" + webContentStructure.getListingTemplateKey() + ".ftl")).thenReturn(script);
-
-		importService.addStructureAndTemplates(mockServiceContext, webContentStructure);
-
-		verify(mockDefaultDDMStructureHelper, times(1)).addDDMStructures(USER_ID, GROUP_ID, ARTICLE_CLASS_NAME_ID, ImportService.class.getClassLoader(),
-				"com/placecube/nhs/webcontent/structures/dependencies/ddm/" + webContentStructure.getStructureKey() + "/" + webContentStructure.getStructureKey() + ".xml", mockServiceContext);
-		verify(mockDDMTemplateLocalService, times(1)).addTemplate(USER_ID, GROUP_ID, STRUCTURE_CLASS_NAME_ID, STRUCTURE_ID, ARTICLE_CLASS_NAME_ID, webContentStructure.getListingTemplateKey(), nameMap,
-				null, "display", null, "ftl", script, true, false, StringPool.BLANK, null, mockServiceContext);
+		inOrder.verify(mockImportUtil, times(1)).createTemplate(mockServiceContext, webContentStructure.getStructureKey(), webContentStructure.getFullDisplayTemplateKey(), ARTICLE_CLASS_NAME_ID,
+				mockDDMStructure);
+		inOrder.verify(mockImportUtil, times(1)).createTemplate(mockServiceContext, webContentStructure.getStructureKey(), webContentStructure.getListingTemplateKey(), ARTICLE_CLASS_NAME_ID,
+				mockDDMStructure);
 	}
 
 }

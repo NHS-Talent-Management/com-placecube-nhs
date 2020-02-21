@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<description>Provides the NHS forms UI component tags, prefixed with <![CDATA[<code>nhs-forms-ui:</code>]]>.</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>nhs-forms-ui</short-name>
+	<uri>http://placecube.com/tld/nhs-forms-ui</uri>
+
+	<tag>
+		<name>errorSummary</name>
+		<tag-class>com.placecube.nhs.taglib.forms.tag.ErrorSummaryTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>portletNamespace</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>errors</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Map</type>
+		</attribute>
+	</tag>
+		
+	<tag>
+		<name>inputText</name>
+		<tag-class>com.placecube.nhs.taglib.forms.tag.InputTextTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>portletNamespace</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>fieldName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>fieldLabel</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>fieldValue</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>errorMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>showAsPassword</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+	</tag>
+	
+	
+	
+</taglib>

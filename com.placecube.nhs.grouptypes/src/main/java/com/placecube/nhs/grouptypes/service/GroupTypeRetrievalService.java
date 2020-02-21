@@ -1,6 +1,6 @@
 package com.placecube.nhs.grouptypes.service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,10 +48,11 @@ public class GroupTypeRetrievalService {
 	}
 
 	public List<Long> getRelatedGroupIds(long companyId, long groupId, GroupType groupType) throws PortalException {
-		SearchContext searchContext = searchService.getSearchContext(companyId);
+		List<Long> results = new ArrayList<>();
 
 		AssetEntry assetEntry = assetEntryLocalService.getEntry(Group.class.getName(), groupId);
 
+		SearchContext searchContext = searchService.getSearchContext(companyId);
 		BooleanClause<Query> queryOnCategoryIds = searchService.getStringQuery(Field.ASSET_CATEGORY_IDS, assetEntry.getCategoryIds(), BooleanClauseOccur.MUST);
 		BooleanClause<Query> queryOnGroupType = searchService.getStringQuery(searchService.getExpandoSearchFieldName(GroupTypeExpando.FIELD_NAME), groupType.getValue(), BooleanClauseOccur.MUST);
 		BooleanClause<Query> queryOnGroupId = searchService.getStringQuery(Field.GROUP_ID, groupId, BooleanClauseOccur.MUST_NOT);
@@ -59,8 +60,10 @@ public class GroupTypeRetrievalService {
 		searchService.configureBooleanClauses(searchContext, queryOnCategoryIds, queryOnGroupType, queryOnGroupId);
 
 		Document[] searchResults = searchService.getSearchResults(searchContext, Group.class.getName());
-
-		return Arrays.asList(searchResults).stream().map(doc -> GetterUtil.getLong(doc.get(Field.GROUP_ID))).collect(Collectors.toList());
+		for (Document document : searchResults) {
+			results.add(GetterUtil.getLong(document.get(Field.GROUP_ID)));
+		}
+		return results;
 	}
 
 }

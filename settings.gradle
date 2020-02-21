@@ -4,8 +4,10 @@ def modules = [
 	'com.placecube.nhs.grouptypes',
 	'com.placecube.nhs.indexer.group',
 	'com.placecube.nhs.language',
+	'com.placecube.nhs.registration.web',
 	'com.placecube.nhs.search.utils',
 	'com.placecube.nhs.taglib.az',
+	'com.placecube.nhs.taglib.forms',
 	'com.placecube.nhs.template.utils',
 	'com.placecube.nhs.webcontent.listing.web',
 	'com.placecube.nhs.webcontent.structures'
