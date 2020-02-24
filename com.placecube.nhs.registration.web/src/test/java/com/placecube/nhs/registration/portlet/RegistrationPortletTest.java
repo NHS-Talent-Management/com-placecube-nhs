@@ -1,9 +1,6 @@
 package com.placecube.nhs.registration.portlet;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
 import java.lang.reflect.Method;
@@ -23,24 +20,17 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.api.support.membermodification.MemberModifier;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
-import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.placecube.nhs.registration.service.RegistrationService;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ MVCPortlet.class, CaptchaUtil.class })
-@PowerMockRunnerDelegate(JUnitParamsRunner.class)
+@PrepareForTest({ MVCPortlet.class })
 public class RegistrationPortletTest extends PowerMockito {
 
 	private static final Long COMPANY_ID = 11l;
@@ -67,12 +57,8 @@ public class RegistrationPortletTest extends PowerMockito {
 	@Mock
 	private Group mockGroup;
 
-	@Mock
-	private PasswordPolicy mockPasswordPolicy;
-
 	@Before
 	public void setUp() throws Exception {
-		mockStatic(CaptchaUtil.class);
 		mockCallToSuper();
 	}
 
@@ -101,46 +87,6 @@ public class RegistrationPortletTest extends PowerMockito {
 		InOrder inOrder = inOrder(mockRegistrationService, mockRenderRequest);
 		inOrder.verify(mockRegistrationService, times(1)).checkAccountCreationEnabled(mockRenderRequest);
 		inOrder.verify(mockRenderRequest, times(1)).setAttribute("webContentGroupId", GROUP_ID);
-	}
-
-	@Test
-	public void render_WhenNoPasswordPolicyFound_ThenDoesNotSetPasswordPolicyDescriptionAsRequestAttribute() throws Exception {
-		mockGroupDetails();
-		when(mockRegistrationService.getDefaultPasswordPolicy(mockRenderRequest)).thenReturn(Optional.empty());
-
-		registrationPortlet.render(mockRenderRequest, mockRenderResponse);
-
-		InOrder inOrder = inOrder(mockRegistrationService, mockRenderRequest);
-		inOrder.verify(mockRegistrationService, times(1)).checkAccountCreationEnabled(mockRenderRequest);
-		inOrder.verify(mockRenderRequest, never()).setAttribute(eq("passwordPolicyDescription"), anyString());
-	}
-
-	@Test
-	public void render_WhenPasswordPolicyFound_ThenSetsPasswordPolicyDescriptionAsRequestAttribute() throws Exception {
-		mockGroupDetails();
-		when(mockRegistrationService.getDefaultPasswordPolicy(mockRenderRequest)).thenReturn(Optional.of(mockPasswordPolicy));
-		String passwordPolicyDescription = "passwordPolicyDescriptionValue";
-		when(mockPasswordPolicy.getDescription()).thenReturn(passwordPolicyDescription);
-
-		registrationPortlet.render(mockRenderRequest, mockRenderResponse);
-
-		InOrder inOrder = inOrder(mockRegistrationService, mockRenderRequest);
-		inOrder.verify(mockRegistrationService, times(1)).checkAccountCreationEnabled(mockRenderRequest);
-		inOrder.verify(mockRenderRequest, times(1)).setAttribute("passwordPolicyDescription", passwordPolicyDescription);
-	}
-
-	@Test
-	@Parameters({ "true", "false" })
-	public void render_WhenNoError_ThenSetsCaptchaEnabledAsRequestAttribute(boolean captchaEnabled) throws Exception {
-		mockGroupDetails();
-		when(CaptchaUtil.isEnabled(mockRenderRequest)).thenReturn(captchaEnabled);
-		when(mockRegistrationService.getDefaultPasswordPolicy(mockRenderRequest)).thenReturn(Optional.empty());
-
-		registrationPortlet.render(mockRenderRequest, mockRenderResponse);
-
-		InOrder inOrder = inOrder(mockRegistrationService, mockRenderRequest);
-		inOrder.verify(mockRegistrationService, times(1)).checkAccountCreationEnabled(mockRenderRequest);
-		inOrder.verify(mockRenderRequest, times(1)).setAttribute("captchaEnabled", captchaEnabled);
 	}
 
 	@SuppressWarnings("rawtypes")

@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.placecube.nhs.registration.constants.MVCCommandKeys;
 import com.placecube.nhs.registration.constants.PortletKeys;
 
-@Component(immediate = true, property = { "javax.portlet.name=" + PortletKeys.REGISTRATION, "mvc.command.name=" + MVCCommandKeys.REGISTER }, service = MVCRenderCommand.class)
+@Component(immediate = true, property = { "javax.portlet.name=" + PortletKeys.REGISTRATION, "mvc.command.name=" + MVCCommandKeys.CONFIRMATION }, service = MVCRenderCommand.class)
 public class ConfirmationPageMVCRenderCommand implements MVCRenderCommand {
 
 	@Override

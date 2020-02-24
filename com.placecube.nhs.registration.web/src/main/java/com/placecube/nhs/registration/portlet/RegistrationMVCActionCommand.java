@@ -41,7 +41,7 @@ public class RegistrationMVCActionCommand extends BaseMVCActionCommand {
 			if (registrationModel.isValid()) {
 				registrationService.createUserAccount(registrationModel);
 
-				actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.REGISTER);
+				actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.CONFIRMATION);
 
 			} else {
 				redirectToInitialPage(actionRequest, actionResponse, registrationModel);
@@ -58,7 +58,7 @@ public class RegistrationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void redirectToInitialPage(ActionRequest actionRequest, ActionResponse actionResponse, RegistrationContext registrationModel) {
-		actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.VIEW);
+		actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.REGISTER);
 		actionRequest.setAttribute("registrationContext", registrationModel);
 	}
 
