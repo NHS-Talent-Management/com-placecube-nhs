@@ -60,8 +60,8 @@ public class LoginMVCRenderCommandOverride implements MVCRenderCommand {
 		return mvcRenderCommand.render(renderRequest, renderResponse);
 	}
 
-	@Reference(target = "(&(mvc.command.name=" + OverrideLoginKeys.MVC_COMMAND_NAME + ")(javax.portlet.name=" + OverrideLoginKeys.LOGIN_PORTLET_KEY + ")(component.name="
-			+ OverrideLoginKeys.CREATE_ACCOUNT_CLASS_NAME + "))")
+	@Reference(target = "(&(mvc.command.name=" + OverrideLoginKeys.MVC_COMMAND_NAME + ")(javax.portlet.name=" + OverrideLoginKeys.LOGIN_PORTLET_KEY + ")" + "(javax.portlet.name="
+			+ OverrideLoginKeys.FAST_LOGIN_PORTLET_KEY + ")" + "(component.name=" + OverrideLoginKeys.CREATE_ACCOUNT_CLASS_NAME + "))")
 	protected void setMvcActionCommand(MVCRenderCommand mvcActionCommand) {
 		mvcRenderCommand = mvcActionCommand;
 	}

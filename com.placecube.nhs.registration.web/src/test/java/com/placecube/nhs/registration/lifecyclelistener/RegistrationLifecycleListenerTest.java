@@ -104,6 +104,25 @@ public class RegistrationLifecycleListenerTest extends PowerMockito {
 		verify(registrationSetupService, times(1)).addArticle(WebContentArticles.REGISTRATION_INTRO_TEXT, mockJournalFolder, mockServiceContext);
 	}
 
+	@Test(expected = Exception.class)
+	public void portalInstanceRegistered_WhenExceptionAddingRegistrationBottomTextArticle_ThenThrowsException() throws Exception {
+		mockServiceContextDetails();
+		when(registrationSetupService.addFolder(mockServiceContext)).thenReturn(mockJournalFolder);
+		doThrow(new Exception()).when(registrationSetupService).addArticle(WebContentArticles.REGISTRATION_BOTTOM_TEXT, mockJournalFolder, mockServiceContext);
+
+		registrationLifecycleListener.portalInstanceRegistered(mockCompany);
+	}
+
+	@Test
+	public void portalInstanceRegistered_WhenNoError_ThenRegistrationBottomTextArticle() throws Exception {
+		mockServiceContextDetails();
+		when(registrationSetupService.addFolder(mockServiceContext)).thenReturn(mockJournalFolder);
+
+		registrationLifecycleListener.portalInstanceRegistered(mockCompany);
+
+		verify(registrationSetupService, times(1)).addArticle(WebContentArticles.REGISTRATION_BOTTOM_TEXT, mockJournalFolder, mockServiceContext);
+	}
+
 	private void mockServiceContextDetails() throws PortalException {
 		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
 		when(mockGroupLocalService.getGroup(COMPANY_ID, GroupConstants.GUEST)).thenReturn(mockGroup);

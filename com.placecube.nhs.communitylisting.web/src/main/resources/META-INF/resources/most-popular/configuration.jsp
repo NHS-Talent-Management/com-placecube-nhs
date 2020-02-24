@@ -10,7 +10,7 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<aui:select name="groupType" required="true">
+	<aui:select name="groupType" required="true" helpMessage="most-popular-group-type-help">
 		<c:forEach items="${availableGroupTypes}" var="availableGroupType">
 			<aui:option value="${availableGroupType.getValue()}" selected="${configuration.groupType().equals(availableGroupType.getValue())}">
 				<liferay-ui:message key="${availableGroupType.getValue()}"/>

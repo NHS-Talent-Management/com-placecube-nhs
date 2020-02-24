@@ -21,7 +21,7 @@ public class InputTextTag extends IncludeTag {
 		portletNamespace = null;
 		fieldName = null;
 		fieldLabel = null;
-		fieldValue = fieldValue;
+		fieldValue = null;
 		errorMessage = null;
 		showAsPassword = false;
 	}

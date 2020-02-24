@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<root available-locales="[$AVAILABLE_LOCALES$]" default-locale="[$LOCALE_DEFAULT$]">
+	<dynamic-element name="content" type="text_area" index-type="text" instance-id="fbyg">
+		<dynamic-content language-id="[$LOCALE_DEFAULT$]">
+			<![CDATA[
+				<div class="registration-discaimer-message">
+					<p class="nhsuk-body">
+						By continuing you agree to the Terms of Service, Privacy Policy and Cookie Policy
+					</p>
+				</div>
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

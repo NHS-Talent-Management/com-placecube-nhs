@@ -55,12 +55,12 @@ public class SearchService {
 
 	public BooleanClause<Query> getStringQuery(String fieldName, String[] fieldValues, BooleanClauseOccur match) {
 		String stringQuery = getOrQuery(fieldName, fieldValues);
-		return getStringQuery(stringQuery);
+		return getStringQuery(stringQuery, match);
 	}
 
 	public BooleanClause<Query> getStringQuery(String fieldName, long[] fieldValues, BooleanClauseOccur match) {
 		String stringQuery = getOrQuery(fieldName, fieldValues);
-		return getStringQuery(stringQuery);
+		return getStringQuery(stringQuery, match);
 	}
 
 	public Document[] getSearchResults(SearchContext searchContext, String indexerClassName) throws SearchException {
@@ -88,9 +88,9 @@ public class SearchService {
 		return fieldValueQueries.stream().collect(Collectors.joining(" OR "));
 	}
 
-	private BooleanClause<Query> getStringQuery(String stringQuery) {
+	private BooleanClause<Query> getStringQuery(String stringQuery, BooleanClauseOccur match) {
 		if (Validator.isNotNull(stringQuery)) {
-			return BooleanClauseFactoryUtil.create(new StringQuery("+(" + stringQuery + ")"), BooleanClauseOccur.MUST.toString());
+			return BooleanClauseFactoryUtil.create(new StringQuery("+(" + stringQuery + ")"), match.toString());
 		}
 		return null;
 	}

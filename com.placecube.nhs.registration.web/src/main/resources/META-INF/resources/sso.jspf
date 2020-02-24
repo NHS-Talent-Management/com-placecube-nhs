@@ -1,0 +1,19 @@
+<liferay-util:buffer var="navigation">
+	<liferay-ui:icon-list>
+		<liferay-util:dynamic-include key="com.liferay.login.web#/navigation.jsp#pre" />
+	</liferay-ui:icon-list>
+</liferay-util:buffer>
+
+<%
+	navigation = navigation.trim();
+
+	if (Validator.isNotNull(navigation)) {
+	%>
+		<div class="registration-sso-options nhsuk-u-margin-top-3 nhsuk-u-margin-bottom-5 nhsuk-u-padding-bottom-5">
+			<h3><liferay-ui:message key="or"/></h3>
+			<%= navigation %>	
+		</div>
+	<%	
+	}
+%>
+				

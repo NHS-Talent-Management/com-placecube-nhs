@@ -2,9 +2,11 @@
 
 <expandoField>
 	<name>group-type</name>
-	<type>15</type>
+	<type>16</type>
 	<hidden>true</hidden>
 	<visibleOnUpdate>true</visibleOnUpdate>
+	<displayType>selection-list</displayType>
+	<defaultValue>-,community-of-interest,community-of-practice</defaultValue>
 	<rolePermission roleName="Guest">
 		<view>true</view>
 		<update>false</update>

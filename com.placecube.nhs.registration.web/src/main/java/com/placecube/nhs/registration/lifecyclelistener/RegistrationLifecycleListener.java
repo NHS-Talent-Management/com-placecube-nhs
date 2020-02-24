@@ -39,6 +39,7 @@ public class RegistrationLifecycleListener extends BasePortalInstanceLifecycleLi
 		JournalFolder journalFolder = registrationSetupService.addFolder(serviceContext);
 		registrationSetupService.addArticle(WebContentArticles.REGISTRATION_CONFIRMATION_PAGE, journalFolder, serviceContext);
 		registrationSetupService.addArticle(WebContentArticles.REGISTRATION_INTRO_TEXT, journalFolder, serviceContext);
+		registrationSetupService.addArticle(WebContentArticles.REGISTRATION_BOTTOM_TEXT, journalFolder, serviceContext);
 
 		LOG.info("Configuration finished for Registration for companyId: " + companyId);
 	}

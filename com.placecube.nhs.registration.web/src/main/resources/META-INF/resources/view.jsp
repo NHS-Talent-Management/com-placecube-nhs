@@ -74,3 +74,14 @@
 	</aui:button-row>
 
 </aui:form>
+
+<%@ include file="sso.jspf"%>
+
+<div class="row">
+	<div class="col-md-12">
+		<liferay-journal:journal-article 
+			articleId="<%= WebContentArticles.REGISTRATION_BOTTOM_TEXT.getArticleId() %>" 
+			groupId="${webContentGroupId}" 
+			showTitle="false" />
+	</div>
+</div>
