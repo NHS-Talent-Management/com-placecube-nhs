@@ -41,6 +41,13 @@
 			Provider: ${Provider.getData()}
 		</p>	
 	</#if>
+
+	<#assign tagNames = .vars['reserved-article-asset-tag-names'].data />
+	<#if tagNames?has_content>
+		<p class="nhsuk-body">
+			Keywords: ${tagNames}
+		</p>	
+	</#if>
 	
 	<#if ProviderCourseURL.getData()?has_content>
 	    <#if themeDisplay.isSignedIn()>
@@ -54,11 +61,4 @@
 	    </#if>
 	</#if>
 
-	
-	<#assign tagNames = .vars['reserved-article-asset-tag-names'].data />
-	<#if tagNames?has_content>
-		<p class="nhsuk-body">
-			Keywords: ${tagNames}
-		</p>	
-	</#if>
 </div>

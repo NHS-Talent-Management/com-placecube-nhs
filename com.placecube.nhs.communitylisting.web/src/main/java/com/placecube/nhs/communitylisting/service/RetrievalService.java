@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 import com.placecube.nhs.taglib.az.model.AZEntry;
@@ -87,5 +89,10 @@ public class RetrievalService {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("groupId", groupIds));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("mirrorActivityId", 0l));
 		return socialActivityLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	public boolean isGroupMember(User user, long groupId) {
+		long[] groupIds = user.getGroupIds();
+		return ArrayUtil.contains(groupIds, groupId);
 	}
 }

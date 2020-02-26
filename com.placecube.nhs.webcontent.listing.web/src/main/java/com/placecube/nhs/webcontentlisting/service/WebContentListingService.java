@@ -2,15 +2,16 @@ package com.placecube.nhs.webcontentlisting.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticleDisplay;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -71,10 +72,10 @@ public class WebContentListingService {
 		throw new ConfigurationException("Invalid configuration");
 	}
 
-	public List<AZEntry> getAllWebContents(ThemeDisplay themeDisplay, String currentPageURL, String structureKey, long[] groupIds) throws SearchException {
+	public List<AZEntry> getAllWebContents(ThemeDisplay themeDisplay, String currentPageURL, String structureKey, Optional<BooleanClause<Query>> queryOnMatchingCategories) throws SearchException {
 		List<AZEntry> results = new ArrayList<>();
 
-		SearchContext searchContext = webContentRetrievalService.getSearchContext(themeDisplay.getCompanyId(), structureKey, -1, groupIds);
+		SearchContext searchContext = webContentRetrievalService.getSearchContext(themeDisplay.getCompanyId(), structureKey, -1, queryOnMatchingCategories);
 		Document[] searchResults = webContentRetrievalService.getSearchResults(searchContext);
 		for (Document document : searchResults) {
 			try {
@@ -86,11 +87,11 @@ public class WebContentListingService {
 		return results;
 	}
 
-	public List<JournalArticleDisplay> getMostPopularWebContents(ThemeDisplay themeDisplay, Integer maxItemsToDisplay, String structureKey, String templateKey, long[] groupIds)
-			throws SearchException {
+	public List<JournalArticleDisplay> getMostPopularWebContents(ThemeDisplay themeDisplay, Integer maxItemsToDisplay, String structureKey, String templateKey,
+			Optional<BooleanClause<Query>> queryOnMatchingCategories) throws SearchException {
 		List<JournalArticleDisplay> results = new ArrayList<>();
 
-		SearchContext searchContext = webContentRetrievalService.getSearchContext(themeDisplay.getCompanyId(), structureKey, maxItemsToDisplay, groupIds);
+		SearchContext searchContext = webContentRetrievalService.getSearchContext(themeDisplay.getCompanyId(), structureKey, maxItemsToDisplay, queryOnMatchingCategories);
 		Document[] searchResults = webContentRetrievalService.getSearchResults(searchContext);
 
 		for (Document document : searchResults) {
@@ -103,26 +104,39 @@ public class WebContentListingService {
 		return results;
 	}
 
-	public long[] getGroupIdsToFilter(long companyId, long groupId, boolean matchingCategories) throws PortalException {
-		if (matchingCategories) {
-			List<Long> groupIds = new ArrayList<>();
-			groupIds.add(groupId);
-			SearchContext searchContext = searchService.getSearchContext(companyId);
+	public Optional<BooleanClause<Query>> getQueryOnMatchingCategories(long companyId, boolean matchingCategories, long scopeGroupId) throws SearchException {
+		try {
+			if (matchingCategories) {
+				long[] categoryIds = assetEntryLocalService.getEntry(Group.class.getName(), scopeGroupId).getCategoryIds();
 
-			AssetEntry assetEntry = assetEntryLocalService.getEntry(Group.class.getName(), groupId);
+				String groupIdsQuery = searchService.getValuesJoinedInOr(Field.GROUP_ID, getGroupIdsWithCategories(companyId, scopeGroupId, categoryIds));
+				String categoryIdsQuery = searchService.getValuesJoinedInOr(Field.ASSET_CATEGORY_IDS, categoryIds);
 
-			BooleanClause<Query> queryOnCategoryIds = searchService.getStringQuery(Field.ASSET_CATEGORY_IDS, assetEntry.getCategoryIds(), BooleanClauseOccur.MUST);
+				String queryString = Stream.of(groupIdsQuery, categoryIdsQuery).filter(query -> Validator.isNotNull(query)).collect(Collectors.joining(" OR "));
+				if (Validator.isNotNull(queryString)) {
+					return Optional.of(searchService.getStringQuery(queryString, BooleanClauseOccur.MUST));
+				}
 
-			searchService.configureBooleanClauses(searchContext, queryOnCategoryIds);
-
-			Document[] searchResults = searchService.getSearchResults(searchContext, Group.class.getName());
-			for (Document document : searchResults) {
-				groupIds.add(GetterUtil.getLong(document.get(Field.GROUP_ID)));
 			}
-
-			return ArrayUtil.toArray(groupIds.toArray(new Long[groupIds.size()]));
+		} catch (Exception e) {
+			LOG.debug(e);
+			LOG.warn("Unable to get categories from groupId: " + scopeGroupId + " - " + e.getMessage());
 		}
-		return new long[0];
+		return Optional.empty();
+	}
+
+	private long[] getGroupIdsWithCategories(long companyId, long groupId, long[] categoryIds) throws SearchException {
+		SearchContext searchContext = searchService.getSearchContext(companyId);
+		BooleanClause<Query> queryOnCategoryIds = searchService.getStringQuery(Field.ASSET_CATEGORY_IDS, categoryIds, BooleanClauseOccur.MUST);
+		searchService.configureBooleanClauses(searchContext, queryOnCategoryIds);
+
+		Document[] searchResults = searchService.getSearchResults(searchContext, Group.class.getName());
+		List<Long> groupIds = new ArrayList<>();
+		for (Document document : searchResults) {
+			groupIds.add(GetterUtil.getLong(document.get(Field.GROUP_ID)));
+		}
+
+		return ArrayUtil.toArray(groupIds.toArray(new Long[groupIds.size()]));
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.placecube.nhs.search.utils;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -17,6 +16,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
@@ -118,32 +118,41 @@ public class SearchServiceTest extends PowerMockito {
 		assertThat(result.getClause().toString(), equalTo("{className=StringQuery, query=+(myFieldName:123)}"));
 	}
 
-	@Test
-	public void getStringQuery_WithFieldNameFieldValuesAndBooleaClause_WhenFieldValuesAreEmpty_ThenReturnsnull() {
-		BooleanClause<Query> result = searchService.getStringQuery(FIELD_NAME, new String[0], BOOLEAN_CLAUSE);
-
-		assertThat(result, nullValue());
+	@Test(expected = SearchException.class)
+	public void getStringQuery_WithFieldNameFieldValuesAndBooleaClause_WhenFieldValuesAreEmpty_ThenThrowsSearchException() throws SearchException {
+		searchService.getStringQuery(FIELD_NAME, new String[0], BOOLEAN_CLAUSE);
 	}
 
 	@Test
-	public void getStringQuery_WithFieldNameFieldValuesAndBooleaClause_WhenFieldValuesAreValid_ThenReturnsTheBooleanClauseWithTheSearchQuery() {
+	public void getStringQuery_WithFieldNameFieldValuesAndBooleaClause_WhenFieldValuesAreValid_ThenReturnsTheBooleanClauseWithTheSearchQuery() throws SearchException {
 		BooleanClause<Query> result = searchService.getStringQuery(FIELD_NAME, new String[] { FIELD_VALUE_STRING, "OtherValue" }, BOOLEAN_CLAUSE);
 
 		assertThat(result.getClause().toString(), equalTo("{className=StringQuery, query=+((myFieldName:myFieldValue) OR (myFieldName:OtherValue))}"));
 	}
 
-	@Test
-	public void getStringQuery_WithFieldNameFieldValuesLongAndBooleaClause_WhenFieldValuesAreEmpty_ThenReturnsnull() {
-		BooleanClause<Query> result = searchService.getStringQuery(FIELD_NAME, new long[0], BOOLEAN_CLAUSE);
-
-		assertThat(result, nullValue());
+	@Test(expected = SearchException.class)
+	public void getStringQuery_WithFieldNameFieldValuesLongAndBooleaClause_WhenFieldValuesAreEmpty_ThenThrowsSearchException() throws SearchException {
+		searchService.getStringQuery(FIELD_NAME, new long[0], BOOLEAN_CLAUSE);
 	}
 
 	@Test
-	public void getStringQuery_WithFieldNameFieldValuesLongAndBooleaClause_WhenFieldValuesAreValid_ThenReturnsTheBooleanClauseWithTheSearchQuery() {
+	public void getStringQuery_WithFieldNameFieldValuesLongAndBooleaClause_WhenFieldValuesAreValid_ThenReturnsTheBooleanClauseWithTheSearchQuery() throws SearchException {
 		BooleanClause<Query> result = searchService.getStringQuery(FIELD_NAME, new long[] { FIELD_VALUE_LONG, 77 }, BOOLEAN_CLAUSE);
 
 		assertThat(result.getClause().toString(), equalTo("{className=StringQuery, query=+((myFieldName:123) OR (myFieldName:77))}"));
+	}
+
+	@Test(expected = SearchException.class)
+	public void getStringQuery_WithStirngQueryAndBooleaClause_WhenStirngQueryIsEmpty_ThenThrowsSearchException() throws SearchException {
+		searchService.getStringQuery(StringPool.BLANK, BOOLEAN_CLAUSE);
+	}
+
+	@Test
+	public void getStringQuery_WithStirngQueryAndBooleaClause_WhenStirngQueryIsValid_ThenReturnsTheBooleanClauseWithTheSearchQuery() throws SearchException {
+		String myQuery = "myQueryValue";
+		BooleanClause<Query> result = searchService.getStringQuery(myQuery, BOOLEAN_CLAUSE);
+
+		assertThat(result.getClause().toString(), equalTo("{className=StringQuery, query=+(myQueryValue)}"));
 	}
 
 	@Test(expected = SearchException.class)
@@ -176,5 +185,33 @@ public class SearchServiceTest extends PowerMockito {
 		assertThat(sort.getFieldName(), equalTo(Field.getSortableFieldName(FIELD_NAME)));
 		assertThat(sort.getType(), equalTo(Sort.LONG_TYPE));
 		assertThat(sort.isReverse(), equalTo(reverse));
+	}
+
+	@Test
+	public void getValuesJoinedInOr_WithLongValues_WhenThereAreNoValues_ThenReturnsEmptyString() throws SearchException {
+		String result = searchService.getValuesJoinedInOr(FIELD_NAME, new long[0]);
+
+		assertThat(result, equalTo(StringPool.BLANK));
+	}
+
+	@Test
+	public void getValuesJoinedInOr_WithLongValues_WhenThereAreValues_ThenReturnsValuesInOr() throws SearchException {
+		String result = searchService.getValuesJoinedInOr(FIELD_NAME, new long[] { FIELD_VALUE_LONG, 77 });
+
+		assertThat(result, equalTo("(myFieldName:123) OR (myFieldName:77)"));
+	}
+
+	@Test
+	public void getValuesJoinedInOr_WithStringValues_WhenThereAreNoValues_ThenReturnsEmptyString() throws SearchException {
+		String result = searchService.getValuesJoinedInOr(FIELD_NAME, new String[0]);
+
+		assertThat(result, equalTo(StringPool.BLANK));
+	}
+
+	@Test
+	public void getValuesJoinedInOr_WithStringValues_WhenThereAreValues_ThenReturnsValuesInOr() throws SearchException {
+		String result = searchService.getValuesJoinedInOr(FIELD_NAME, new String[] { "valueOne", "valueTwo" });
+
+		assertThat(result, equalTo("(myFieldName:valueOne) OR (myFieldName:valueTwo)"));
 	}
 }

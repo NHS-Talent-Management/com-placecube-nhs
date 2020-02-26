@@ -6,6 +6,8 @@ dependencies {
 	
 	compile group: 'biz.aQute.bnd', name: 'biz.aQute.bndlib'
 	compile group: 'com.liferay', name: 'com.liferay.portal.configuration.metatype.api'
+	compile group: 'com.liferay', name: 'com.liferay.petra.lang'
+	compile group: 'com.liferay', name: 'com.liferay.petra.string'
 	compile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel'
 	compile group: 'javax.portlet', name: 'portlet-api'
 	compile group: 'javax.servlet', name: 'javax.servlet-api'
