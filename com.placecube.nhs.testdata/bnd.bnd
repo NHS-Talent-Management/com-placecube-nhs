@@ -1,7 +1,0 @@
-Bundle-SymbolicName: com.placecube.nhs.testdata
-Bundle-Name: Placecube NHS Test Data
-Bundle-Version: 1.1.0
-Web-ContextPath: /com.placecube.nhs.testdata
-
--includeresource: \
-	@commons-lang3-[0-9]*.jar
