@@ -18,6 +18,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -93,7 +94,7 @@ public class CommunityMembershipMVCActionCommandTest extends PowerMockito {
 	}
 
 	private void mockDetails(String cmd, boolean isGroupMember) {
-		when(ParamUtil.getString(mockActionRequest, "cmd")).thenReturn(cmd);
+		when(ParamUtil.getString(mockActionRequest, Constants.CMD)).thenReturn(cmd);
 		when(mockActionRequest.getAttribute(WebKeys.THEME_DISPLAY)).thenReturn(mockThemeDisplay);
 		when(mockThemeDisplay.getUser()).thenReturn(mockUser);
 		when(mockThemeDisplay.getScopeGroupId()).thenReturn(GROUP_ID);

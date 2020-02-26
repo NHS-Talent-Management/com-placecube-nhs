@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.placecube.nhs.communitylisting.constants.MVCCommandKeys;
@@ -31,7 +32,7 @@ public class CommunityMembershipMVCActionCommand extends BaseMVCActionCommand {
 	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		String cmd = ParamUtil.getString(actionRequest, "cmd");
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		long groupId = themeDisplay.getScopeGroupId();
 		User user = themeDisplay.getUser();
