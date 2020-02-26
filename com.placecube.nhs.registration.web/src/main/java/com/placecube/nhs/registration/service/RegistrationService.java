@@ -103,9 +103,6 @@ public class RegistrationService {
 	}
 
 	public void configureExceptionMessage(Locale locale, Exception exception, RegistrationContext registrationModel) {
-		// TODO Auto-generated method stub
-
-		String errorMessage;
 
 		if (exception instanceof UserPasswordException.MustBeLonger) {
 			UserPasswordException.MustBeLonger upe = (UserPasswordException.MustBeLonger) exception;
@@ -117,6 +114,31 @@ public class RegistrationService {
 		} else if (exception instanceof UserPasswordException.MustComplyWithRegex) {
 			UserPasswordException.MustComplyWithRegex upe = (UserPasswordException.MustComplyWithRegex) exception;
 			registrationModel.addFieldError(RegistrationField.PASSWORD, LanguageUtil.format(locale, "that-password-does-not-comply-with-the-regular-expression", String.valueOf(upe.regex)));
+
+		} else if (exception instanceof UserPasswordException.MustHaveMoreAlphanumeric) {
+			UserPasswordException.MustHaveMoreAlphanumeric upe = (UserPasswordException.MustHaveMoreAlphanumeric) exception;
+			registrationModel.addFieldError(RegistrationField.PASSWORD,
+					LanguageUtil.format(locale, "that-password-must-contain-at-least-x-alphanumeric-characters", String.valueOf(upe.minAlphanumeric)));
+
+		} else if (exception instanceof UserPasswordException.MustHaveMoreLowercase) {
+			UserPasswordException.MustHaveMoreLowercase upe = (UserPasswordException.MustHaveMoreLowercase) exception;
+			registrationModel.addFieldError(RegistrationField.PASSWORD, LanguageUtil.format(locale, "that-password-must-contain-at-least-x-lowercase-characters", String.valueOf(upe.minLowercase)));
+
+		} else if (exception instanceof UserPasswordException.MustHaveMoreNumbers) {
+			UserPasswordException.MustHaveMoreNumbers upe = (UserPasswordException.MustHaveMoreNumbers) exception;
+			registrationModel.addFieldError(RegistrationField.PASSWORD, LanguageUtil.format(locale, "that-password-must-contain-at-least-x-numbers", String.valueOf(upe.minNumbers)));
+
+		} else if (exception instanceof UserPasswordException.MustHaveMoreSymbols) {
+			UserPasswordException.MustHaveMoreSymbols upe = (UserPasswordException.MustHaveMoreSymbols) exception;
+			registrationModel.addFieldError(RegistrationField.PASSWORD, LanguageUtil.format(locale, "that-password-must-contain-at-least-x-symbols", String.valueOf(upe.minSymbols)));
+
+		} else if (exception instanceof UserPasswordException.MustHaveMoreUppercase) {
+			UserPasswordException.MustHaveMoreUppercase upe = (UserPasswordException.MustHaveMoreUppercase) exception;
+			registrationModel.addFieldError(RegistrationField.PASSWORD, LanguageUtil.format(locale, "that-password-must-contain-at-least-x-uppercase-characters", String.valueOf(upe.minUppercase)));
+
+		} else if (exception instanceof UserPasswordException.MustNotBeEqualToCurrent) {
+			UserPasswordException.MustNotBeEqualToCurrent upe = (UserPasswordException.MustNotBeEqualToCurrent) exception;
+			registrationModel.addFieldError(RegistrationField.PASSWORD, LanguageUtil.get(locale, "your-new-password-cannot-be-the-same-as-your-old-password-please-enter-a-different-password"));
 
 		} else if (exception instanceof UserPasswordException.MustMatch) {
 			registrationModel.addFieldError(RegistrationField.PASSWORD, LanguageUtil.get(locale, "the-passwords-you-entered-do-not-match"));
