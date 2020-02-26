@@ -1,5 +1,9 @@
 package com.placecube.nhs.webcontentlisting.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -8,13 +12,14 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.pfiks.journal.content.service.JournalContentRendererService;
 import com.placecube.nhs.search.utils.SearchService;
@@ -35,19 +40,21 @@ public class WebContentRetrievalService {
 	@Reference
 	private SearchService searchService;
 
-	public SearchContext getSearchContext(long companyId, String structureKey, int maxItemsToDisplay, long[] groupIds) {
+	public SearchContext getSearchContext(long companyId, String structureKey, int maxItemsToDisplay, Optional<BooleanClause<Query>> queryOnMatchingCategories) throws SearchException {
 		SearchContext searchContext = searchService.getSearchContext(companyId);
 		if (maxItemsToDisplay > 0) {
 			searchContext.setStart(0);
 			searchContext.setEnd(maxItemsToDisplay);
 		}
-		if (ArrayUtil.isNotEmpty(groupIds)) {
-			searchContext.setGroupIds(groupIds);
-		}
 		searchContext.setEntryClassNames(new String[] { JournalArticle.class.getName() });
 		searchContext.setSorts(searchService.getSortOnDate(Field.CREATE_DATE, true));
 
-		searchService.configureBooleanClauses(searchContext, searchService.getStringQuery("ddmStructureKey", structureKey, BooleanClauseOccur.MUST));
+		List<BooleanClause<Query>> queries = new ArrayList<>();
+		if (queryOnMatchingCategories.isPresent()) {
+			queries.add(queryOnMatchingCategories.get());
+		}
+		queries.add(searchService.getStringQuery("ddmStructureKey", structureKey, BooleanClauseOccur.MUST));
+		searchService.configureBooleanClauses(searchContext, queries);
 
 		return searchContext;
 	}

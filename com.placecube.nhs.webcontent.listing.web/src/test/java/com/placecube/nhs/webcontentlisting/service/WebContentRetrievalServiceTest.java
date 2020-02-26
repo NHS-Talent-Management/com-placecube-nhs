@@ -7,6 +7,10 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,6 +70,9 @@ public class WebContentRetrievalServiceTest extends PowerMockito {
 	private BooleanClause<Query> mockBooleanClause;
 
 	@Mock
+	private BooleanClause<Query> mockBooleanClause2;
+
+	@Mock
 	private Document mockDocument;
 
 	@Mock
@@ -86,52 +93,67 @@ public class WebContentRetrievalServiceTest extends PowerMockito {
 	}
 
 	@Test
-	public void getSearchContext_WhenNoError_ThenReturnsTheSearchContext() {
+	public void getSearchContext_WhenNoError_ThenReturnsTheSearchContext() throws SearchException {
 		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
 
-		SearchContext result = webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, null);
+		SearchContext result = webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, Optional.empty());
 
 		assertThat(result, sameInstance(mockSearchContext));
 	}
 
 	@Test
-	public void getSearchContext_WhenMaxItemsIsNotGreaterThanZero_ThenDoesNotConfigureStartAndEnd() {
+	public void getSearchContext_WhenMaxItemsIsNotGreaterThanZero_ThenDoesNotConfigureStartAndEnd() throws SearchException {
 		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
 
-		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, 0, null);
+		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, 0, Optional.empty());
 
 		verify(mockSearchContext, never()).setStart(anyInt());
 		verify(mockSearchContext, never()).setEnd(anyInt());
 	}
 
 	@Test
-	public void getSearchContext_WhenMaxItemsIsGreaterThanZero_ThenConfigureStartAndEnd() {
+	public void getSearchContext_WhenMaxItemsIsGreaterThanZero_ThenConfigureStartAndEnd() throws SearchException {
 		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
 
-		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, null);
+		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, Optional.empty());
 
 		verify(mockSearchContext, times(1)).setStart(0);
 		verify(mockSearchContext, times(1)).setEnd(MAX_ITEMS);
 	}
 
 	@Test
-	public void getSearchContext_WhenNoError_ThenConfiguresJournalArticleAsEntryClassNames() {
+	public void getSearchContext_WhenNoError_ThenConfiguresJournalArticleAsEntryClassNames() throws SearchException {
 		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
 
-		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, new long[0]);
+		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, Optional.empty());
 
 		verify(mockSearchContext, times(1)).setEntryClassNames(new String[] { JournalArticle.class.getName() });
 		verify(mockSearchContext, times(1)).setEnd(MAX_ITEMS);
 	}
 
 	@Test
-	public void getSearchContext_WhenNoError_ThenConfiguresTheBooleanClauses() {
+	public void getSearchContext_WhenNoQueryOnCategoriesFound_ThenConfiguresTheBooleanClausesWithQueryOnStructureOnly() throws SearchException {
 		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
 		when(mockSearchService.getStringQuery("ddmStructureKey", STRUCTURE_KEY, BooleanClauseOccur.MUST)).thenReturn(mockBooleanClause);
+		List<BooleanClause<Query>> queries = new ArrayList<>();
+		queries.add(mockBooleanClause);
 
-		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, null);
+		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, Optional.empty());
 
-		verify(mockSearchService, times(1)).configureBooleanClauses(mockSearchContext, mockBooleanClause);
+		verify(mockSearchService, times(1)).configureBooleanClauses(mockSearchContext, queries);
+	}
+
+	@Test
+	public void getSearchContext_WhenQueryOnCategoriesFound_ThenConfiguresTheBooleanClausesWithQueryOnCategoryAndQueryOnStructure() throws SearchException {
+		when(mockSearchService.getSearchContext(COMPANY_ID)).thenReturn(mockSearchContext);
+		when(mockSearchService.getStringQuery("ddmStructureKey", STRUCTURE_KEY, BooleanClauseOccur.MUST)).thenReturn(mockBooleanClause);
+		List<BooleanClause<Query>> queries = new ArrayList<>();
+		queries.add(mockBooleanClause2);
+		queries.add(mockBooleanClause);
+
+		webContentRetrievalService.getSearchContext(COMPANY_ID, STRUCTURE_KEY, MAX_ITEMS, Optional.of(mockBooleanClause2));
+
+		verify(mockSearchService, times(1)).configureBooleanClauses(mockSearchContext, queries);
 	}
 
 	@Test

@@ -1,6 +1,7 @@
 package com.placecube.nhs.webcontentlisting.portlet.az;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -13,6 +14,8 @@ import org.osgi.service.component.annotations.Reference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,9 +46,10 @@ public class AZWebContentPortlet extends MVCPortlet {
 
 			String currentPageURL = portal.getLayoutFullURL(themeDisplay.getLayout(), themeDisplay);
 
-			long[] groupIds = webcontentListingService.getGroupIdsToFilter(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), configuration.matchingCategories());
+			Optional<BooleanClause<Query>> queryOnMatchingCategories = webcontentListingService.getQueryOnMatchingCategories(themeDisplay.getCompanyId(), configuration.matchingCategories(),
+					themeDisplay.getScopeGroupId());
 
-			renderRequest.setAttribute("articles", webcontentListingService.getAllWebContents(themeDisplay, currentPageURL, configuration.structureKey(), groupIds));
+			renderRequest.setAttribute("articles", webcontentListingService.getAllWebContents(themeDisplay, currentPageURL, configuration.structureKey(), queryOnMatchingCategories));
 		} catch (Exception e) {
 			LOG.debug(e);
 			LOG.error(e.getMessage());
