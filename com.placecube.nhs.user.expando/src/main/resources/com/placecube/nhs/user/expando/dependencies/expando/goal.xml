@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<expandoField>
+	<name>goal</name>
+	<type>16</type>
+	<hidden>true</hidden>
+	<visibleOnUpdate>true</visibleOnUpdate>
+	<displayType>radio</displayType>
+	<defaultValue>Step up or career progression,Lateral move within the organisation,Lateral move outsite the organisation,Step back from my current position,Career shift to another profession or industry,Return to health and social care,Stay in role</defaultValue>
+	<rolePermission roleName="Guest">
+		<view>true</view>
+		<update>false</update>
+	</rolePermission>
+	<rolePermission roleName="User">
+		<view>true</view>
+		<update>true</update>
+	</rolePermission>
+</expandoField>

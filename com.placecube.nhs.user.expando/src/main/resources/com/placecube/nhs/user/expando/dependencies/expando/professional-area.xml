@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<expandoField>
+	<name>professional-area</name>
+	<type>16</type>
+	<hidden>true</hidden>
+	<visibleOnUpdate>true</visibleOnUpdate>
+	<displayType>radio</displayType>
+	<defaultValue>Nursing,Midwifery,Medical,HR,Allied Health Professionals</defaultValue>
+	<rolePermission roleName="Guest">
+		<view>true</view>
+		<update>false</update>
+	</rolePermission>
+	<rolePermission roleName="User">
+		<view>true</view>
+		<update>true</update>
+	</rolePermission>
+</expandoField>

@@ -10,6 +10,7 @@ def modules = [
 	'com.placecube.nhs.taglib.az',
 	'com.placecube.nhs.taglib.forms',
 	'com.placecube.nhs.template.utils',
+	'com.placecube.nhs.user.expando',
 	'com.placecube.nhs.webcontent.listing.web',
 	'com.placecube.nhs.webcontent.structures'
 ] as String[]

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<expandoField>
+	<name>environment</name>
+	<type>16</type>
+	<hidden>true</hidden>
+	<visibleOnUpdate>true</visibleOnUpdate>
+	<displayType>radio</displayType>
+	<defaultValue>Patient facing,Non-patient facing,Both</defaultValue>
+	<rolePermission roleName="Guest">
+		<view>true</view>
+		<update>false</update>
+	</rolePermission>
+	<rolePermission roleName="User">
+		<view>true</view>
+		<update>true</update>
+	</rolePermission>
+</expandoField>

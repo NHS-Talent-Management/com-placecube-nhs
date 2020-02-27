@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<expandoField>
+	<name>pay-scale</name>
+	<type>16</type>
+	<hidden>true</hidden>
+	<visibleOnUpdate>true</visibleOnUpdate>
+	<displayType>radio</displayType>
+	<defaultValue>Band 1 £18005,Band 2 £18005 - £19337,Band 3 £19337 - £21142,Band 4 £21892 - £24157,Band 5 £24907 - £30615,Band 6 £31365 - £37890,Band 8a £45753 - £51668,Band 8b £53168 - £62001,Band 8c £75914 - £87754,Band 9 £91004 - £104927,Band 9+ £104927+</defaultValue>
+	<rolePermission roleName="Guest">
+		<view>true</view>
+		<update>false</update>
+	</rolePermission>
+	<rolePermission roleName="User">
+		<view>true</view>
+		<update>true</update>
+	</rolePermission>
+</expandoField>

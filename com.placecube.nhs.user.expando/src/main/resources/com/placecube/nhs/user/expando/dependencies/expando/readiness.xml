@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<expandoField>
+	<name>readiness</name>
+	<type>16</type>
+	<hidden>true</hidden>
+	<visibleOnUpdate>true</visibleOnUpdate>
+	<displayType>radio</displayType>
+	<defaultValue>Ready now,Ready 6 - 12 months, Ready 1 - 2 years,Ready 2+ years,Not ready (the time isn't right for me)</defaultValue>
+	<rolePermission roleName="Guest">
+		<view>true</view>
+		<update>false</update>
+	</rolePermission>
+	<rolePermission roleName="User">
+		<view>true</view>
+		<update>true</update>
+	</rolePermission>
+</expandoField>
