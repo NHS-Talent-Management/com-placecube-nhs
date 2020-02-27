@@ -1,7 +1,7 @@
 Bundle-Category: Placecube
 Bundle-Name: Placecube NHS User Expando
 Bundle-SymbolicName: com.placecube.nhs.user.expando
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1.SNAPSHOT
 Export-Package: com.placecube.nhs.user.expando.constants
 -privatepackage: \
 	com.placecube.nhs.user.expando.expando,\
