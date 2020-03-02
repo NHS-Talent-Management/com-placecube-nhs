@@ -1,7 +1,7 @@
 Bundle-SymbolicName: com.placecube.nhs.taglib.forms
 Bundle-Name: Placecube Forms taglib
 Bundle-Category: Placecube
-Bundle-Version: 1.0.2.SNAPSHOT
+Bundle-Version: 1.1.0
 
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://placecube.com/tld/nhs-forms-ui";version:Version="${Bundle-Version}",
 

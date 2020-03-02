@@ -1,0 +1,10 @@
+dependencies {
+	compile project (':com.placecube.nhs.taglib.forms')
+	compile project (':com.placecube.nhs.user.expando')
+	
+	compile group: 'biz.aQute.bnd', name: 'biz.aQute.bndlib'
+	compile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel'
+	compile group: 'javax.portlet', name: 'portlet-api'
+	compile group: 'javax.servlet', name: 'javax.servlet-api'
+	compile group: 'org.osgi', name: 'org.osgi.service.component.annotations'
+}
