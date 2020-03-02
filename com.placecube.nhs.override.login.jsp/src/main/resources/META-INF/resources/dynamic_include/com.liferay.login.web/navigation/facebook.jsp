@@ -6,12 +6,12 @@
 
 
 <%
-String regex = "(<span class=\"taglib-text)(\\s)*(\">Facebook<\\/span>)";
+String regexForLabel = "(<span class=\"taglib-text)(\\s)*(\">Facebook<\\/span>)";
 String iconToAdd = "<span class=\"facebook-icon\"><\\/span>";
 String valueToReplace = "<span class=\"taglib-text\">Connect with Facebook<\\/span>";
-html = html.replaceFirst(regex, iconToAdd+valueToReplace);
+html = html.replaceFirst(regexForLabel, iconToAdd+valueToReplace);
+
+html = html.replaceFirst("class=\" lfr-icon-item taglib-icon\"", "class=\" lfr-icon-item taglib-icon facebook-sso\"");
 %>
 
-<div class="facebook-sso">
-	<%= html %>
-</div>
+<%= html %>

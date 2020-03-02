@@ -1,6 +1,6 @@
 Bundle-Name: Placecube NHS - Override Login JSP
 Bundle-SymbolicName: com.placecube.nhs.override.login.jsp
-Bundle-Version: 1.0.1.SNAPSHOT
+Bundle-Version: 1.0.1
 
 Fragment-Host: com.liferay.login.authentication.facebook.connect.web;bundle-version="4.0.12"
 
