@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<root available-locales="[$AVAILABLE_LOCALES$]" default-locale="[$LOCALE_DEFAULT$]">
+	<dynamic-element name="content" type="text_area" index-type="text" instance-id="fbyg">
+		<dynamic-content language-id="[$LOCALE_DEFAULT$]">
+			<![CDATA[
+				<div class="readiness-intro-message">
+					<h1>Readiness Questionnaire</h1>
+					<p class="nhsuk-body">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat finibus neque vel luctus. Fusce accumsan mauris a imperdiet accumsan. Nam mollis rhoncus sem, vitae efficitur magna imperdiet id. Integer sed lacus nec mi pulvinar aliquet. Maecenas ultrices felis risus. Integer pellentesque nisi eget consectetur sollicitudin. Aliquam viverra sapien vel orci commodo, malesuada pulvinar sapien aliquam. Pellentesque fringilla pulvinar posuere. Suspendisse molestie efficitur suscipit. Curabitur non aliquam risus, et pretium leo. Sed porttitor ornare turpis sit amet fermentum.
+					</p>
+				</div>
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>
