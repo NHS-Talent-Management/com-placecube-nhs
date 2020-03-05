@@ -1,5 +1,6 @@
 package com.placecube.nhs.grouptypes.service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,8 +13,11 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -30,6 +34,8 @@ import com.placecube.nhs.search.utils.SearchService;
 @Component(immediate = true, service = GroupTypeRetrievalService.class)
 public class GroupTypeRetrievalService {
 
+	private static final Log LOG = LogFactoryUtil.getLog(GroupTypeRetrievalService.class);
+
 	@Reference
 	private AssetEntryLocalService assetEntryLocalService;
 
@@ -45,6 +51,18 @@ public class GroupTypeRetrievalService {
 		List<Long> groupIds = columnValues.stream().map(expandoValue -> Validator.isNotNull(expandoValue) ? expandoValue.getClassPK() : 0).collect(Collectors.toList());
 		groupIds.remove(0l);
 		return groupIds;
+	}
+
+	public String getGroupType(Group group) {
+		try {
+			Serializable data = expandoValueLocalService.getData(group.getCompanyId(), Group.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, GroupTypeExpando.FIELD_NAME,
+					group.getGroupId());
+			String[] values = GetterUtil.getStringValues(data);
+			return values[0];
+		} catch (Exception e) {
+			LOG.debug(e);
+		}
+		return StringPool.BLANK;
 	}
 
 	public List<Long> getRelatedGroupIds(long companyId, long groupId, GroupType groupType) throws PortalException {

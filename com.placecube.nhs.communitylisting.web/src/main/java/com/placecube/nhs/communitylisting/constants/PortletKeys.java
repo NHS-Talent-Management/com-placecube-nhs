@@ -8,6 +8,8 @@ public final class PortletKeys {
 
 	public static final String MOST_POPULAR = "com_placecube_nhs_communitylisting_mostpopular_MostPopularCommunitiesPortlet";
 
+	public static final String MY_COMMUNITIES = "com_placecube_nhs_communitylisting_mycommunities_MyCommunitiesPortlet";
+
 	private PortletKeys() {
 		return;
 	}

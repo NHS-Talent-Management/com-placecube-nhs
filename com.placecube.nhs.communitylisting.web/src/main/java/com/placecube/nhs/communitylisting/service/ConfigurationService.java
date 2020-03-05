@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.placecube.nhs.communitylisting.portlet.az.configuration.AZCommunityPortletInstanceConfiguration;
 import com.placecube.nhs.communitylisting.portlet.mostpopular.configuration.MostPopularCommunityPortletInstanceConfiguration;
+import com.placecube.nhs.communitylisting.portlet.mycommunities.configuration.MyCommunitiesPortletInstanceConfiguration;
 
 @Component(immediate = true, service = ConfigurationService.class)
 public class ConfigurationService {
@@ -29,6 +30,15 @@ public class ConfigurationService {
 			return configuration;
 		}
 		throw new ConfigurationException("Invalid Most popular configuration");
+	}
+
+	public MyCommunitiesPortletInstanceConfiguration getMyCommunitiesConfiguration(ThemeDisplay themeDisplay, boolean skipValidation) throws ConfigurationException {
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		MyCommunitiesPortletInstanceConfiguration configuration = portletDisplay.getPortletInstanceConfiguration(MyCommunitiesPortletInstanceConfiguration.class);
+		if (skipValidation || hasValidGroupTypes(configuration.groupTypes())) {
+			return configuration;
+		}
+		throw new ConfigurationException("Invalid My communities configuration");
 	}
 
 	private boolean hasValidGroupTypes(String[] groupTypes) {

@@ -10,6 +10,14 @@ public final class MVCCommandKeys {
 
 	public static final String EXPERIENCE_VIEW = "/userProfileExperience/view";
 
+	public static final String LEARNING_SKILLS_EDIT = "/userProfileLearningSkills/edit";
+
+	public static final String LEARNING_SKILLS_VIEW = "/userProfileLearningSkills/view";
+
+	public static final String PROFESSIONAL_BODIES_EDIT = "/userProfileProfessionalBodies/edit";
+
+	public static final String PROFESSIONAL_BODIES_VIEW = "/userProfileProfessionalBodies/view";
+
 	private MVCCommandKeys() {
 		return;
 	}

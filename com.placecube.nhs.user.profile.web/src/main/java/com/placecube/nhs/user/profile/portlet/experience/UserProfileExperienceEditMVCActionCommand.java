@@ -35,7 +35,7 @@ public class UserProfileExperienceEditMVCActionCommand extends BaseMVCActionComm
 		User user = themeDisplay.getUser();
 		Locale locale = user.getLocale();
 
-		ExtraInfoContext extraInfoContext = extraInfoService.populateExtraInfoExperienceFromRequest(actionRequest, user.getTimeZone());
+		ExtraInfoContext extraInfoContext = extraInfoService.populateExtraInfoFromRequest(actionRequest, user.getTimeZone());
 
 		Map<String, String> validationErrors = extraInfoService.getValidationErrorsForExperience(extraInfoContext, locale);
 

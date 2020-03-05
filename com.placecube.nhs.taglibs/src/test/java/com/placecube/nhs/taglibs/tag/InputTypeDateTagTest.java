@@ -52,6 +52,13 @@ public class InputTypeDateTagTest extends PowerMockito {
 	@Mock
 	private PageContext mockPageContext;
 
+	@Before
+	public void setUp() {
+		mockStatic(PropsUtil.class, ServletContextUtil.class);
+
+		inputTypeDateTag = new InputTypeDateTag();
+	}
+
 	@Test
 	public void cleanUp_WhenNoError_SetsErrorMessageToNull() {
 		inputTypeDateTag.setErrorMessage("value");
@@ -258,13 +265,6 @@ public class InputTypeDateTagTest extends PowerMockito {
 		inputTypeDateTag.setPageContext(mockPageContext);
 
 		verify(inputTypeDateTag, times(1)).setPageContext(mockPageContext);
-	}
-
-	@Before
-	public void setUp() {
-		mockStatic(PropsUtil.class, ServletContextUtil.class);
-
-		inputTypeDateTag = new InputTypeDateTag();
 	}
 
 }

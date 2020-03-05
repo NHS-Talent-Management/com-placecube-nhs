@@ -17,10 +17,10 @@
 	<div class="row">
 		<div class="col-md-12">
 			<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
-				fieldName="placeOfWork"
+				fieldName="place"
 				fieldLabel="place-of-work"
 				fieldValue="${extraInfoContext.getPlace()}"
-				errorMessage="${validationErrors.get('placeOfWork')}" />
+				errorMessage="${validationErrors.get('place')}" />
 			
 			<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
 				fieldName="role"

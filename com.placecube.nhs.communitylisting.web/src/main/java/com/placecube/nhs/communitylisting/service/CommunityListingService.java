@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
@@ -21,6 +23,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.placecube.nhs.grouptypes.constants.GroupType;
 import com.placecube.nhs.grouptypes.constants.GroupTypeExpando;
 import com.placecube.nhs.grouptypes.service.GroupTypeRetrievalService;
@@ -62,6 +66,14 @@ public class CommunityListingService {
 		Document[] searchResults = searchService.getSearchResults(searchContext, Group.class.getName());
 
 		return retrievalService.getEntriesFromSearchResults(themeDisplay, searchResults);
+	}
+
+	public List<Group> getCommunitiesForUser(ThemeDisplay themeDisplay, String[] groupTypes) {
+		User user = themeDisplay.getUser();
+		List<Group> groups = user.getGroups();
+		List<Group> communities = groups.stream().filter(group -> ArrayUtil.contains(groupTypes, groupTypeRetrievalService.getGroupType(group))).collect(Collectors.toList());
+		communities.sort(new GroupNameComparator(true));
+		return communities;
 	}
 
 	/*

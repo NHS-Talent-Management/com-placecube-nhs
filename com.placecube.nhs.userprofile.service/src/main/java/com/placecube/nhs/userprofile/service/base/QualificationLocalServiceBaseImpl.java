@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.placecube.nhs.userprofile.model.Qualification;
 import com.placecube.nhs.userprofile.service.QualificationLocalService;
 import com.placecube.nhs.userprofile.service.persistence.ExperiencePersistence;
+import com.placecube.nhs.userprofile.service.persistence.ProfessionalBodyPersistence;
 import com.placecube.nhs.userprofile.service.persistence.QualificationPersistence;
 
 import java.io.Serializable;
@@ -491,6 +492,9 @@ public abstract class QualificationLocalServiceBaseImpl
 
 	@Reference
 	protected ExperiencePersistence experiencePersistence;
+
+	@Reference
+	protected ProfessionalBodyPersistence professionalBodyPersistence;
 
 	protected QualificationLocalService qualificationLocalService;
 

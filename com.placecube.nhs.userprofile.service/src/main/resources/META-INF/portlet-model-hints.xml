@@ -19,6 +19,18 @@
 		<field name="fromDate" type="Date" />
 		<field name="toDate" type="Date" />
 	</model>
+	<model name="com.placecube.nhs.userprofile.model.ProfessionalBody">
+		<field name="uuid" type="String" />
+		<field name="professionalBodyId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="title" type="String" />
+		<field name="location" type="String" />
+		<field name="expiryDate" type="Date" />
+	</model>
 	<model name="com.placecube.nhs.userprofile.model.Qualification">
 		<field name="uuid" type="String" />
 		<field name="qualificationId" type="long" />

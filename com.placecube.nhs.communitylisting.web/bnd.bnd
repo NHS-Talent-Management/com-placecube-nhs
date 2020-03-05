@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.communitylisting.web
 Bundle-Name: Placecube NHS - Community Listing Web
-Bundle-Version: 1.5.2.SNAPSHOT
+Bundle-Version: 1.6.0
 
 Require-Capability: \
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://placecube.com/tld/nhs-az-ui))"

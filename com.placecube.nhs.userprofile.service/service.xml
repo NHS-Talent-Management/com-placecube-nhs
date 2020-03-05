@@ -58,4 +58,29 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	
+	<entity local-service="true" name="ProfessionalBody" remote-service="false" uuid="true">
+
+		<column name="professionalBodyId" primary="true" type="long" />
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<column name="title" type="String" />
+		<column name="location" type="String" />
+		<column name="expiryDate" type="Date" />
+
+		<order>
+			<order-column name="expiryDate" order-by="desc"/>
+		</order>
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		 
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	
 </service-builder>
