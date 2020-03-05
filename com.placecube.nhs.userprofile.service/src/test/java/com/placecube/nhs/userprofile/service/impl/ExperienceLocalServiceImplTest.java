@@ -72,8 +72,7 @@ public class ExperienceLocalServiceImplTest extends PowerMockito {
 	}
 
 	@Test
-	@Parameters({ "true", "false" })
-	public void createExperience_WhenNoError_ThenConfiguresTheExperience(boolean current) {
+	public void createExperience_WhenNoErrorAndCurrentIsFalse_ThenConfiguresTheExperienceWithTheToDate() {
 		long nextId = 123l;
 		long userId = 456;
 		String userName = "userNameValue";
@@ -82,16 +81,39 @@ public class ExperienceLocalServiceImplTest extends PowerMockito {
 		when(mockCounterLocalService.increment(Experience.class.getName(), 1)).thenReturn(nextId);
 		when(mockExperienceLocalService.createExperience(nextId)).thenReturn(mockExperience1);
 
-		experienceLocalServiceImpl.createExperience(mockUser, "placeOfWorkValue", "roleValue", current, mockDateFrom, mockDateTo);
+		experienceLocalServiceImpl.createExperience(mockUser, "placeOfWorkValue", "roleValue", false, mockDateFrom, mockDateTo);
 
 		InOrder inOrder = Mockito.inOrder(mockExperience1, mockExperienceLocalService);
 		inOrder.verify(mockExperience1, times(1)).setUserId(userId);
 		inOrder.verify(mockExperience1, times(1)).setUserName(userName);
 		inOrder.verify(mockExperience1, times(1)).setPlaceOfWork("placeOfWorkValue");
 		inOrder.verify(mockExperience1, times(1)).setRole("roleValue");
-		inOrder.verify(mockExperience1, times(1)).setCurrent(current);
+		inOrder.verify(mockExperience1, times(1)).setCurrent(false);
 		inOrder.verify(mockExperience1, times(1)).setFromDate(mockDateFrom);
 		inOrder.verify(mockExperience1, times(1)).setToDate(mockDateTo);
+		inOrder.verify(mockExperienceLocalService, times(1)).addExperience(mockExperience1);
+	}
+
+	@Test
+	public void createExperience_WhenNoErrorAndCurrentIsFTrue_ThenConfiguresTheExperienceWithoutToDate() {
+		long nextId = 123l;
+		long userId = 456;
+		String userName = "userNameValue";
+		when(mockUser.getFullName()).thenReturn(userName);
+		when(mockUser.getUserId()).thenReturn(userId);
+		when(mockCounterLocalService.increment(Experience.class.getName(), 1)).thenReturn(nextId);
+		when(mockExperienceLocalService.createExperience(nextId)).thenReturn(mockExperience1);
+
+		experienceLocalServiceImpl.createExperience(mockUser, "placeOfWorkValue", "roleValue", true, mockDateFrom, mockDateTo);
+
+		InOrder inOrder = Mockito.inOrder(mockExperience1, mockExperienceLocalService);
+		inOrder.verify(mockExperience1, times(1)).setUserId(userId);
+		inOrder.verify(mockExperience1, times(1)).setUserName(userName);
+		inOrder.verify(mockExperience1, times(1)).setPlaceOfWork("placeOfWorkValue");
+		inOrder.verify(mockExperience1, times(1)).setRole("roleValue");
+		inOrder.verify(mockExperience1, times(1)).setCurrent(true);
+		inOrder.verify(mockExperience1, times(1)).setFromDate(mockDateFrom);
+		inOrder.verify(mockExperience1, times(1)).setToDate(null);
 		inOrder.verify(mockExperienceLocalService, times(1)).addExperience(mockExperience1);
 	}
 
