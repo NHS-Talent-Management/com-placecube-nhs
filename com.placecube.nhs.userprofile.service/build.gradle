@@ -29,18 +29,17 @@ buildService {
 sonarqube {
    properties {
 	    properties['sonar.exclusions'] = '**/model/impl/*.java,'
-	    properties['sonar.exclusions'] += '**/persistence/impl/*.java,'
 	  	properties['sonar.exclusions'] += '**/service/base/*.java,'
-		properties['sonar.exclusions'] += '**/service/util/*.java'
+	    properties['sonar.exclusions'] += '**/service/persistence/impl/*.java,'
+	    properties['sonar.exclusions'] += '**/service/persistence/impl/constants/*.java,'
 	}
 }
 
 javadoc {
     excludes.addAll([
-    	'**/model/*.java',
     	'**/model/impl/*.java',
-    	'**/service/persistence/impl/*.java',
     	'**/service/base/*.java',
-    	'**/service/util/*.java'
+    	'**/service/persistence/impl/*.java',
+    	'**/service/persistence/impl/constants/*.java',
     ])
 }
