@@ -1,0 +1,7 @@
+<div class="row">
+	<div class="col-md-12 text-center">
+		<h1>
+			<liferay-ui:message key="${titleMessageKey}"/>
+		</h1>
+	</div>
+</div>

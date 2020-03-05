@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.pfiks.journal.content.service.JournalContentRendererService;
 import com.placecube.nhs.search.utils.SearchService;
-import com.placecube.nhs.taglib.az.model.AZEntry;
+import com.placecube.nhs.taglibs.model.AZEntry;
 
 @Component(immediate = true, service = WebContentRetrievalService.class)
 public class WebContentRetrievalService {

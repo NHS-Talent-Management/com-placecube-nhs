@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.placecube.nhs.search.utils.SearchService;
-import com.placecube.nhs.taglib.az.model.AZEntry;
+import com.placecube.nhs.taglibs.model.AZEntry;
 import com.placecube.nhs.webcontentlisting.portlet.az.configuration.AZWebContentPortletInstanceConfiguration;
 import com.placecube.nhs.webcontentlisting.portlet.mostpopular.configuration.MostPopularWebContentPortletInstanceConfiguration;
 

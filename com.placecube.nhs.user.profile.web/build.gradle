@@ -1,6 +1,7 @@
 dependencies {
-	compile project (':com.placecube.nhs.taglib.forms')
+	compile project (':com.placecube.nhs.taglibs')
 	compile project (':com.placecube.nhs.user.expando')
+	compile project (':com.placecube.nhs.userprofile.api')
 	
 	compile group: 'biz.aQute.bnd', name: 'biz.aQute.bndlib'
 	compile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel'

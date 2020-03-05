@@ -1,6 +1,6 @@
 dependencies {
 	compile project (':com.placecube.nhs.search.utils')
-	compile project (':com.placecube.nhs.taglib.az')
+	compile project (':com.placecube.nhs.taglibs')
 	
 	compile group: 'biz.aQute.bnd', name: 'biz.aQute.bndlib'
 	compile group: 'com.liferay', name: 'com.liferay.dynamic.data.mapping.api'

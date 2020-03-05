@@ -1,0 +1,5 @@
+<c:if test="${not empty fieldHint}">
+	<span class="nhsuk-hint" id="${portletNamespace}_field_${fieldName}_hint">
+		<liferay-ui:message key="${fieldHint}"/>
+	</span>
+</c:if>

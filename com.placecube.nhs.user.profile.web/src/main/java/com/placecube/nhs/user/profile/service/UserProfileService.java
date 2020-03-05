@@ -1,6 +1,6 @@
 package com.placecube.nhs.user.profile.service;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.placecube.nhs.user.expando.constants.UserExpando;
-import com.placecube.nhs.user.profile.constants.UserProfileField;
 import com.placecube.nhs.user.profile.model.UserProfileContext;
 
 @Component(immediate = true, service = UserProfileService.class)
@@ -29,14 +28,14 @@ public class UserProfileService {
 	@Reference
 	private UserLocalService userLocalService;
 
-	public void validateUserProfileModel(UserProfileContext userProfileContext, Locale locale) {
-		Map<String, String> errors = new HashMap<>();
-		validationService.validateMandatoryField(errors, locale, UserProfileField.FIRSTNAME, userProfileContext.getFirstName());
-		validationService.validateMandatoryField(errors, locale, UserProfileField.LASTNAME, userProfileContext.getLastName());
-		validationService.validateOptionalField(errors, locale, UserProfileField.CURRENT_POSITION, userProfileContext.getCurrentPosition());
-		validationService.validateOptionalField(errors, locale, UserProfileField.SUMMARY, userProfileContext.getSummary());
-		validationService.validateOptionalField(errors, locale, UserProfileField.LOCATION, userProfileContext.getLocation());
-		userProfileContext.setErrors(errors);
+	public Map<String, String> getValidationErrorsForUserProfileModel(UserProfileContext userProfileContext, Locale locale) {
+		Map<String, String> errors = new LinkedHashMap<>();
+		validationService.validateMandatoryField(errors, locale, userProfileContext.getFirstName(), "firstName", "enter-your-firstname", 75, "enter-a-firstname-that-is-75-characters-or-fewer");
+		validationService.validateMandatoryField(errors, locale, userProfileContext.getLastName(), "lastName", "enter-your-lastname", 75, "enter-a-lastname-that-is-75-characters-or-fewer");
+		validationService.validateOptionalField(errors, locale, userProfileContext.getCurrentPosition(), "currentPosition", 100, "enter-a-current-position-that-is-100-characters-or-fewer");
+		validationService.validateOptionalField(errors, locale, userProfileContext.getSummary(), "summary", 1000, "enter-a-summary-that-is-1000-characters-or-fewer");
+		validationService.validateOptionalField(errors, locale, userProfileContext.getLocation(), "location", 250, "enter-a-location-that-is-250-characters-or-fewer");
+		return errors;
 	}
 
 	public UserProfileContext getUserProfileContext(PortletRequest portletRequest) {
@@ -54,7 +53,6 @@ public class UserProfileService {
 			userProfileContext.setSummary(user.getComments());
 			return userProfileContext;
 		}
-
 	}
 
 	public UserProfileContext populateFromRequest(PortletRequest portletRequest) {

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
-import com.placecube.nhs.taglib.az.model.AZEntry;
+import com.placecube.nhs.taglibs.model.AZEntry;
 
 @Component(immediate = true, service = RetrievalService.class)
 public class RetrievalService {

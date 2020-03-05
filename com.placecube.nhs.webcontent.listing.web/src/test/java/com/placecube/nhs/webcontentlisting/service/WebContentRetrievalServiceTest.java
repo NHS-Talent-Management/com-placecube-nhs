@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.pfiks.journal.content.service.JournalContentRendererService;
 import com.placecube.nhs.search.utils.SearchService;
-import com.placecube.nhs.taglib.az.model.AZEntry;
+import com.placecube.nhs.taglibs.model.AZEntry;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ AZEntry.class })

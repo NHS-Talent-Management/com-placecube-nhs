@@ -1,0 +1,5 @@
+<legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
+	<span class="nhsuk-fieldset__heading">
+		<liferay-ui:message key="${fieldLabel}"/>
+	</span>
+</legend>

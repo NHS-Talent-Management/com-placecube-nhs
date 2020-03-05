@@ -10,10 +10,11 @@ def modules = [
 	'com.placecube.nhs.readiness.web',
 	'com.placecube.nhs.registration.web',
 	'com.placecube.nhs.search.utils',
-	'com.placecube.nhs.taglib.az',
-	'com.placecube.nhs.taglib.forms',
+	'com.placecube.nhs.taglibs',
 	'com.placecube.nhs.template.utils',
 	'com.placecube.nhs.user.expando',
+	'com.placecube.nhs.userprofile.api',
+	'com.placecube.nhs.userprofile.service',
 	'com.placecube.nhs.user.profile.web',
 	'com.placecube.nhs.webcontent.listing.web',
 	'com.placecube.nhs.webcontent.structures'

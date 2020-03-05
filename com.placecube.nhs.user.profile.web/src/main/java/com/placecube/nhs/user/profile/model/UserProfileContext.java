@@ -1,10 +1,5 @@
 package com.placecube.nhs.user.profile.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.placecube.nhs.user.profile.constants.UserProfileField;
-
 public class UserProfileContext {
 
 	private String currentPosition;
@@ -12,11 +7,6 @@ public class UserProfileContext {
 	private String lastName;
 	private String location;
 	private String summary;
-	private Map<String, String> errors;
-
-	public UserProfileContext() {
-		errors = new HashMap<>();
-	}
 
 	public String getCurrentPosition() {
 		return currentPosition;
@@ -58,27 +48,4 @@ public class UserProfileContext {
 		this.summary = summary;
 	}
 
-	public Map<String, String> getErrors() {
-		return errors;
-	}
-
-	public void setErrors(Map<String, String> errors) {
-		this.errors = errors;
-	}
-
-	public String getFieldError(String fieldName) {
-		return errors.get(fieldName);
-	}
-
-	public boolean isValid() {
-		return errors.isEmpty();
-	}
-
-	public void addFieldError(UserProfileField userProfileField, String message) {
-		errors.put(userProfileField.getFieldName(), message);
-	}
-
-	public void addFieldError(String fieldName, String message) {
-		errors.put(fieldName, message);
-	}
 }

@@ -1,0 +1,8 @@
+Bundle-SymbolicName: com.placecube.nhs.userprofile.api
+Bundle-Name: Placecube NHS - User Profile API
+Bundle-Version: 1.0.0
+Export-Package: \
+	com.placecube.nhs.userprofile.exception,\
+	com.placecube.nhs.userprofile.model,\
+	com.placecube.nhs.userprofile.service.persistence,\
+	com.placecube.nhs.userprofile.service

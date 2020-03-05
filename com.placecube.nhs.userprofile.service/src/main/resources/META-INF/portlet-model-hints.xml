@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.placecube.nhs.userprofile.model.Experience">
+		<field name="uuid" type="String" />
+		<field name="experienceId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="placeOfWork" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="role" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="current" type="boolean" />
+		<field name="fromDate" type="Date" />
+		<field name="toDate" type="Date" />
+	</model>
+	<model name="com.placecube.nhs.userprofile.model.Qualification">
+		<field name="uuid" type="String" />
+		<field name="qualificationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="place" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="qualification" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="fromDate" type="Date" />
+		<field name="toDate" type="Date" />
+	</model>
+</model-hints>

@@ -15,21 +15,21 @@
 
 <aui:form action="${personalDetailsURL}" method="post" name="createAccountForm">
 	
-	<nhs-forms-ui:inputText portletNamespace="${portletNamespace}" 
+	<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
 			fieldName="firstName" 
 			fieldLabel="first-name"
 			fieldValue="${registrationContext.getFirstName()}" 
 			errorMessage="${registrationContext.getFieldError('firstName')}" 
 			showAsPassword="false"/>
 	
-	<nhs-forms-ui:inputText portletNamespace="${portletNamespace}" 
+	<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
 			fieldName="lastName" 
 			fieldLabel="last-name" 
 			fieldValue="${registrationContext.getLastName()}"
 			errorMessage="${registrationContext.getFieldError('lastName')}" 
 			showAsPassword="false"/>
 	
-	<nhs-forms-ui:inputText portletNamespace="${portletNamespace}" 
+	<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
 			fieldName="emailAddress" 
 			fieldLabel="email-address"
 			fieldValue="${registrationContext.getEmailAddress()}"
@@ -44,14 +44,14 @@
 		</div>
 	</c:if>
 
-	<nhs-forms-ui:inputText portletNamespace="${portletNamespace}" 
+	<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
 		fieldName="password" 
 		fieldLabel="password"
 		fieldValue=""
 		errorMessage="${registrationContext.getFieldError('password')}" 
 		showAsPassword="true"/>
 
-	<nhs-forms-ui:inputText portletNamespace="${portletNamespace}" 
+	<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
 		fieldName="confirmPassword" 
 		fieldLabel="confirm-password"
 		fieldValue=""

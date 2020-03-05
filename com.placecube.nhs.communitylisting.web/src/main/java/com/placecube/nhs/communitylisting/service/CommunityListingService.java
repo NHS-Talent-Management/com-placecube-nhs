@@ -25,7 +25,7 @@ import com.placecube.nhs.grouptypes.constants.GroupType;
 import com.placecube.nhs.grouptypes.constants.GroupTypeExpando;
 import com.placecube.nhs.grouptypes.service.GroupTypeRetrievalService;
 import com.placecube.nhs.search.utils.SearchService;
-import com.placecube.nhs.taglib.az.model.AZEntry;
+import com.placecube.nhs.taglibs.model.AZEntry;
 
 @Component(immediate = true, service = CommunityListingService.class)
 public class CommunityListingService {

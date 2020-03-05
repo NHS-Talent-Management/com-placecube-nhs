@@ -1,8 +1,6 @@
 package com.placecube.nhs.registration.service;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.portlet.PortletException;
@@ -57,11 +55,11 @@ public class RegistrationService {
 		}
 	}
 
-	public void createUserAccount(RegistrationContext registrationModel) throws PortalException {
+	public void createUserAccount(RegistrationContext registrationContext) throws PortalException {
 		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-		userLocalService.addUserWithWorkflow(0, serviceContext.getCompanyId(), false, registrationModel.getPassword(), registrationModel.getConfirmPassword(), true, null,
-				registrationModel.getEmailAddress(), 0, null, serviceContext.getLocale(), registrationModel.getFirstName(), null, registrationModel.getLastName(), 0, 0, true, 1, 1, 1960, null,
+		userLocalService.addUserWithWorkflow(0, serviceContext.getCompanyId(), false, registrationContext.getPassword(), registrationContext.getConfirmPassword(), true, null,
+				registrationContext.getEmailAddress(), 0, null, serviceContext.getLocale(), registrationContext.getFirstName(), null, registrationContext.getLastName(), 0, 0, true, 1, 1, 1960, null,
 				new long[0], new long[0], new long[0], new long[0], true, serviceContext);
 	}
 
@@ -75,16 +73,14 @@ public class RegistrationService {
 		}
 	}
 
-	public void validateRegistrationModel(RegistrationContext registrationModel, Locale locale) {
-		Map<String, String> errors = new HashMap<>();
-		validationService.validateMandatoryField(errors, locale, RegistrationField.FIRSTNAME, registrationModel.getFirstName());
-		validationService.validateMandatoryField(errors, locale, RegistrationField.LASTNAME, registrationModel.getLastName());
-		validationService.validateMandatoryField(errors, locale, RegistrationField.EMAIL, registrationModel.getEmailAddress());
-		validationService.validateEmail(errors, locale, registrationModel.getEmailAddress());
-		validationService.validateMandatoryField(errors, locale, RegistrationField.PASSWORD, registrationModel.getPassword());
-		validationService.validateMandatoryField(errors, locale, RegistrationField.PASSWORD_CONFIRM, registrationModel.getConfirmPassword());
-		validationService.validatePasswordMatch(errors, locale, registrationModel.getPassword(), registrationModel.getConfirmPassword());
-		registrationModel.setErrors(errors);
+	public void validateRegistrationModel(RegistrationContext registrationContext, Locale locale) {
+		validationService.validateMandatoryField(registrationContext, locale, RegistrationField.FIRSTNAME, registrationContext.getFirstName());
+		validationService.validateMandatoryField(registrationContext, locale, RegistrationField.LASTNAME, registrationContext.getLastName());
+		validationService.validateMandatoryField(registrationContext, locale, RegistrationField.EMAIL, registrationContext.getEmailAddress());
+		validationService.validateEmail(registrationContext, locale);
+		validationService.validateMandatoryField(registrationContext, locale, RegistrationField.PASSWORD, registrationContext.getPassword());
+		validationService.validateMandatoryField(registrationContext, locale, RegistrationField.PASSWORD_CONFIRM, registrationContext.getConfirmPassword());
+		validationService.validatePasswordMatch(registrationContext, locale);
 	}
 
 	public RegistrationContext getRegistrationContext(PortletRequest portletRequest) {
@@ -137,7 +133,6 @@ public class RegistrationService {
 			registrationModel.addFieldError(RegistrationField.PASSWORD, LanguageUtil.format(locale, "that-password-must-contain-at-least-x-uppercase-characters", String.valueOf(upe.minUppercase)));
 
 		} else if (exception instanceof UserPasswordException.MustNotBeEqualToCurrent) {
-			UserPasswordException.MustNotBeEqualToCurrent upe = (UserPasswordException.MustNotBeEqualToCurrent) exception;
 			registrationModel.addFieldError(RegistrationField.PASSWORD, LanguageUtil.get(locale, "your-new-password-cannot-be-the-same-as-your-old-password-please-enter-a-different-password"));
 
 		} else if (exception instanceof UserPasswordException.MustMatch) {
