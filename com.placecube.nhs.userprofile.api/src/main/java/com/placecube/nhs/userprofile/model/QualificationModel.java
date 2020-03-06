@@ -244,4 +244,25 @@ public interface QualificationModel
 	 */
 	public void setToDate(Date toDate);
 
+	/**
+	 * Returns the validated of this qualification.
+	 *
+	 * @return the validated of this qualification
+	 */
+	public boolean getValidated();
+
+	/**
+	 * Returns <code>true</code> if this qualification is validated.
+	 *
+	 * @return <code>true</code> if this qualification is validated; <code>false</code> otherwise
+	 */
+	public boolean isValidated();
+
+	/**
+	 * Sets whether this qualification is validated.
+	 *
+	 * @param validated the validated of this qualification
+	 */
+	public void setValidated(boolean validated);
+
 }

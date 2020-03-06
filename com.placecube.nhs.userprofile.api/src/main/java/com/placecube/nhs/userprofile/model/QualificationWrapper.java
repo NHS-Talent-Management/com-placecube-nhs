@@ -57,6 +57,7 @@ public class QualificationWrapper
 		attributes.put("qualification", getQualification());
 		attributes.put("fromDate", getFromDate());
 		attributes.put("toDate", getToDate());
+		attributes.put("validated", isValidated());
 
 		return attributes;
 	}
@@ -127,6 +128,12 @@ public class QualificationWrapper
 
 		if (toDate != null) {
 			setToDate(toDate);
+		}
+
+		Boolean validated = (Boolean)attributes.get("validated");
+
+		if (validated != null) {
+			setValidated(validated);
 		}
 	}
 
@@ -258,6 +265,26 @@ public class QualificationWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	/**
+	 * Returns the validated of this qualification.
+	 *
+	 * @return the validated of this qualification
+	 */
+	@Override
+	public boolean getValidated() {
+		return model.getValidated();
+	}
+
+	/**
+	 * Returns <code>true</code> if this qualification is validated.
+	 *
+	 * @return <code>true</code> if this qualification is validated; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isValidated() {
+		return model.isValidated();
 	}
 
 	@Override
@@ -393,6 +420,16 @@ public class QualificationWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	/**
+	 * Sets whether this qualification is validated.
+	 *
+	 * @param validated the validated of this qualification
+	 */
+	@Override
+	public void setValidated(boolean validated) {
+		model.setValidated(validated);
 	}
 
 	@Override

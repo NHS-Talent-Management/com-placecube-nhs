@@ -65,7 +65,7 @@ public class ExperienceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -91,6 +91,8 @@ public class ExperienceCacheModel
 		sb.append(fromDate);
 		sb.append(", toDate=");
 		sb.append(toDate);
+		sb.append(", validated=");
+		sb.append(validated);
 		sb.append("}");
 
 		return sb.toString();
@@ -162,6 +164,8 @@ public class ExperienceCacheModel
 			experienceImpl.setToDate(new Date(toDate));
 		}
 
+		experienceImpl.setValidated(validated);
+
 		experienceImpl.resetOriginalValues();
 
 		return experienceImpl;
@@ -185,6 +189,8 @@ public class ExperienceCacheModel
 		current = objectInput.readBoolean();
 		fromDate = objectInput.readLong();
 		toDate = objectInput.readLong();
+
+		validated = objectInput.readBoolean();
 	}
 
 	@Override
@@ -229,6 +235,8 @@ public class ExperienceCacheModel
 		objectOutput.writeBoolean(current);
 		objectOutput.writeLong(fromDate);
 		objectOutput.writeLong(toDate);
+
+		objectOutput.writeBoolean(validated);
 	}
 
 	public String uuid;
@@ -243,5 +251,6 @@ public class ExperienceCacheModel
 	public boolean current;
 	public long fromDate;
 	public long toDate;
+	public boolean validated;
 
 }

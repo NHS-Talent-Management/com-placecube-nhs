@@ -265,4 +265,25 @@ public interface ExperienceModel
 	 */
 	public void setToDate(Date toDate);
 
+	/**
+	 * Returns the validated of this experience.
+	 *
+	 * @return the validated of this experience
+	 */
+	public boolean getValidated();
+
+	/**
+	 * Returns <code>true</code> if this experience is validated.
+	 *
+	 * @return <code>true</code> if this experience is validated; <code>false</code> otherwise
+	 */
+	public boolean isValidated();
+
+	/**
+	 * Sets whether this experience is validated.
+	 *
+	 * @param validated the validated of this experience
+	 */
+	public void setValidated(boolean validated);
+
 }

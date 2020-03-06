@@ -32,8 +32,6 @@ public class ReadinessSummaryPortlet extends MVCPortlet {
 
 		if (themeDisplay.isSignedIn()) {
 			addQuestions(renderRequest, themeDisplay);
-		} else {
-			throw new PortletException("Must be signed in");
 		}
 
 		super.render(renderRequest, renderResponse);

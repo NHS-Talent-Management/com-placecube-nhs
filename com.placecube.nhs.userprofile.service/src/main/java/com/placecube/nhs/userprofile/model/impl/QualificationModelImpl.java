@@ -79,7 +79,7 @@ public class QualificationModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"place", Types.VARCHAR},
 		{"qualification", Types.VARCHAR}, {"fromDate", Types.TIMESTAMP},
-		{"toDate", Types.TIMESTAMP}
+		{"toDate", Types.TIMESTAMP}, {"validated", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,10 +97,11 @@ public class QualificationModelImpl
 		TABLE_COLUMNS_MAP.put("qualification", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fromDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("toDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("validated", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NHS_Qualification (uuid_ VARCHAR(75) null,qualificationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,place VARCHAR(500) null,qualification VARCHAR(500) null,fromDate DATE null,toDate DATE null)";
+		"create table NHS_Qualification (uuid_ VARCHAR(75) null,qualificationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,place VARCHAR(500) null,qualification VARCHAR(500) null,fromDate DATE null,toDate DATE null,validated BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table NHS_Qualification";
 
@@ -304,6 +305,10 @@ public class QualificationModelImpl
 		attributeSetterBiConsumers.put(
 			"toDate",
 			(BiConsumer<Qualification, Date>)Qualification::setToDate);
+		attributeGetterFunctions.put("validated", Qualification::getValidated);
+		attributeSetterBiConsumers.put(
+			"validated",
+			(BiConsumer<Qualification, Boolean>)Qualification::setValidated);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -500,6 +505,21 @@ public class QualificationModelImpl
 	}
 
 	@Override
+	public boolean getValidated() {
+		return _validated;
+	}
+
+	@Override
+	public boolean isValidated() {
+		return _validated;
+	}
+
+	@Override
+	public void setValidated(boolean validated) {
+		_validated = validated;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(Qualification.class.getName()));
@@ -547,6 +567,7 @@ public class QualificationModelImpl
 		qualificationImpl.setQualification(getQualification());
 		qualificationImpl.setFromDate(getFromDate());
 		qualificationImpl.setToDate(getToDate());
+		qualificationImpl.setValidated(isValidated());
 
 		qualificationImpl.resetOriginalValues();
 
@@ -704,6 +725,8 @@ public class QualificationModelImpl
 			qualificationCacheModel.toDate = Long.MIN_VALUE;
 		}
 
+		qualificationCacheModel.validated = isValidated();
+
 		return qualificationCacheModel;
 	}
 
@@ -792,6 +815,7 @@ public class QualificationModelImpl
 	private String _qualification;
 	private Date _fromDate;
 	private Date _toDate;
+	private boolean _validated;
 	private long _columnBitmask;
 	private Qualification _escapedModel;
 

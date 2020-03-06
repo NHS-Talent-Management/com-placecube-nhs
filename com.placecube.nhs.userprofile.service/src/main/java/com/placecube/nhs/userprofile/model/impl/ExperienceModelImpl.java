@@ -79,7 +79,8 @@ public class ExperienceModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"placeOfWork", Types.VARCHAR},
 		{"role_", Types.VARCHAR}, {"current", Types.BOOLEAN},
-		{"fromDate", Types.TIMESTAMP}, {"toDate", Types.TIMESTAMP}
+		{"fromDate", Types.TIMESTAMP}, {"toDate", Types.TIMESTAMP},
+		{"validated", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,10 +99,11 @@ public class ExperienceModelImpl
 		TABLE_COLUMNS_MAP.put("current", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("fromDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("toDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("validated", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NHS_Experience (uuid_ VARCHAR(75) null,experienceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,placeOfWork VARCHAR(500) null,role_ VARCHAR(500) null,current BOOLEAN,fromDate DATE null,toDate DATE null)";
+		"create table NHS_Experience (uuid_ VARCHAR(75) null,experienceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,placeOfWork VARCHAR(500) null,role_ VARCHAR(500) null,current BOOLEAN,fromDate DATE null,toDate DATE null,validated BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table NHS_Experience";
 
@@ -301,6 +303,10 @@ public class ExperienceModelImpl
 		attributeGetterFunctions.put("toDate", Experience::getToDate);
 		attributeSetterBiConsumers.put(
 			"toDate", (BiConsumer<Experience, Date>)Experience::setToDate);
+		attributeGetterFunctions.put("validated", Experience::getValidated);
+		attributeSetterBiConsumers.put(
+			"validated",
+			(BiConsumer<Experience, Boolean>)Experience::setValidated);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -512,6 +518,21 @@ public class ExperienceModelImpl
 	}
 
 	@Override
+	public boolean getValidated() {
+		return _validated;
+	}
+
+	@Override
+	public boolean isValidated() {
+		return _validated;
+	}
+
+	@Override
+	public void setValidated(boolean validated) {
+		_validated = validated;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(Experience.class.getName()));
@@ -560,6 +581,7 @@ public class ExperienceModelImpl
 		experienceImpl.setCurrent(isCurrent());
 		experienceImpl.setFromDate(getFromDate());
 		experienceImpl.setToDate(getToDate());
+		experienceImpl.setValidated(isValidated());
 
 		experienceImpl.resetOriginalValues();
 
@@ -717,6 +739,8 @@ public class ExperienceModelImpl
 			experienceCacheModel.toDate = Long.MIN_VALUE;
 		}
 
+		experienceCacheModel.validated = isValidated();
+
 		return experienceCacheModel;
 	}
 
@@ -806,6 +830,7 @@ public class ExperienceModelImpl
 	private boolean _current;
 	private Date _fromDate;
 	private Date _toDate;
+	private boolean _validated;
 	private long _columnBitmask;
 	private Experience _escapedModel;
 

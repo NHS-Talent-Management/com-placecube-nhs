@@ -18,6 +18,7 @@
 		<field name="current" type="boolean" />
 		<field name="fromDate" type="Date" />
 		<field name="toDate" type="Date" />
+		<field name="validated" type="boolean" />
 	</model>
 	<model name="com.placecube.nhs.userprofile.model.ProfessionalBody">
 		<field name="uuid" type="String" />
@@ -30,6 +31,7 @@
 		<field name="title" type="String" />
 		<field name="location" type="String" />
 		<field name="expiryDate" type="Date" />
+		<field name="validated" type="boolean" />
 	</model>
 	<model name="com.placecube.nhs.userprofile.model.Qualification">
 		<field name="uuid" type="String" />
@@ -47,5 +49,6 @@
 		</field>
 		<field name="fromDate" type="Date" />
 		<field name="toDate" type="Date" />
+		<field name="validated" type="boolean" />
 	</model>
 </model-hints>

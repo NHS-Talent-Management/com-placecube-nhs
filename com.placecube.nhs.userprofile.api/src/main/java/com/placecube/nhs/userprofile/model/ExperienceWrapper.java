@@ -58,6 +58,7 @@ public class ExperienceWrapper
 		attributes.put("current", isCurrent());
 		attributes.put("fromDate", getFromDate());
 		attributes.put("toDate", getToDate());
+		attributes.put("validated", isValidated());
 
 		return attributes;
 	}
@@ -134,6 +135,12 @@ public class ExperienceWrapper
 
 		if (toDate != null) {
 			setToDate(toDate);
+		}
+
+		Boolean validated = (Boolean)attributes.get("validated");
+
+		if (validated != null) {
+			setValidated(validated);
 		}
 	}
 
@@ -278,6 +285,16 @@ public class ExperienceWrapper
 	}
 
 	/**
+	 * Returns the validated of this experience.
+	 *
+	 * @return the validated of this experience
+	 */
+	@Override
+	public boolean getValidated() {
+		return model.getValidated();
+	}
+
+	/**
 	 * Returns <code>true</code> if this experience is current.
 	 *
 	 * @return <code>true</code> if this experience is current; <code>false</code> otherwise
@@ -285,6 +302,16 @@ public class ExperienceWrapper
 	@Override
 	public boolean isCurrent() {
 		return model.isCurrent();
+	}
+
+	/**
+	 * Returns <code>true</code> if this experience is validated.
+	 *
+	 * @return <code>true</code> if this experience is validated; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isValidated() {
+		return model.isValidated();
 	}
 
 	@Override
@@ -430,6 +457,16 @@ public class ExperienceWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	/**
+	 * Sets whether this experience is validated.
+	 *
+	 * @param validated the validated of this experience
+	 */
+	@Override
+	public void setValidated(boolean validated) {
+		model.setValidated(validated);
 	}
 
 	@Override

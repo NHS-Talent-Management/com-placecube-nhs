@@ -56,6 +56,7 @@ public class ProfessionalBodyWrapper
 		attributes.put("title", getTitle());
 		attributes.put("location", getLocation());
 		attributes.put("expiryDate", getExpiryDate());
+		attributes.put("validated", isValidated());
 
 		return attributes;
 	}
@@ -120,6 +121,12 @@ public class ProfessionalBodyWrapper
 
 		if (expiryDate != null) {
 			setExpiryDate(expiryDate);
+		}
+
+		Boolean validated = (Boolean)attributes.get("validated");
+
+		if (validated != null) {
+			setValidated(validated);
 		}
 	}
 
@@ -241,6 +248,26 @@ public class ProfessionalBodyWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	/**
+	 * Returns the validated of this professional body.
+	 *
+	 * @return the validated of this professional body
+	 */
+	@Override
+	public boolean getValidated() {
+		return model.getValidated();
+	}
+
+	/**
+	 * Returns <code>true</code> if this professional body is validated.
+	 *
+	 * @return <code>true</code> if this professional body is validated; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isValidated() {
+		return model.isValidated();
 	}
 
 	@Override
@@ -366,6 +393,16 @@ public class ProfessionalBodyWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	/**
+	 * Sets whether this professional body is validated.
+	 *
+	 * @param validated the validated of this professional body
+	 */
+	@Override
+	public void setValidated(boolean validated) {
+		model.setValidated(validated);
 	}
 
 	@Override

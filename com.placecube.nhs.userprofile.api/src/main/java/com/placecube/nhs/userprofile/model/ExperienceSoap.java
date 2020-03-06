@@ -46,6 +46,7 @@ public class ExperienceSoap implements Serializable {
 		soapModel.setCurrent(model.isCurrent());
 		soapModel.setFromDate(model.getFromDate());
 		soapModel.setToDate(model.getToDate());
+		soapModel.setValidated(model.isValidated());
 
 		return soapModel;
 	}
@@ -199,6 +200,18 @@ public class ExperienceSoap implements Serializable {
 		_toDate = toDate;
 	}
 
+	public boolean getValidated() {
+		return _validated;
+	}
+
+	public boolean isValidated() {
+		return _validated;
+	}
+
+	public void setValidated(boolean validated) {
+		_validated = validated;
+	}
+
 	private String _uuid;
 	private long _experienceId;
 	private long _companyId;
@@ -211,5 +224,6 @@ public class ExperienceSoap implements Serializable {
 	private boolean _current;
 	private Date _fromDate;
 	private Date _toDate;
+	private boolean _validated;
 
 }

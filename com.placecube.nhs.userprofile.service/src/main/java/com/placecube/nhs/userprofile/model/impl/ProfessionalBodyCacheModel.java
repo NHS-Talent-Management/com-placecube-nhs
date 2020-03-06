@@ -68,7 +68,7 @@ public class ProfessionalBodyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,8 @@ public class ProfessionalBodyCacheModel
 		sb.append(location);
 		sb.append(", expiryDate=");
 		sb.append(expiryDate);
+		sb.append(", validated=");
+		sb.append(validated);
 		sb.append("}");
 
 		return sb.toString();
@@ -152,6 +154,8 @@ public class ProfessionalBodyCacheModel
 			professionalBodyImpl.setExpiryDate(new Date(expiryDate));
 		}
 
+		professionalBodyImpl.setValidated(validated);
+
 		professionalBodyImpl.resetOriginalValues();
 
 		return professionalBodyImpl;
@@ -172,6 +176,8 @@ public class ProfessionalBodyCacheModel
 		title = objectInput.readUTF();
 		location = objectInput.readUTF();
 		expiryDate = objectInput.readLong();
+
+		validated = objectInput.readBoolean();
 	}
 
 	@Override
@@ -214,6 +220,8 @@ public class ProfessionalBodyCacheModel
 		}
 
 		objectOutput.writeLong(expiryDate);
+
+		objectOutput.writeBoolean(validated);
 	}
 
 	public String uuid;
@@ -226,5 +234,6 @@ public class ProfessionalBodyCacheModel
 	public String title;
 	public String location;
 	public long expiryDate;
+	public boolean validated;
 
 }

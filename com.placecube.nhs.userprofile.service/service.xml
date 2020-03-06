@@ -20,6 +20,7 @@
 		<column name="fromDate" type="Date" />
 		<column name="toDate" type="Date" />
 
+		<column name="validated" type="boolean" />
 		<order>
 			<order-column name="fromDate" order-by="desc"/>
 		</order>
@@ -46,7 +47,8 @@
 		<column name="qualification" type="String" />
 		<column name="fromDate" type="Date" />
 		<column name="toDate" type="Date" />
-
+		<column name="validated" type="boolean" />
+		
 		<order>
 			<order-column name="fromDate" order-by="desc"/>
 		</order>
@@ -71,7 +73,8 @@
 		<column name="title" type="String" />
 		<column name="location" type="String" />
 		<column name="expiryDate" type="Date" />
-
+		<column name="validated" type="boolean" />
+		
 		<order>
 			<order-column name="expiryDate" order-by="desc"/>
 		</order>
