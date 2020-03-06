@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
 import com.placecube.nhs.readiness.service.ReadinessService;
-import com.placecube.nhs.readiness.web.portlet.summary.ReadinessSummaryPortlet;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ MVCPortlet.class })
@@ -62,8 +61,8 @@ public class ReadinessSummaryPortletTest extends PowerMockito {
 		mockCallToSuper();
 	}
 
-	@Test(expected = PortletException.class)
-	public void render_WhenUserIsNotSignedIn_ThenNothingIsAddedAsRequestAttributeAndThrowsPortletException() throws Exception {
+	@Test
+	public void render_WhenUserIsNotSignedIn_ThenNothingIsAddedAsRequestAttribute() throws Exception {
 		when(mockRenderRequest.getAttribute(WebKeys.THEME_DISPLAY)).thenReturn(mockThemeDisplay);
 		when(mockThemeDisplay.isSignedIn()).thenReturn(false);
 
