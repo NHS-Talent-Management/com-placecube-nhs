@@ -230,4 +230,25 @@ public interface ProfessionalBodyModel
 	 */
 	public void setExpiryDate(Date expiryDate);
 
+	/**
+	 * Returns the validated of this professional body.
+	 *
+	 * @return the validated of this professional body
+	 */
+	public boolean getValidated();
+
+	/**
+	 * Returns <code>true</code> if this professional body is validated.
+	 *
+	 * @return <code>true</code> if this professional body is validated; <code>false</code> otherwise
+	 */
+	public boolean isValidated();
+
+	/**
+	 * Sets whether this professional body is validated.
+	 *
+	 * @param validated the validated of this professional body
+	 */
+	public void setValidated(boolean validated);
+
 }

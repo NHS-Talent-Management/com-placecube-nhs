@@ -10,7 +10,8 @@ create table NHS_Experience (
 	role_ VARCHAR(500) null,
 	current BOOLEAN,
 	fromDate DATE null,
-	toDate DATE null
+	toDate DATE null,
+	validated BOOLEAN
 );
 
 create table NHS_ProfessionalBody (
@@ -23,7 +24,8 @@ create table NHS_ProfessionalBody (
 	modifiedDate DATE null,
 	title VARCHAR(75) null,
 	location VARCHAR(75) null,
-	expiryDate DATE null
+	expiryDate DATE null,
+	validated BOOLEAN
 );
 
 create table NHS_Qualification (
@@ -37,5 +39,6 @@ create table NHS_Qualification (
 	place VARCHAR(500) null,
 	qualification VARCHAR(500) null,
 	fromDate DATE null,
-	toDate DATE null
+	toDate DATE null,
+	validated BOOLEAN
 );

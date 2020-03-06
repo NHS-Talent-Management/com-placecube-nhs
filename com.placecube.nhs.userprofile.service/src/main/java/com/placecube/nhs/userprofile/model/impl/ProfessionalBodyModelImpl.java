@@ -78,7 +78,8 @@ public class ProfessionalBodyModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"title", Types.VARCHAR},
-		{"location", Types.VARCHAR}, {"expiryDate", Types.TIMESTAMP}
+		{"location", Types.VARCHAR}, {"expiryDate", Types.TIMESTAMP},
+		{"validated", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,10 +96,11 @@ public class ProfessionalBodyModelImpl
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("location", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("expiryDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("validated", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NHS_ProfessionalBody (uuid_ VARCHAR(75) null,professionalBodyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,location VARCHAR(75) null,expiryDate DATE null)";
+		"create table NHS_ProfessionalBody (uuid_ VARCHAR(75) null,professionalBodyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,location VARCHAR(75) null,expiryDate DATE null,validated BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NHS_ProfessionalBody";
@@ -309,6 +311,12 @@ public class ProfessionalBodyModelImpl
 			"expiryDate",
 			(BiConsumer<ProfessionalBody, Date>)
 				ProfessionalBody::setExpiryDate);
+		attributeGetterFunctions.put(
+			"validated", ProfessionalBody::getValidated);
+		attributeSetterBiConsumers.put(
+			"validated",
+			(BiConsumer<ProfessionalBody, Boolean>)
+				ProfessionalBody::setValidated);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -495,6 +503,21 @@ public class ProfessionalBodyModelImpl
 	}
 
 	@Override
+	public boolean getValidated() {
+		return _validated;
+	}
+
+	@Override
+	public boolean isValidated() {
+		return _validated;
+	}
+
+	@Override
+	public void setValidated(boolean validated) {
+		_validated = validated;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(ProfessionalBody.class.getName()));
@@ -541,6 +564,7 @@ public class ProfessionalBodyModelImpl
 		professionalBodyImpl.setTitle(getTitle());
 		professionalBodyImpl.setLocation(getLocation());
 		professionalBodyImpl.setExpiryDate(getExpiryDate());
+		professionalBodyImpl.setValidated(isValidated());
 
 		professionalBodyImpl.resetOriginalValues();
 
@@ -692,6 +716,8 @@ public class ProfessionalBodyModelImpl
 			professionalBodyCacheModel.expiryDate = Long.MIN_VALUE;
 		}
 
+		professionalBodyCacheModel.validated = isValidated();
+
 		return professionalBodyCacheModel;
 	}
 
@@ -779,6 +805,7 @@ public class ProfessionalBodyModelImpl
 	private String _title;
 	private String _location;
 	private Date _expiryDate;
+	private boolean _validated;
 	private long _columnBitmask;
 	private ProfessionalBody _escapedModel;
 

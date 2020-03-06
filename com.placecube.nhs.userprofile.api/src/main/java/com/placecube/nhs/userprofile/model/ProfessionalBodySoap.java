@@ -44,6 +44,7 @@ public class ProfessionalBodySoap implements Serializable {
 		soapModel.setTitle(model.getTitle());
 		soapModel.setLocation(model.getLocation());
 		soapModel.setExpiryDate(model.getExpiryDate());
+		soapModel.setValidated(model.isValidated());
 
 		return soapModel;
 	}
@@ -185,6 +186,18 @@ public class ProfessionalBodySoap implements Serializable {
 		_expiryDate = expiryDate;
 	}
 
+	public boolean getValidated() {
+		return _validated;
+	}
+
+	public boolean isValidated() {
+		return _validated;
+	}
+
+	public void setValidated(boolean validated) {
+		_validated = validated;
+	}
+
 	private String _uuid;
 	private long _professionalBodyId;
 	private long _companyId;
@@ -195,5 +208,6 @@ public class ProfessionalBodySoap implements Serializable {
 	private String _title;
 	private String _location;
 	private Date _expiryDate;
+	private boolean _validated;
 
 }

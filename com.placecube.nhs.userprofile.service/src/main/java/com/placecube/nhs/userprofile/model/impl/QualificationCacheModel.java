@@ -66,7 +66,7 @@ public class QualificationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,8 @@ public class QualificationCacheModel
 		sb.append(fromDate);
 		sb.append(", toDate=");
 		sb.append(toDate);
+		sb.append(", validated=");
+		sb.append(validated);
 		sb.append("}");
 
 		return sb.toString();
@@ -159,6 +161,8 @@ public class QualificationCacheModel
 			qualificationImpl.setToDate(new Date(toDate));
 		}
 
+		qualificationImpl.setValidated(validated);
+
 		qualificationImpl.resetOriginalValues();
 
 		return qualificationImpl;
@@ -180,6 +184,8 @@ public class QualificationCacheModel
 		qualification = objectInput.readUTF();
 		fromDate = objectInput.readLong();
 		toDate = objectInput.readLong();
+
+		validated = objectInput.readBoolean();
 	}
 
 	@Override
@@ -223,6 +229,8 @@ public class QualificationCacheModel
 
 		objectOutput.writeLong(fromDate);
 		objectOutput.writeLong(toDate);
+
+		objectOutput.writeBoolean(validated);
 	}
 
 	public String uuid;
@@ -236,5 +244,6 @@ public class QualificationCacheModel
 	public String qualification;
 	public long fromDate;
 	public long toDate;
+	public boolean validated;
 
 }

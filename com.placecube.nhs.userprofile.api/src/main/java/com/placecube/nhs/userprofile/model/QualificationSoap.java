@@ -45,6 +45,7 @@ public class QualificationSoap implements Serializable {
 		soapModel.setQualification(model.getQualification());
 		soapModel.setFromDate(model.getFromDate());
 		soapModel.setToDate(model.getToDate());
+		soapModel.setValidated(model.isValidated());
 
 		return soapModel;
 	}
@@ -186,6 +187,18 @@ public class QualificationSoap implements Serializable {
 		_toDate = toDate;
 	}
 
+	public boolean getValidated() {
+		return _validated;
+	}
+
+	public boolean isValidated() {
+		return _validated;
+	}
+
+	public void setValidated(boolean validated) {
+		_validated = validated;
+	}
+
 	private String _uuid;
 	private long _qualificationId;
 	private long _companyId;
@@ -197,5 +210,6 @@ public class QualificationSoap implements Serializable {
 	private String _qualification;
 	private Date _fromDate;
 	private Date _toDate;
+	private boolean _validated;
 
 }
