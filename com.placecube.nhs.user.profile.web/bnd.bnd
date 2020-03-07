@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.user.profile.web
 Bundle-Name: Placecube NHS User Profile Web
-Bundle-Version: 1.2.2
+Bundle-Version: 1.2.3.SNAPSHOT
 
 Require-Capability: \
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://placecube.com/tld/nhs-forms-ui))"
