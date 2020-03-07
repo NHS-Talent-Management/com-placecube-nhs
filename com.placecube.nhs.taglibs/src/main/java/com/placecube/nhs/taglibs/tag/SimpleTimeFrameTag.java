@@ -1,14 +1,10 @@
 package com.placecube.nhs.taglibs.tag;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 import com.placecube.nhs.taglibs.context.ServletContextUtil;
 
@@ -16,13 +12,7 @@ public class SimpleTimeFrameTag extends IncludeTag {
 
 	private Date startDate;
 	private Date endDate;
-
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-		startDate = null;
-		endDate = null;
-	}
+	private String format;
 
 	@Override
 	public int doStartTag() {
@@ -30,16 +20,12 @@ public class SimpleTimeFrameTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	@Override
-	protected String getPage() {
-		return "/META-INF/taglibs/nhs-dates-ui/simpleTimeFrame/view.jsp";
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		LocalDate endLocalDate = Validator.isNull(endDate) ? LocalDate.now() : getLocalDateFromDate(endDate);
-		LocalDate startLocalDate = getLocalDateFromDate(startDate);
-		request.setAttribute("timeFrame", LanguageUtil.format(request, "date-from-x-to-x", new String[] { String.valueOf(startLocalDate.getYear()), String.valueOf(endLocalDate.getYear()) }));
+	public void setFormat(String format) {
+		this.format = format;
 	}
 
 	@Override
@@ -52,11 +38,24 @@ public class SimpleTimeFrameTag extends IncludeTag {
 		this.startDate = startDate;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+		startDate = null;
+		endDate = null;
+		format = null;
 	}
 
-	private LocalDate getLocalDateFromDate(Date date) {
-		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	@Override
+	protected String getPage() {
+		return "/META-INF/taglibs/nhs-dates-ui/simpleTimeFrame/view.jsp";
 	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("startDate", startDate);
+		request.setAttribute("endDate", endDate);
+		request.setAttribute("format", format);
+	}
+
 }

@@ -42,7 +42,10 @@
 								</h4>
 								
 								<p class="nhsuk-u-margin-0">${experience.placeOfWork}</p>
-								<p class="nhsuk-u-margin-0"><nhs-dates-ui:friendlyTimeFrame startDate="${experience.getFromDate()}"endDate="${experience.getToDate()}" /></p>
+								<p class="nhsuk-u-margin-0">
+									<nhs-dates-ui:simpleTimeFrame startDate="${experience.getFromDate()}"endDate="${experience.getToDate()}" format="MMM yyyy"/>&nbsp;:&nbsp;
+									<nhs-dates-ui:friendlyTimeFrame startDate="${experience.getFromDate()}"endDate="${experience.getToDate()}" />
+								</p>
 								<c:if test="${not loop.last}">
 									<hr class="nhsuk-section-break nhsuk-section-break--visible nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-3"/>
 								</c:if>
@@ -60,7 +63,9 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:message key="please-sign-in-to-access-this-application"/>
+		<div class="alert alert-warning">
+			<liferay-ui:message key="please-sign-in-to-access-this-application"/>
+		</div>
 	</c:otherwise>
 </c:choose>
 

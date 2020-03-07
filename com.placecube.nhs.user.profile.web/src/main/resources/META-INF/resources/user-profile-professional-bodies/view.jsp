@@ -44,7 +44,7 @@
 								<p class="nhsuk-u-margin-0"><liferay-ui:message key="location"/>:&nbsp;${professionalBody.location}</p>
 								<p class="nhsuk-u-margin-0">
 									<liferay-ui:message key="expiry-date"/>:&nbsp;
-									<fmt:formatDate value="${professionalBody.getExpiryDate()}" pattern="dd-MM-yyyy" />
+									<fmt:formatDate value="${professionalBody.getExpiryDate()}" pattern="dd/MM/yyyy" />
 								</p>
 								<c:if test="${not loop.last}">
 									<hr class="nhsuk-section-break nhsuk-section-break--visible nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-3"/>
@@ -63,6 +63,8 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:message key="please-sign-in-to-access-this-application"/>
+		<div class="alert alert-warning">
+			<liferay-ui:message key="please-sign-in-to-access-this-application"/>
+		</div>
 	</c:otherwise>
 </c:choose>

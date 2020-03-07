@@ -27,7 +27,9 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:message key="please-sign-in-to-access-this-application"/>
+		<div class="alert alert-warning">
+			<liferay-ui:message key="please-sign-in-to-access-this-application"/>
+		</div>
 	</c:otherwise>
 </c:choose>
 

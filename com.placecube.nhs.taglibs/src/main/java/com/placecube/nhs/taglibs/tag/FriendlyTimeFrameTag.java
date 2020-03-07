@@ -20,16 +20,30 @@ public class FriendlyTimeFrameTag extends IncludeTag {
 	private Date endDate;
 
 	@Override
+	public int doStartTag() {
+		setAttributeNamespace("nhs-dates-ui:friendlyTimeFrame");
+		return EVAL_BODY_INCLUDE;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+		setServletContext(ServletContextUtil.getServletContext());
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 		startDate = null;
 		endDate = null;
-	}
-
-	@Override
-	public int doStartTag() {
-		setAttributeNamespace("nhs-dates-ui:friendlyTimeFrame");
-		return EVAL_BODY_INCLUDE;
 	}
 
 	@Override
@@ -47,11 +61,15 @@ public class FriendlyTimeFrameTag extends IncludeTag {
 		request.setAttribute("timeFrame", timeframe);
 	}
 
+	private LocalDate getLocalDateFromDate(Date date) {
+		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	}
+
 	private String getTimeframeString(HttpServletRequest request, Period period) {
 		StringBuilder timeFrame = new StringBuilder();
 		int years = period.getYears();
 		if (years == 1) {
-			timeFrame.append(LanguageUtil.get(request, "x-year"));
+			timeFrame.append(LanguageUtil.format(request, "x-year", 1));
 			timeFrame.append(StringPool.SPACE);
 		} else if (years > 1) {
 			timeFrame.append(LanguageUtil.format(request, "x-years", years));
@@ -60,30 +78,12 @@ public class FriendlyTimeFrameTag extends IncludeTag {
 
 		int months = period.getMonths();
 		if (months == 1) {
-			timeFrame.append(LanguageUtil.get(request, "x-month"));
+			timeFrame.append(LanguageUtil.format(request, "x-month", 1));
 			timeFrame.append(StringPool.SPACE);
 		} else if (months > 1) {
 			timeFrame.append(LanguageUtil.format(request, "x-months", months));
 			timeFrame.append(StringPool.SPACE);
 		}
 		return timeFrame.toString().toLowerCase();
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-		setServletContext(ServletContextUtil.getServletContext());
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	private LocalDate getLocalDateFromDate(Date date) {
-		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 }

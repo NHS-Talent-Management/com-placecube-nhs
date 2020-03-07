@@ -16,16 +16,16 @@ public enum WebContentStructure {
 		this.listingTemplateKey = listingTemplateKey;
 	}
 
-	public String getStructureKey() {
-		return structureKey;
+	public String getFullDisplayTemplateKey() {
+		return fullDisplayTemplateKey;
 	}
 
 	public String getListingTemplateKey() {
 		return listingTemplateKey;
 	}
 
-	public String getFullDisplayTemplateKey() {
-		return fullDisplayTemplateKey;
+	public String getStructureKey() {
+		return structureKey;
 	}
 
 }
