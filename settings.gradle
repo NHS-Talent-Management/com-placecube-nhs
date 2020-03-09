@@ -1,4 +1,5 @@
 def modules = [
+	'com.placecube.nhs.assetpublisher.provider',
 	'com.placecube.nhs.communitylisting.web',
 	'com.placecube.nhs.fragmentcollection',
 	'com.placecube.nhs.grouptypes',
