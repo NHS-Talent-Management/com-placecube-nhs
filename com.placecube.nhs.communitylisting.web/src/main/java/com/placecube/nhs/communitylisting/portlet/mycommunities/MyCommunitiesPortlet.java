@@ -12,8 +12,8 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.placecube.nhs.communitylisting.constants.PortletKeys;
@@ -48,10 +48,11 @@ public class MyCommunitiesPortlet extends MVCPortlet {
 			renderRequest.setAttribute("communityTypeLabel", groupTypes.length > 1 ? "communities" : "communities-" + groupTypes[0]);
 			renderRequest.setAttribute("viewAllURL", configuration.viewAllURL());
 
-		} catch (Exception e) {
+		} catch (ConfigurationException e) {
 			LOG.debug(e);
-			LOG.error(e.getMessage());
-			SessionErrors.add(renderRequest, e.getClass());
+			renderRequest.setAttribute("invalidConfiguration", true);
+		} catch (Exception e) {
+			throw new PortletException(e);
 		}
 
 		super.render(renderRequest, renderResponse);

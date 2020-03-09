@@ -42,6 +42,11 @@
 			</div>
 		</div>
 	</c:when>
+	<c:when test="${invalidConfiguration}">
+		<div class="alert alert-warning">
+			<liferay-ui:message key="the-default-preferences-are-invalid"/>
+		</div>
+	</c:when>
 	<c:otherwise>
 		<liferay-ui:message key="please-sign-in-to-access-this-application"/>
 	</c:otherwise>
