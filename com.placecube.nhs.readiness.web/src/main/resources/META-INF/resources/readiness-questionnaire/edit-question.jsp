@@ -59,6 +59,7 @@
 			</aui:button-row>		
 			
 		</aui:form>
+	</c:when>
 	<c:otherwise>
 		<div class="alert alert-warning">
 			<liferay-ui:message key="please-sign-in-to-access-this-application"/>
