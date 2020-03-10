@@ -5,6 +5,7 @@ def modules = [
 	'com.placecube.nhs.grouptypes',
 	'com.placecube.nhs.indexer.group',
 	'com.placecube.nhs.language',
+	'com.placecube.nhs.navigationmenu',
 	'com.placecube.nhs.override.login.jsp',
 	'com.placecube.nhs.readiness.api',
 	'com.placecube.nhs.readiness.service',
