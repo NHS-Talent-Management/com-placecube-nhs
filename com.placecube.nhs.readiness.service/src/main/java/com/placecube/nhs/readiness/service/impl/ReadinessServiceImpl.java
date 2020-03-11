@@ -10,6 +10,7 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.placecube.nhs.readiness.configuration.ReadinessInstanceConfiguration;
+import com.placecube.nhs.readiness.constants.WebContentArticles;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
 import com.placecube.nhs.readiness.model.impl.ModelFactoryBuilder;
 import com.placecube.nhs.readiness.service.ReadinessService;
@@ -35,12 +37,21 @@ public class ReadinessServiceImpl implements ReadinessService {
 	private ExpandoValueLocalService expandoValueLocalService;
 
 	@Reference
+	private ReadinessWebContentService readinessWebContentService;
+
+	@Reference
 	private ModelFactoryBuilder modelFactoryBuilder;
 
 	@Override
 	public void deleteAnswer(long questionId, long userId) throws PortalException {
 		ExpandoColumn expandoColumn = expandoColumnLocalService.getColumn(questionId);
 		expandoValueLocalService.deleteValue(expandoColumn.getCompanyId(), User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, expandoColumn.getName(), userId);
+	}
+
+	@Override
+	public String getCloseURL(long companyId) throws PortalException {
+		ReadinessInstanceConfiguration configuration = configurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, companyId);
+		return configuration.questionnaireCloseURL();
 	}
 
 	@Override
@@ -108,6 +119,16 @@ public class ReadinessServiceImpl implements ReadinessService {
 		} else {
 			deleteAnswer(questionId, userId);
 		}
+	}
+
+	@Override
+	public JournalArticle getQuestionnaireIntro(Company company) throws PortalException {
+		return readinessWebContentService.getArticle(company, WebContentArticles.READINESS_QUESTIONNAIRE_INTRO);
+	}
+
+	@Override
+	public JournalArticle getQuestionnaireCompleted(Company company) throws PortalException {
+		return readinessWebContentService.getArticle(company, WebContentArticles.READINESS_QUESTIONNAIRE_COMPLETED);
 	}
 
 }

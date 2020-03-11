@@ -34,7 +34,6 @@ import com.placecube.nhs.readiness.web.service.ReadinessQuestionnaireService;
 public class EditQuestionMVCRenderCommandTest extends PowerMockito {
 
 	private static final Integer CURRENT_INDEX = 12;
-	private static final Long GROUP_ID = 456l;
 	private static final Integer TOTAL_QUESTIONS = 3;
 
 	@InjectMocks
@@ -74,13 +73,13 @@ public class EditQuestionMVCRenderCommandTest extends PowerMockito {
 	}
 
 	@Test
-	public void render_WhenCommandIsPreviousAndNoQuestionFound_ThenSetsWebContentGroupIdAsRequestAttribute() throws Exception {
+	public void render_WhenCommandIsPreviousAndNoQuestionFound_ThenSetsWebContentRequestAttributesTrue() throws Exception {
 		mockBasicDetails("previous");
 		mockQuestionNotFound(CURRENT_INDEX - 1);
 
 		editQuestionMVCRenderCommand.render(mockRenderRequest, mockRenderResponse);
 
-		verify(mockRenderRequest, times(1)).setAttribute("webContentGroupId", GROUP_ID);
+		verify(mockReadinessQuestionnaireService, times(1)).setWebContentAttributesInRequest(mockRenderRequest, true);
 	}
 
 	@Test
@@ -124,13 +123,13 @@ public class EditQuestionMVCRenderCommandTest extends PowerMockito {
 	}
 
 	@Test
-	public void render_WhenCommandIsNextAndNoQuestionFound_ThenSetsWebContentGroupIdAsRequestAttribute() throws Exception {
+	public void render_WhenCommandIsNextAndNoQuestionFound_ThenSetsWebContentRequestAttributesAsFalse() throws Exception {
 		mockBasicDetails("next");
 		mockQuestionNotFound(CURRENT_INDEX + 1);
 
 		editQuestionMVCRenderCommand.render(mockRenderRequest, mockRenderResponse);
 
-		verify(mockRenderRequest, times(1)).setAttribute("webContentGroupId", GROUP_ID);
+		verify(mockReadinessQuestionnaireService, times(1)).setWebContentAttributesInRequest(mockRenderRequest, false);
 	}
 
 	@Test
@@ -174,13 +173,13 @@ public class EditQuestionMVCRenderCommandTest extends PowerMockito {
 	}
 
 	@Test
-	public void render_WhenCommandIsNotManagedAndNoQuestionFound_ThenSetsWebContentGroupIdAsRequestAttribute() throws Exception {
+	public void render_WhenCommandIsNotManagedAndNoQuestionFound_ThenSetsWebContentRequestAttributesAsFalse() throws Exception {
 		mockBasicDetails("otherCommand");
 		mockQuestionNotFound(CURRENT_INDEX);
 
 		editQuestionMVCRenderCommand.render(mockRenderRequest, mockRenderResponse);
 
-		verify(mockRenderRequest, times(1)).setAttribute("webContentGroupId", GROUP_ID);
+		verify(mockReadinessQuestionnaireService, times(1)).setWebContentAttributesInRequest(mockRenderRequest, false);
 	}
 
 	@Test
@@ -220,7 +219,6 @@ public class EditQuestionMVCRenderCommandTest extends PowerMockito {
 
 	private void mockQuestionNotFound(int index) throws Exception {
 		when(mockReadinessQuestionnaireService.getQuestionWithIndex(mockQuestions, index)).thenReturn(Optional.empty());
-		when(mockReadinessQuestionnaireService.getWebContentGroupId(mockThemeDisplay)).thenReturn(GROUP_ID);
 	}
 
 	private void mockBasicDetails(String cmd) throws Exception {

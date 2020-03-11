@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.placecube.nhs.readiness.configuration.ReadinessInstanceConfiguration;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
@@ -105,6 +106,24 @@ public class ReadinessServiceImplTest extends PowerMockito {
 		doThrow(new PortalException()).when(mockExpandoValueLocalService).deleteValue(COMPANY_ID, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, NAME, USER_ID);
 
 		readinessServiceImpl.deleteAnswer(COLUMN_ID_1, USER_ID);
+	}
+
+	@Test
+	public void getCloseURL_WhenNoError_ThenReturnsTheQuestionnaireCloseURL() throws PortalException {
+		String expected = "expectedValue";
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questionnaireCloseURL()).thenReturn(expected);
+
+		String result = readinessServiceImpl.getCloseURL(COMPANY_ID);
+
+		assertThat(result, equalTo(expected));
+	}
+
+	@Test(expected = PortalException.class)
+	public void getCloseURL_WhenExceptionRetrievingConfiguration_ThenThrowsPortalException() throws PortalException {
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenThrow(new ConfigurationException());
+
+		readinessServiceImpl.getCloseURL(COMPANY_ID);
 	}
 
 	@Test(expected = PortalException.class)

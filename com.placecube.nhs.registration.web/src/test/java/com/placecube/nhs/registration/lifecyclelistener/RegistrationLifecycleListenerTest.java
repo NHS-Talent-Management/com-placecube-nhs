@@ -14,8 +14,6 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.placecube.nhs.registration.constants.WebContentArticles;
 import com.placecube.nhs.registration.service.RegistrationSetupService;
@@ -29,9 +27,6 @@ public class RegistrationLifecycleListenerTest extends PowerMockito {
 
 	@Mock
 	private RegistrationSetupService registrationSetupService;
-
-	@Mock
-	private GroupLocalService mockGroupLocalService;
 
 	@Mock
 	private Company mockCompany;
@@ -53,7 +48,7 @@ public class RegistrationLifecycleListenerTest extends PowerMockito {
 	@Test(expected = PortalException.class)
 	public void portalInstanceRegistered_WhenExceptionRetrievingTheGuestGroup_ThenThrowsPortalException() throws Exception {
 		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
-		when(mockGroupLocalService.getGroup(COMPANY_ID, GroupConstants.GUEST)).thenThrow(new PortalException());
+		when(mockCompany.getGroup()).thenThrow(new PortalException());
 
 		registrationLifecycleListener.portalInstanceRegistered(mockCompany);
 	}
@@ -125,7 +120,7 @@ public class RegistrationLifecycleListenerTest extends PowerMockito {
 
 	private void mockServiceContextDetails() throws PortalException {
 		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
-		when(mockGroupLocalService.getGroup(COMPANY_ID, GroupConstants.GUEST)).thenReturn(mockGroup);
+		when(mockCompany.getGroup()).thenReturn(mockGroup);
 		when(registrationSetupService.getServiceContext(mockGroup)).thenReturn(mockServiceContext);
 	}
 }

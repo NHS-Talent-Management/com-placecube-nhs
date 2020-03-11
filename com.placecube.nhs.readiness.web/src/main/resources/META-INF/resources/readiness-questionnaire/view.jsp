@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<liferay-journal:journal-article 
-					articleId="<%= WebContentArticles.CAREER_READINESS.getArticleId() %>" 
+					articleId="${webContentArticleId}" 
 					groupId="${webContentGroupId}" 
 					showTitle="false" />
 			</div>

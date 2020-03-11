@@ -9,10 +9,7 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.placecube.nhs.registration.constants.WebContentArticles;
 import com.placecube.nhs.registration.service.RegistrationSetupService;
@@ -25,16 +22,12 @@ public class RegistrationLifecycleListener extends BasePortalInstanceLifecycleLi
 	@Reference
 	private RegistrationSetupService registrationSetupService;
 
-	@Reference
-	private GroupLocalService groupLocalService;
-
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		long companyId = company.getCompanyId();
 		LOG.info("Initialising Registration for companyId: " + companyId);
 
-		Group guestGroup = groupLocalService.getGroup(company.getCompanyId(), GroupConstants.GUEST);
-		ServiceContext serviceContext = registrationSetupService.getServiceContext(guestGroup);
+		ServiceContext serviceContext = registrationSetupService.getServiceContext(company.getGroup());
 
 		JournalFolder journalFolder = registrationSetupService.addFolder(serviceContext);
 		registrationSetupService.addArticle(WebContentArticles.REGISTRATION_CONFIRMATION_PAGE, journalFolder, serviceContext);

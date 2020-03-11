@@ -1,4 +1,4 @@
-package com.placecube.nhs.readiness.web.lifefycle;
+package com.placecube.nhs.readiness.service.impl;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;
@@ -23,14 +23,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.placecube.digitalplace.journal.service.JournalArticleCreationService;
-import com.placecube.nhs.readiness.web.constants.WebContentArticles;
+import com.placecube.nhs.readiness.constants.WebContentArticles;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(StringUtil.class)
-public class ReadinessSetupServiceTest extends PowerMockito {
+public class ReadinessWebContentServiceTest extends PowerMockito {
 
 	@InjectMocks
-	private ReadinessSetupService readinessSetupService;
+	private ReadinessWebContentService readinessWebContentService;
 
 	@Mock
 	private JournalArticleCreationService mockJournalArticleCreationService;
@@ -52,10 +52,10 @@ public class ReadinessSetupServiceTest extends PowerMockito {
 	@Test
 	public void addArticle_WhenNoError_ThenCreatesTheArticle() throws Exception {
 		String articleContent = "articleContent";
-		WebContentArticles webContent = WebContentArticles.CAREER_READINESS;
+		WebContentArticles webContent = WebContentArticles.READINESS_QUESTIONNAIRE_INTRO;
 		when(StringUtil.read(getClass().getClassLoader(), "com/placecube/nhs/readiness/dependencies/webcontent/" + webContent.getArticleId() + ".xml")).thenReturn(articleContent);
 
-		readinessSetupService.addArticle(webContent, mockJournalFolder, mockServiceContext);
+		readinessWebContentService.addArticle(webContent, mockJournalFolder, mockServiceContext);
 
 		verify(mockJournalArticleCreationService, times(1)).getOrCreateBasicWebContentArticle(webContent.getArticleId(), webContent.getArticleTitle(), articleContent, mockJournalFolder,
 				mockServiceContext);
@@ -63,28 +63,28 @@ public class ReadinessSetupServiceTest extends PowerMockito {
 
 	@Test(expected = PortalException.class)
 	public void addArticle_WhenExceptionReadingArticleContent_ThenThrowsPortalException() throws Exception {
-		WebContentArticles webContent = WebContentArticles.CAREER_READINESS;
+		WebContentArticles webContent = WebContentArticles.READINESS_QUESTIONNAIRE_INTRO;
 		when(StringUtil.read(getClass().getClassLoader(), "com/placecube/nhs/readiness/dependencies/webcontent/" + webContent.getArticleId() + ".xml")).thenThrow(new IOException());
 
-		readinessSetupService.addArticle(webContent, mockJournalFolder, mockServiceContext);
+		readinessWebContentService.addArticle(webContent, mockJournalFolder, mockServiceContext);
 	}
 
 	@Test(expected = PortalException.class)
 	public void addArticle_WhenExceptionCreatingArticle_ThenThrowsPortalException() throws Exception {
 		String articleContent = "articleContent";
-		WebContentArticles webContent = WebContentArticles.CAREER_READINESS;
+		WebContentArticles webContent = WebContentArticles.READINESS_QUESTIONNAIRE_INTRO;
 		when(StringUtil.read(getClass().getClassLoader(), "com/placecube/nhs/readiness/dependencies/webcontent/" + webContent.getArticleId() + ".xml")).thenReturn(articleContent);
 		when(mockJournalArticleCreationService.getOrCreateBasicWebContentArticle(webContent.getArticleId(), webContent.getArticleTitle(), articleContent, mockJournalFolder, mockServiceContext))
 				.thenThrow(new PortalException());
 
-		readinessSetupService.addArticle(webContent, mockJournalFolder, mockServiceContext);
+		readinessWebContentService.addArticle(webContent, mockJournalFolder, mockServiceContext);
 	}
 
 	@Test
 	public void addFolder_WhenNoError_ThenReturnsTheFolder() throws PortalException {
 		when(mockJournalArticleCreationService.getOrCreateJournalFolder("Readiness Questionnaire", mockServiceContext)).thenReturn(mockJournalFolder);
 
-		JournalFolder result = readinessSetupService.addFolder(mockServiceContext);
+		JournalFolder result = readinessWebContentService.addFolder(mockServiceContext);
 
 		assertThat(result, sameInstance(mockJournalFolder));
 	}
@@ -93,7 +93,7 @@ public class ReadinessSetupServiceTest extends PowerMockito {
 	public void addFolder_WhenExceptionCreatingTheFolder_ThenThrowsPortalException() throws PortalException {
 		when(mockJournalArticleCreationService.getOrCreateJournalFolder("Readiness Questionnaire", mockServiceContext)).thenThrow(new PortalException());
 
-		readinessSetupService.addFolder(mockServiceContext);
+		readinessWebContentService.addFolder(mockServiceContext);
 	}
 
 	@Test
@@ -101,7 +101,7 @@ public class ReadinessSetupServiceTest extends PowerMockito {
 		Long expected = 11l;
 		when(mockGroup.getGroupId()).thenReturn(expected);
 
-		ServiceContext result = readinessSetupService.getServiceContext(mockGroup);
+		ServiceContext result = readinessWebContentService.getServiceContext(mockGroup);
 
 		assertThat(result.getScopeGroupId(), equalTo(expected));
 	}
@@ -111,7 +111,7 @@ public class ReadinessSetupServiceTest extends PowerMockito {
 		Long expected = 11l;
 		when(mockGroup.getCompanyId()).thenReturn(expected);
 
-		ServiceContext result = readinessSetupService.getServiceContext(mockGroup);
+		ServiceContext result = readinessWebContentService.getServiceContext(mockGroup);
 
 		assertThat(result.getCompanyId(), equalTo(expected));
 	}
@@ -121,7 +121,7 @@ public class ReadinessSetupServiceTest extends PowerMockito {
 		Long expected = 11l;
 		when(mockGroup.getCreatorUserId()).thenReturn(expected);
 
-		ServiceContext result = readinessSetupService.getServiceContext(mockGroup);
+		ServiceContext result = readinessWebContentService.getServiceContext(mockGroup);
 
 		assertThat(result.getUserId(), equalTo(expected));
 	}
@@ -131,7 +131,7 @@ public class ReadinessSetupServiceTest extends PowerMockito {
 		String expected = "expectedValue";
 		when(mockGroup.getDefaultLanguageId()).thenReturn(expected);
 
-		ServiceContext result = readinessSetupService.getServiceContext(mockGroup);
+		ServiceContext result = readinessWebContentService.getServiceContext(mockGroup);
 
 		assertThat(result.getLanguageId(), equalTo(expected));
 	}

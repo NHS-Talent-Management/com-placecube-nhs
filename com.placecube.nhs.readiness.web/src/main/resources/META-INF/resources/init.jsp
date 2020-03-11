@@ -11,7 +11,6 @@
 <%@page import="com.liferay.portal.kernel.util.Constants"%>
 <%@page import="com.placecube.nhs.readiness.web.constants.MVCCommandKeys"%>
 <%@page import="com.placecube.nhs.readiness.web.constants.PortletKeys"%>
-<%@page import="com.placecube.nhs.readiness.web.constants.WebContentArticles"%>
 
 <liferay-theme:defineObjects />
 

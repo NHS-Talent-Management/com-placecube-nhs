@@ -8,8 +8,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.placecube.nhs.readiness.web.constants.MVCCommandKeys;
 import com.placecube.nhs.readiness.web.constants.PortletKeys;
 import com.placecube.nhs.readiness.web.constants.ViewKeys;
@@ -24,8 +22,7 @@ public class ReadinessQuestionnaireMVCRenderCommand implements MVCRenderCommand 
 
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
-		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		renderRequest.setAttribute("webContentGroupId", readinessQuestionnaireService.getWebContentGroupId(themeDisplay));
+		readinessQuestionnaireService.setWebContentAttributesInRequest(renderRequest, true);
 		return ViewKeys.QUESTIONNAIRE_START;
 	}
 

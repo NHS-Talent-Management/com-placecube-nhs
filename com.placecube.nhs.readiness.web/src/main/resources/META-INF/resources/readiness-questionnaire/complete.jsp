@@ -5,11 +5,20 @@
 		<div class="row">
 			<div class="col-md-12">
 				<liferay-journal:journal-article 
-					articleId="<%= WebContentArticles.READINESS_QUESTIONNAIRE_COMPLETED.getArticleId() %>" 
+					articleId="${webContentArticleId}" 
 					groupId="${webContentGroupId}" 
 					showTitle="false" />
 			</div>
 		</div>
+		<c:if test="${not empty closeURL}">
+			<div class="row">
+				<div class="col-md-12">
+					<a href="${closeURL}" class="nhsuk-button">
+						<liferay-ui:message key="go-to-my-profile"/>
+					</a>
+				</div>
+			</div>
+		</c:if>
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-warning">

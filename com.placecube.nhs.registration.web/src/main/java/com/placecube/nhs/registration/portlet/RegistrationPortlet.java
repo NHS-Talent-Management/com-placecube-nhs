@@ -10,10 +10,7 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.placecube.nhs.registration.constants.PortletKeys;
 import com.placecube.nhs.registration.service.RegistrationService;
@@ -23,9 +20,6 @@ import com.placecube.nhs.registration.service.RegistrationService;
 		"javax.portlet.security-role-ref=power-user,user", "javax.portlet.name=" + PortletKeys.REGISTRATION,
 		"javax.portlet.init-param.add-process-action-success-action=false" }, service = Portlet.class)
 public class RegistrationPortlet extends MVCPortlet {
-
-	@Reference
-	private GroupLocalService groupLocalService;
 
 	@Reference
 	private Portal portal;
@@ -38,8 +32,7 @@ public class RegistrationPortlet extends MVCPortlet {
 		registrationService.checkAccountCreationEnabled(renderRequest);
 
 		try {
-			Group group = groupLocalService.getGroup(portal.getCompanyId(renderRequest), GroupConstants.GUEST);
-			renderRequest.setAttribute("webContentGroupId", group.getGroupId());
+			renderRequest.setAttribute("webContentGroupId", portal.getCompany(renderRequest).getGroupId());
 			super.render(renderRequest, renderResponse);
 		} catch (Exception e) {
 			throw new PortletException(e);

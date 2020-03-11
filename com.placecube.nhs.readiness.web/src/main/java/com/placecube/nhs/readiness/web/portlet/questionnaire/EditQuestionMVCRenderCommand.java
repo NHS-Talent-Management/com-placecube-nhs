@@ -36,11 +36,13 @@ public class EditQuestionMVCRenderCommand implements MVCRenderCommand {
 		String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
 
 		String noQuestionViewPage;
+		boolean showIntro = false;
 		int questionIndex;
 
 		if ("previous".equals(cmd)) {
 			questionIndex = currentQuestionIndex - 1;
 			noQuestionViewPage = ViewKeys.QUESTIONNAIRE_START;
+			showIntro = true;
 		} else if ("next".equals(cmd)) {
 			questionIndex = currentQuestionIndex + 1;
 			noQuestionViewPage = ViewKeys.QUESTIONNAIRE_COMPLETE;
@@ -58,7 +60,7 @@ public class EditQuestionMVCRenderCommand implements MVCRenderCommand {
 			return ViewKeys.QUESTIONNAIRE_EDIT;
 
 		} else {
-			renderRequest.setAttribute("webContentGroupId", readinessQuestionnaireService.getWebContentGroupId(themeDisplay));
+			readinessQuestionnaireService.setWebContentAttributesInRequest(renderRequest, showIntro);
 			return noQuestionViewPage;
 		}
 	}

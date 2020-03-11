@@ -22,10 +22,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.placecube.nhs.registration.service.RegistrationService;
 
@@ -33,7 +31,6 @@ import com.placecube.nhs.registration.service.RegistrationService;
 @PrepareForTest({ MVCPortlet.class })
 public class RegistrationPortletTest extends PowerMockito {
 
-	private static final Long COMPANY_ID = 11l;
 	private static final Long GROUP_ID = 22l;
 
 	@InjectMocks
@@ -41,9 +38,6 @@ public class RegistrationPortletTest extends PowerMockito {
 
 	@Mock
 	private RegistrationService mockRegistrationService;
-
-	@Mock
-	private GroupLocalService mockGroupLocalService;
 
 	@Mock
 	private Portal mockPortal;
@@ -55,7 +49,7 @@ public class RegistrationPortletTest extends PowerMockito {
 	private RenderResponse mockRenderResponse;
 
 	@Mock
-	private Group mockGroup;
+	private Company mockCompany;
 
 	@Before
 	public void setUp() throws Exception {
@@ -70,9 +64,8 @@ public class RegistrationPortletTest extends PowerMockito {
 	}
 
 	@Test(expected = PortletException.class)
-	public void render_WhenNoErrorCheckingAccountCreationAndExceptionRetrievingGroup_ThenThrowsPortletException() throws Exception {
-		when(mockPortal.getCompanyId(mockRenderRequest)).thenReturn(COMPANY_ID);
-		when(mockGroupLocalService.getGroup(COMPANY_ID, GroupConstants.GUEST)).thenThrow(new PortalException());
+	public void render_WhenNoErrorCheckingAccountCreationAndExceptionRetrievingCompany_ThenThrowsPortletException() throws Exception {
+		when(mockPortal.getCompany(mockRenderRequest)).thenThrow(new PortalException());
 
 		registrationPortlet.render(mockRenderRequest, mockRenderResponse);
 	}
@@ -99,9 +92,8 @@ public class RegistrationPortletTest extends PowerMockito {
 	}
 
 	private void mockGroupDetails() throws PortalException {
-		when(mockPortal.getCompanyId(mockRenderRequest)).thenReturn(COMPANY_ID);
-		when(mockGroupLocalService.getGroup(COMPANY_ID, GroupConstants.GUEST)).thenReturn(mockGroup);
-		when(mockGroup.getGroupId()).thenReturn(GROUP_ID);
+		when(mockPortal.getCompany(mockRenderRequest)).thenReturn(mockCompany);
+		when(mockCompany.getGroupId()).thenReturn(GROUP_ID);
 	}
 
 }

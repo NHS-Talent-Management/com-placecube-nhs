@@ -19,7 +19,6 @@ import org.powermock.api.mockito.PowerMockito;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -55,28 +54,6 @@ public class ReadinessQuestionnaireServiceTest extends PowerMockito {
 	@Before
 	public void setUp() {
 		initMocks(this);
-	}
-
-	@Test(expected = PortletException.class)
-	public void getWebContentGroupId_WhenExceptionRetrievingGroup_ThenThrowsPortletException() throws Exception {
-		long companyId = 123;
-		when(mockThemeDisplay.getCompanyId()).thenReturn(companyId);
-		when(mockGroupLocalService.getGroup(companyId, GroupConstants.GUEST)).thenThrow(new PortalException());
-
-		readinessQuestionnaireService.getWebContentGroupId(mockThemeDisplay);
-	}
-
-	@Test
-	public void getWebContentGroupId_WhenNoError_TheNReturnsTheGuestGroupId() throws Exception {
-		long companyId = 123;
-		long groupId = 456l;
-		when(mockThemeDisplay.getCompanyId()).thenReturn(companyId);
-		when(mockGroupLocalService.getGroup(companyId, GroupConstants.GUEST)).thenReturn(mockGroup);
-		when(mockGroup.getGroupId()).thenReturn(groupId);
-
-		long result = readinessQuestionnaireService.getWebContentGroupId(mockThemeDisplay);
-
-		assertThat(result, equalTo(groupId));
 	}
 
 	@Test(expected = PortletException.class)

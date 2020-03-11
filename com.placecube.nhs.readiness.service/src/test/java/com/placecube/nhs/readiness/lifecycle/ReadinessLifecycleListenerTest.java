@@ -1,4 +1,4 @@
-package com.placecube.nhs.readiness.web.lifefycle;
+package com.placecube.nhs.readiness.lifecycle;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -14,10 +14,9 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.placecube.nhs.readiness.web.constants.WebContentArticles;
+import com.placecube.nhs.readiness.constants.WebContentArticles;
+import com.placecube.nhs.readiness.service.impl.ReadinessWebContentService;
 
 public class ReadinessLifecycleListenerTest extends PowerMockito {
 
@@ -27,10 +26,7 @@ public class ReadinessLifecycleListenerTest extends PowerMockito {
 	private ReadinessLifecycleListener readinessLifecycleListener;
 
 	@Mock
-	private ReadinessSetupService mockReadinessSetupService;
-
-	@Mock
-	private GroupLocalService mockGroupLocalService;
+	private ReadinessWebContentService mockReadinessWebContentService;
 
 	@Mock
 	private Company mockCompany;
@@ -50,9 +46,9 @@ public class ReadinessLifecycleListenerTest extends PowerMockito {
 	}
 
 	@Test(expected = PortalException.class)
-	public void portalInstanceRegistered_WhenExceptionRetrievingTheGuestGroup_ThenThrowsPortalException() throws Exception {
+	public void portalInstanceRegistered_WhenExceptionRetrievingThGroup_ThenThrowsPortalException() throws Exception {
 		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
-		when(mockGroupLocalService.getGroup(COMPANY_ID, GroupConstants.GUEST)).thenThrow(new PortalException());
+		when(mockCompany.getGroup()).thenThrow(new PortalException());
 
 		readinessLifecycleListener.portalInstanceRegistered(mockCompany);
 	}
@@ -60,35 +56,35 @@ public class ReadinessLifecycleListenerTest extends PowerMockito {
 	@Test(expected = PortalException.class)
 	public void portalInstanceRegistered_WhenExceptionAddingFolder_ThenThrowsPortalException() throws Exception {
 		mockServiceContextDetails();
-		when(mockReadinessSetupService.addFolder(mockServiceContext)).thenThrow(new PortalException());
+		when(mockReadinessWebContentService.addFolder(mockServiceContext)).thenThrow(new PortalException());
 
 		readinessLifecycleListener.portalInstanceRegistered(mockCompany);
 	}
 
 	@Test(expected = Exception.class)
-	public void portalInstanceRegistered_WhenExceptionAddingCareerReadinessArticle_ThenThrowsException() throws Exception {
+	public void portalInstanceRegistered_WhenExceptionAddingIntroReadinessArticle_ThenThrowsException() throws Exception {
 		mockServiceContextDetails();
-		when(mockReadinessSetupService.addFolder(mockServiceContext)).thenReturn(mockJournalFolder);
-		doThrow(new Exception()).when(mockReadinessSetupService).addArticle(WebContentArticles.CAREER_READINESS, mockJournalFolder, mockServiceContext);
+		when(mockReadinessWebContentService.addFolder(mockServiceContext)).thenReturn(mockJournalFolder);
+		doThrow(new Exception()).when(mockReadinessWebContentService).addArticle(WebContentArticles.READINESS_QUESTIONNAIRE_INTRO, mockJournalFolder, mockServiceContext);
 
 		readinessLifecycleListener.portalInstanceRegistered(mockCompany);
 	}
 
 	@Test
-	public void portalInstanceRegistered_WhenNoError_ThenAddsCareerReadinessArticle() throws Exception {
+	public void portalInstanceRegistered_WhenNoError_ThenAddsIntroReadinessArticle() throws Exception {
 		mockServiceContextDetails();
-		when(mockReadinessSetupService.addFolder(mockServiceContext)).thenReturn(mockJournalFolder);
+		when(mockReadinessWebContentService.addFolder(mockServiceContext)).thenReturn(mockJournalFolder);
 
 		readinessLifecycleListener.portalInstanceRegistered(mockCompany);
 
-		verify(mockReadinessSetupService, times(1)).addArticle(WebContentArticles.CAREER_READINESS, mockJournalFolder, mockServiceContext);
+		verify(mockReadinessWebContentService, times(1)).addArticle(WebContentArticles.READINESS_QUESTIONNAIRE_INTRO, mockJournalFolder, mockServiceContext);
 	}
 
 	@Test(expected = Exception.class)
 	public void portalInstanceRegistered_WhenExceptionAddingReadinessQuestionnaireCompletedArticle_ThenThrowsException() throws Exception {
 		mockServiceContextDetails();
-		when(mockReadinessSetupService.addFolder(mockServiceContext)).thenReturn(mockJournalFolder);
-		doThrow(new Exception()).when(mockReadinessSetupService).addArticle(WebContentArticles.READINESS_QUESTIONNAIRE_COMPLETED, mockJournalFolder, mockServiceContext);
+		when(mockReadinessWebContentService.addFolder(mockServiceContext)).thenReturn(mockJournalFolder);
+		doThrow(new Exception()).when(mockReadinessWebContentService).addArticle(WebContentArticles.READINESS_QUESTIONNAIRE_COMPLETED, mockJournalFolder, mockServiceContext);
 
 		readinessLifecycleListener.portalInstanceRegistered(mockCompany);
 	}
@@ -96,17 +92,17 @@ public class ReadinessLifecycleListenerTest extends PowerMockito {
 	@Test
 	public void portalInstanceRegistered_WhenNoError_ThenAddsReadinessQuestionnaireCompletedArticle() throws Exception {
 		mockServiceContextDetails();
-		when(mockReadinessSetupService.addFolder(mockServiceContext)).thenReturn(mockJournalFolder);
+		when(mockReadinessWebContentService.addFolder(mockServiceContext)).thenReturn(mockJournalFolder);
 
 		readinessLifecycleListener.portalInstanceRegistered(mockCompany);
 
-		verify(mockReadinessSetupService, times(1)).addArticle(WebContentArticles.READINESS_QUESTIONNAIRE_COMPLETED, mockJournalFolder, mockServiceContext);
+		verify(mockReadinessWebContentService, times(1)).addArticle(WebContentArticles.READINESS_QUESTIONNAIRE_COMPLETED, mockJournalFolder, mockServiceContext);
 	}
 
 	private void mockServiceContextDetails() throws PortalException {
 		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
-		when(mockGroupLocalService.getGroup(COMPANY_ID, GroupConstants.GUEST)).thenReturn(mockGroup);
-		when(mockReadinessSetupService.getServiceContext(mockGroup)).thenReturn(mockServiceContext);
+		when(mockCompany.getGroup()).thenReturn(mockGroup);
+		when(mockReadinessWebContentService.getServiceContext(mockGroup)).thenReturn(mockServiceContext);
 	}
 
 }

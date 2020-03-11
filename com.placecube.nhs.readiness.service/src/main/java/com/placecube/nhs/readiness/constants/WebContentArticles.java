@@ -1,10 +1,10 @@
-package com.placecube.nhs.readiness.web.constants;
+package com.placecube.nhs.readiness.constants;
 
 public enum WebContentArticles {
 
-	CAREER_READINESS("CAREER-READINESS", "Career Readiness"),
+	READINESS_QUESTIONNAIRE_INTRO("READINESS-QUESTIONNAIRE-INTRO", "Readiness Questionnaire intro"),
 
-	READINESS_QUESTIONNAIRE_COMPLETED("READINESS-QUESTIONNAIRE-COMPLETED", "Questionnaire completed");
+	READINESS_QUESTIONNAIRE_COMPLETED("READINESS-QUESTIONNAIRE-COMPLETED", "Readiness Questionnaire completed");
 
 	private final String articleId;
 	private final String articleTitle;
