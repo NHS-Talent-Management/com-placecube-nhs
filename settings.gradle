@@ -6,6 +6,7 @@ def modules = [
 	'com.placecube.nhs.indexer.group',
 	'com.placecube.nhs.language',
 	'com.placecube.nhs.navigationmenu',
+	'com.placecube.nhs.override.facebooklogin.jsp',
 	'com.placecube.nhs.override.login.jsp',
 	'com.placecube.nhs.readiness.api',
 	'com.placecube.nhs.readiness.service',
@@ -19,7 +20,8 @@ def modules = [
 	'com.placecube.nhs.userprofile.service',
 	'com.placecube.nhs.user.profile.web',
 	'com.placecube.nhs.webcontent.listing.web',
-	'com.placecube.nhs.webcontent.structures'
+	'com.placecube.nhs.webcontent.structures',
+	'javascript-theme-contributor'
 ] as String[]
 
 include modules

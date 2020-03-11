@@ -5,7 +5,6 @@ dependencies {
 	compile group: 'com.liferay', name: 'com.liferay.captcha.api'
 	compile group: 'com.liferay', name: 'com.liferay.petra.lang'
 	compile group: 'com.liferay', name: 'com.liferay.petra.string'
-	compile group: 'com.liferay', name: 'com.liferay.portal.configuration.metatype.api'
 	compile group: 'com.liferay', name: 'com.liferay.portal.instance.lifecycle.api'
 	compile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel'
 	compile group: 'com.placecube.digitalplace', name: 'com.placecube.digitalplace.journal.api', version: '1.2.0'
