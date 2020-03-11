@@ -12,6 +12,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -47,6 +48,26 @@ public class ReadinessServiceImpl implements ReadinessService {
 		try {
 			List<ReadinessQuestion> questions = getQuestions(user);
 			return questions.stream().filter(question -> questionId == question.getQuestionId()).findFirst().get();
+		} catch (Exception e) {
+			throw new PortalException(e);
+		}
+	}
+
+	@Override
+	public List<ReadinessQuestion> getQuestionnaire(Company company) throws PortalException {
+		try {
+			ReadinessInstanceConfiguration configuration = configurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, company.getCompanyId());
+
+			String[] questions = configuration.questions();
+			if (ArrayUtil.isNotEmpty(questions) && Validator.isNotNull(questions[0])) {
+				List<ReadinessQuestion> results = new LinkedList<>();
+				for (int index = 0; index < questions.length; index++) {
+					results.add(modelFactoryBuilder.getQuestion(company, index, questions[index]));
+				}
+				return results;
+			} else {
+				throw new PortalException("No questions configured");
+			}
 		} catch (Exception e) {
 			throw new PortalException(e);
 		}

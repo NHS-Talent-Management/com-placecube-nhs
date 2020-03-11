@@ -3,6 +3,7 @@ package com.placecube.nhs.readiness.service;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
 
@@ -15,5 +16,7 @@ public interface ReadinessService {
 	List<ReadinessQuestion> getQuestions(User user) throws PortalException;
 
 	void updateAnswer(long questionId, long userId, String value) throws PortalException;
+
+	List<ReadinessQuestion> getQuestionnaire(Company company) throws PortalException;
 
 }

@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.placecube.nhs.readiness.configuration.ReadinessInstanceConfiguration;
@@ -69,6 +70,9 @@ public class ReadinessServiceImplTest extends PowerMockito {
 
 	@Mock
 	private ReadinessQuestion mockReadinessQuestion3;
+
+	@Mock
+	private Company mockCompany;
 
 	@Before
 	public void setUp() {
@@ -230,6 +234,52 @@ public class ReadinessServiceImplTest extends PowerMockito {
 		readinessServiceImpl.updateAnswer(COLUMN_ID_1, USER_ID, StringPool.BLANK);
 
 		verify(mockExpandoValueLocalService, times(1)).deleteValue(COMPANY_ID, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, NAME, USER_ID);
+	}
+
+	@Test(expected = PortalException.class)
+	public void getQuestionnaire_WhenNoQuestionsFound_ThenThrowsPortalException() throws Exception {
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(null);
+
+		readinessServiceImpl.getQuestionnaire(mockCompany);
+	}
+
+	@Test(expected = PortalException.class)
+	public void getQuestionnaire_WhenNoQuestionConfigured_ThenThrowsPortalException() throws Exception {
+		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(new String[0]);
+
+		readinessServiceImpl.getQuestionnaire(mockCompany);
+	}
+
+	@Test(expected = PortalException.class)
+	public void getQuestionnaire_WhenQuestionConfiguredWithEmptyValue_ThenThrowsPortalException() throws Exception {
+		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(new String[] { StringPool.BLANK });
+
+		readinessServiceImpl.getQuestionnaire(mockCompany);
+	}
+
+	@Test
+	public void getQuestionnaire_WhenQuestionsConfigured_ThenReturnsTheQuestions() throws Exception {
+		String[] questions = new String[] { "questionName1=Question title 1", "questionName2=Question title 2", "questionName3=Question title 3" };
+		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(questions);
+		mockCompanyQuestion("questionName1=Question title 1", COLUMN_ID_1, mockReadinessQuestion1, 0);
+		mockCompanyQuestion("questionName2=Question title 2", COLUMN_ID_2, mockReadinessQuestion2, 1);
+		mockCompanyQuestion("questionName3=Question title 3", COLUMN_ID_3, mockReadinessQuestion3, 2);
+
+		List<ReadinessQuestion> results = readinessServiceImpl.getQuestionnaire(mockCompany);
+
+		assertThat(results, contains(mockReadinessQuestion1, mockReadinessQuestion2, mockReadinessQuestion3));
+	}
+
+	private void mockCompanyQuestion(String questionConfig, long columnId, ReadinessQuestion readinessQuestion, int index) throws PortalException {
+		when(mockModelFactoryBuilder.getQuestion(mockCompany, index, questionConfig)).thenReturn(readinessQuestion);
+		when(readinessQuestion.getQuestionId()).thenReturn(columnId);
 	}
 
 	private void mockQuestion(String questionConfig, long columnId, ReadinessQuestion readinessQuestion, int index) {
