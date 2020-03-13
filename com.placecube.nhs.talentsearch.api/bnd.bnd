@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.talentsearch.api
 Bundle-Name: Placecube NHS - Talent Search API
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1.SNAPSHOT
 Export-Package: \
 	com.placecube.nhs.talentsearch.exception,\
 	com.placecube.nhs.talentsearch.model,\

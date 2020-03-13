@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.talentsearch.service
 Bundle-Name: Placecube NHS - Talent Search service
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1.SNAPSHOT
 
 Liferay-Require-SchemaVersion: 1.1.0
 Liferay-Service: true
