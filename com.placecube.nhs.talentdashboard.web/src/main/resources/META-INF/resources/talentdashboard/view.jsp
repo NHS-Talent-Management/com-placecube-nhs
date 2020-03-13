@@ -28,7 +28,8 @@
 					<div class="row">
 						<div class="col-md-12">
 							<h2>
-								<liferay-ui:message key="results-found" arguments="${searchContainer.getTotal()}"/>
+								<c:set var="messageKey" value="${searchContainer.getTotal() gt 1 ? 'x-results-found' : 'x-result-found'}"/>
+								<liferay-ui:message key="${messageKey}" arguments="${searchContainer.getTotal()}"/>
 							</h2>
 						</div>
 					</div>
