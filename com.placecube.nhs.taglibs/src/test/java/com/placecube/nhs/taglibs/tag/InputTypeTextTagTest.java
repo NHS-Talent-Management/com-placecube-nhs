@@ -124,7 +124,7 @@ public class InputTypeTextTagTest extends PowerMockito {
 	public void doStartTag_WhenNoError_ThenSetsAttributeNamespace() {
 		inputTypeTextTag.doStartTag();
 
-		assertThat(inputTypeTextTag.getAttributeNamespace(), equalTo("nhs-forms-ui:inputText"));
+		assertThat(inputTypeTextTag.getAttributeNamespace(), equalTo("nhs-forms-ui:input-text"));
 	}
 
 	@Test

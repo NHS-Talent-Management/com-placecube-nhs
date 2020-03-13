@@ -138,7 +138,7 @@ public class InputTypeCheckboxTagTest extends PowerMockito {
 	public void doStartTag_WhenNoError_ThenSetsAttributeNamespace() {
 		inputTypeCheckboxTag.doStartTag();
 
-		assertThat(inputTypeCheckboxTag.getAttributeNamespace(), equalTo("nhs-forms-ui:checkbox"));
+		assertThat(inputTypeCheckboxTag.getAttributeNamespace(), equalTo("nhs-forms-ui:input-checkbox"));
 	}
 
 	@Test

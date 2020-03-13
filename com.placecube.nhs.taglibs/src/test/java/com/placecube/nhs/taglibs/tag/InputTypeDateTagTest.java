@@ -150,7 +150,7 @@ public class InputTypeDateTagTest extends PowerMockito {
 	public void doStartTag_WhenNoError_ThenSetsAttributeNamespace() {
 		inputTypeDateTag.doStartTag();
 
-		assertThat(inputTypeDateTag.getAttributeNamespace(), equalTo("nhs-forms-ui:date"));
+		assertThat(inputTypeDateTag.getAttributeNamespace(), equalTo("nhs-forms-ui:input-date"));
 	}
 
 	@Test

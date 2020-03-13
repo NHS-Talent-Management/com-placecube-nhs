@@ -122,7 +122,7 @@ public class InputTypeTextareaTagTest extends PowerMockito {
 	public void doStartTag_WhenNoError_ThenSetsAttributeNamespace() {
 		inputTypeTextareaTag.doStartTag();
 
-		assertThat(inputTypeTextareaTag.getAttributeNamespace(), equalTo("nhs-forms-ui:textarea"));
+		assertThat(inputTypeTextareaTag.getAttributeNamespace(), equalTo("nhs-forms-ui:input-textarea"));
 	}
 
 	@Test
