@@ -1,6 +1,7 @@
 package com.placecube.nhs.readiness.model.impl;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 import java.util.Locale;
@@ -119,14 +120,14 @@ public class ModelFactoryBuilderTest extends PowerMockito {
 	}
 
 	@Test
-	public void getQuestion_WithCompanyParameter_WhenNoError_ThenReturnsTheQuestionWithSearchableQuestionIdConfigured() throws PortalException {
+	public void getQuestion_WithCompanyParameter_WhenNoError_ThenReturnsTheQuestionWithExpandoColumnConfigured() throws PortalException {
 		mockCompanyDetails();
 		mockColumnDetails();
 		mockExpandoValueDetails();
 
 		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockCompany, INDEX, NAME + "=" + QUESTION_TITLE);
 
-		assertThat(result.getSearchableQuestionId(), equalTo("expando__keyword__custom_fields__" + NAME));
+		assertThat(result.getExpandoColumn(), sameInstance(mockExpandoColumn));
 	}
 
 	@Test
@@ -196,14 +197,14 @@ public class ModelFactoryBuilderTest extends PowerMockito {
 	}
 
 	@Test
-	public void getQuestion_WithUserParameter_WhenNoError_ThenReturnsTheQuestionWithSearchableQuestionIdConfigured() {
+	public void getQuestion_WithUserParameter_WhenNoError_ThenReturnsTheQuestionWithExpandoColumnConfigured() {
 		mockUserDetails();
 		mockColumnDetails();
 		mockExpandoValueDetails();
 
 		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
 
-		assertThat(result.getSearchableQuestionId(), equalTo("expando__keyword__custom_fields__" + NAME));
+		assertThat(result.getExpandoColumn(), sameInstance(mockExpandoColumn));
 	}
 
 	@Test
