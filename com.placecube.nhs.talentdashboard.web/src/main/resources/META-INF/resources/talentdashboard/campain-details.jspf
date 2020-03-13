@@ -1,0 +1,28 @@
+<fieldset class="nhsuk-fieldset talent-search-settings">
+	
+	<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
+			fieldName="talentSearchName" 
+			fieldLabel="talent-search-name"
+			fieldValue="${talentSearchContext.getTalentSearchName()}" 
+			errorMessage="${validationErrors.get('talentSearchName')}" 
+			showAsPassword="false"/>
+
+	<nhs-forms-ui:input-select portletNamespace="${portletNamespace}" 
+			fieldName="talentSearchTypeId"
+			fieldLabel="talent-search-type"
+			fieldOptions="${availableTypes}"
+			fieldValue="${talentSearchContext.getTalentSearchTypeId()}"
+			errorMessage="${validationErrors.get('talentSearchTypeId')}" />
+
+	<nhs-forms-ui:input-select portletNamespace="${portletNamespace}" 
+			fieldName="talentSearchCategoryId"
+			fieldLabel="talent-search-category"
+			fieldOptions="${availableCategories}"
+			fieldValue="${talentSearchContext.getTalentSearchCategoryId()}"
+			errorMessage="${validationErrors.get('talentSearchCategoryId')}" />
+	
+	<aui:button-row cssClass="pull-right">
+		<aui:button type="submit" cssClass="nhsuk-button nhsuk-button--secondary btn-secondary" value="save" onClick="submitTalentSearchForm('${saveTalentSearchURL}')"/>
+	</aui:button-row>
+	
+</fieldset>

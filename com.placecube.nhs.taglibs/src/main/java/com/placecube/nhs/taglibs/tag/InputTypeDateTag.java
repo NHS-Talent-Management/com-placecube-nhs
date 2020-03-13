@@ -39,7 +39,7 @@ public class InputTypeDateTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
-		setAttributeNamespace("nhs-forms-ui:date");
+		setAttributeNamespace("nhs-forms-ui:input-date");
 		return EVAL_BODY_INCLUDE;
 	}
 

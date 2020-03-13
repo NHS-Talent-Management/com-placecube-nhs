@@ -27,12 +27,12 @@ public class ModelFactoryBuilder {
 	@Reference
 	private ExpandoValueLocalService expandoValueLocalService;
 
-	public ReadinessQuestion getQuestion(User user, int index, String questionConfig) {
-		return getPopulatedQuestion(user.getCompanyId(), user.getUserId(), user.getLocale(), index, questionConfig);
-	}
-
 	public ReadinessQuestion getQuestion(Company company, int index, String questionConfig) throws PortalException {
 		return getPopulatedQuestion(company.getCompanyId(), -1, company.getLocale(), index, questionConfig);
+	}
+
+	public ReadinessQuestion getQuestion(User user, int index, String questionConfig) {
+		return getPopulatedQuestion(user.getCompanyId(), user.getUserId(), user.getLocale(), index, questionConfig);
 	}
 
 	private ReadinessQuestion getPopulatedQuestion(long companyId, long userId, Locale locale, int index, String questionConfig) {
@@ -47,7 +47,7 @@ public class ModelFactoryBuilder {
 		String questionTitle = questionValues[1];
 		String[] availableValues = expandoColumn.getDefaultData().split(StringPool.COMMA);
 
-		return new ReadinessQuestionImpl(expandoColumn.getColumnId(), questionName, questionTitle, availableValues, index + 1, userAnswer);
+		return new ReadinessQuestionImpl(expandoColumn, questionName, questionTitle, availableValues, index + 1, userAnswer);
 	}
 
 }

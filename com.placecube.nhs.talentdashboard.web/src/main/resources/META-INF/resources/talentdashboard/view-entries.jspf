@@ -1,0 +1,24 @@
+<liferay-ui:search-container id="talentDashboardSearch" searchContainer="${searchContainer}" compactEmptyResultsMessage="true">
+	<liferay-ui:search-container-row className="com.liferay.portal.kernel.model.User" escapedModel="true" keyProperty="userId"  modelVar="user"> 
+		
+		<details class="nhsuk-details nhsuk-expander">
+			<summary class="nhsuk-details__summary">
+				<span class="nhsuk-details__summary-text">
+					${user.getFullName()}
+				</span>
+			</summary>
+			
+			<div class="nhsuk-details__text">
+				<dl class="nhsuk-summary-list">
+					<c:forEach items="${availableFilters}" var="availableFilter">
+						<nhs-user-ui:view-expando expandoFieldName="${availableFilter.getFieldName()}" expandoFieldLabel="${availableFilter.getFieldLabel()}" user="${user}"/>
+					</c:forEach>
+				</dl>
+			</div>
+		</details>
+			
+	</liferay-ui:search-container-row>
+	
+	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+</liferay-ui:search-container>
+

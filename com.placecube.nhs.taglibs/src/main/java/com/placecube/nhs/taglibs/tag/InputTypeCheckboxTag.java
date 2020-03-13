@@ -33,7 +33,7 @@ public class InputTypeCheckboxTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
-		setAttributeNamespace("nhs-forms-ui:checkbox");
+		setAttributeNamespace("nhs-forms-ui:input-checkbox");
 		return EVAL_BODY_INCLUDE;
 	}
 

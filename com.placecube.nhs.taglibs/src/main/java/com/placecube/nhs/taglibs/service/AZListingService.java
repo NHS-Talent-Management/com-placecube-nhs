@@ -28,7 +28,7 @@ public class AZListingService {
 		if (Validator.isNotNull(entries)) {
 			for (AZEntry entry : entries) {
 				String initial = entry.getInitial();
-				List<AZEntry> communitiesForInitial = results.get(initial);
+				List<AZEntry> communitiesForInitial = results.get(initial.toUpperCase());
 				communitiesForInitial.add(entry);
 				results.put(initial, communitiesForInitial);
 			}

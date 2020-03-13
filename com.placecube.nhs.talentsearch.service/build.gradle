@@ -1,0 +1,38 @@
+apply plugin: 'com.liferay.portal.tools.service.builder'
+
+dependencies {
+	compile project (':com.placecube.nhs.talentsearch.api')
+	
+	compile group: 'biz.aQute.bnd', name: 'biz.aQute.bndlib'
+	compile group: 'com.liferay', name: 'com.liferay.petra.string'
+	compile group: 'com.liferay', name: 'com.liferay.petra.lang'
+	compile group: 'org.osgi', name: 'org.osgi.annotation', version: '6.0.0'
+	compile group: 'com.liferay', name: 'com.liferay.portal.aop.api'
+	compile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel'
+	compile group: 'javax.servlet', name: 'javax.servlet-api'
+}
+
+buildService {
+	apiDir = '../com.placecube.nhs.talentsearch.api/src/main/java'
+	osgiModule = true
+	propsUtil = 'com.placecube.nhs.talentsearch.service.util.PropsUtil'
+}
+
+
+sonarqube {
+   properties {
+	    properties['sonar.exclusions'] = '**/model/impl/*.java,'
+	  	properties['sonar.exclusions'] += '**/service/base/*.java,'
+	    properties['sonar.exclusions'] += '**/service/persistence/impl/*.java,'
+	    properties['sonar.exclusions'] += '**/service/persistence/impl/constants/*.java,'
+	}
+}
+
+javadoc {
+    excludes.addAll([
+    	'**/model/impl/*.java',
+    	'**/service/base/*.java',
+    	'**/service/persistence/impl/*.java',
+    	'**/service/persistence/impl/constants/*.java',
+    ])
+}

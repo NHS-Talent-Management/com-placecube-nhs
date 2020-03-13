@@ -1,0 +1,9 @@
+Bundle-SymbolicName: com.placecube.nhs.talentsearch.api
+Bundle-Name: Placecube NHS - Talent Search API
+Bundle-Version: 1.0.0
+Export-Package: \
+	com.placecube.nhs.talentsearch.exception,\
+	com.placecube.nhs.talentsearch.model,\
+	com.placecube.nhs.talentsearch.service.persistence,\
+	com.placecube.nhs.talentsearch.service,\
+	com.placecube.nhs.talentsearch.constants

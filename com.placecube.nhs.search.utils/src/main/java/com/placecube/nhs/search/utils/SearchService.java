@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -28,6 +29,20 @@ public class SearchService {
 	@Reference
 	private IndexerRegistry indexerRegistry;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void configureBooleanClauses(SearchContext searchContext, BooleanClause... queries) {
+		searchContext.setBooleanClauses(queries);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void configureBooleanClauses(SearchContext searchContext, List<BooleanClause<Query>> queries) {
+		searchContext.setBooleanClauses(queries.toArray(new BooleanClause[queries.size()]));
+	}
+
+	public Hits executeSearch(SearchContext searchContext, String indexerClassName) throws SearchException {
+		return indexerRegistry.getIndexer(indexerClassName).search(searchContext);
+	}
+
 	public String getExpandoSearchFieldName(String fieldName) {
 		return "expando__keyword__custom_fields__" + fieldName;
 	}
@@ -38,30 +53,14 @@ public class SearchService {
 		return searchContext;
 	}
 
-	public void configureBooleanClauses(SearchContext searchContext, List<BooleanClause<Query>> queries) {
-		searchContext.setBooleanClauses(queries.toArray(new BooleanClause[queries.size()]));
+	public Document[] getSearchResults(SearchContext searchContext, String indexerClassName) throws SearchException {
+		Hits hits = indexerRegistry.getIndexer(indexerClassName).search(searchContext);
+		hits.getLength();
+		return hits.getDocs();
 	}
 
-	public void configureBooleanClauses(SearchContext searchContext, BooleanClause... queries) {
-		searchContext.setBooleanClauses(queries);
-	}
-
-	public BooleanClause<Query> getStringQuery(String fieldName, String fieldValue, BooleanClauseOccur match) {
-		return BooleanClauseFactoryUtil.create(new StringQuery("+(" + fieldName + ":" + fieldValue + ")"), match.toString());
-	}
-
-	public BooleanClause<Query> getStringQuery(String fieldName, long fieldValue, BooleanClauseOccur match) {
-		return BooleanClauseFactoryUtil.create(new StringQuery("+(" + fieldName + ":" + fieldValue + ")"), match.toString());
-	}
-
-	public BooleanClause<Query> getStringQuery(String fieldName, String[] fieldValues, BooleanClauseOccur match) throws SearchException {
-		String stringQuery = getValuesJoinedInOr(fieldName, fieldValues);
-		return getStringQuery(stringQuery, match);
-	}
-
-	public BooleanClause<Query> getStringQuery(String fieldName, long[] fieldValues, BooleanClauseOccur match) throws SearchException {
-		String stringQuery = getValuesJoinedInOr(fieldName, fieldValues);
-		return getStringQuery(stringQuery, match);
+	public Sort getSortOnDate(String fieldName, boolean reverse) {
+		return new Sort(Field.getSortableFieldName(fieldName), Sort.LONG_TYPE, reverse);
 	}
 
 	public BooleanClause<Query> getStringQuery(String stringQuery, BooleanClauseOccur match) throws SearchException {
@@ -71,13 +70,22 @@ public class SearchService {
 		throw new SearchException("Empty string query");
 	}
 
-	public Document[] getSearchResults(SearchContext searchContext, String indexerClassName) throws SearchException {
-		Hits hits = indexerRegistry.getIndexer(indexerClassName).search(searchContext);
-		return hits.getDocs();
+	public BooleanClause<Query> getStringQuery(String fieldName, long fieldValue, BooleanClauseOccur match) {
+		return BooleanClauseFactoryUtil.create(new StringQuery("+(" + fieldName + ":" + fieldValue + ")"), match.toString());
 	}
 
-	public Sort getSortOnDate(String fieldName, boolean reverse) {
-		return new Sort(Field.getSortableFieldName(fieldName), Sort.LONG_TYPE, reverse);
+	public BooleanClause<Query> getStringQuery(String fieldName, long[] fieldValues, BooleanClauseOccur match) throws SearchException {
+		String stringQuery = getValuesJoinedInOr(fieldName, fieldValues);
+		return getStringQuery(stringQuery, match);
+	}
+
+	public BooleanClause<Query> getStringQuery(String fieldName, String fieldValue, BooleanClauseOccur match) {
+		return BooleanClauseFactoryUtil.create(new StringQuery("+(" + fieldName + ":" + StringPool.QUOTE + fieldValue + StringPool.QUOTE + ")"), match.toString());
+	}
+
+	public BooleanClause<Query> getStringQuery(String fieldName, String[] fieldValues, BooleanClauseOccur match) throws SearchException {
+		String stringQuery = getValuesJoinedInOr(fieldName, fieldValues);
+		return getStringQuery(stringQuery, match);
 	}
 
 	public String getValuesJoinedInOr(String fieldName, long[] fieldValues) {
@@ -95,7 +103,7 @@ public class SearchService {
 
 		if (ArrayUtil.isNotEmpty(fieldValues)) {
 			for (String value : fieldValues) {
-				fieldValueQueries.add("(" + fieldName + ":" + value + ")");
+				fieldValueQueries.add("(" + fieldName + ":" + StringPool.QUOTE + value + StringPool.QUOTE + ")");
 			}
 		}
 		return fieldValueQueries.stream().collect(Collectors.joining(" OR "));

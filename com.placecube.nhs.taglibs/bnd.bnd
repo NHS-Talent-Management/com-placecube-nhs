@@ -1,11 +1,13 @@
 Bundle-SymbolicName: com.placecube.nhs.taglibs
 Bundle-Name: Placecube NHS taglibs
 Bundle-Category: Placecube
-Bundle-Version: 1.1.2.SNAPSHOT
+Bundle-Version: 1.2.0
 
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://placecube.com/tld/nhs-az-ui";version:Version="${Bundle-Version}",\
 	osgi.extender;osgi.extender="jsp.taglib";uri="http://placecube.com/tld/nhs-dates-ui";version:Version="${Bundle-Version}",\
-	osgi.extender;osgi.extender="jsp.taglib";uri="http://placecube.com/tld/nhs-forms-ui";version:Version="${Bundle-Version}"
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://placecube.com/tld/nhs-forms-ui";version:Version="${Bundle-Version}",\
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://placecube.com/tld/nhs-search-ui";version:Version="${Bundle-Version}",\
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://placecube.com/tld/nhs-user-ui";version:Version="${Bundle-Version}"
 
 Web-ContextPath: /com.placecube.nhs.taglibs
 

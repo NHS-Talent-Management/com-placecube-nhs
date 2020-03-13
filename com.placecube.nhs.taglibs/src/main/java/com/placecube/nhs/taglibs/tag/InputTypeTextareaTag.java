@@ -28,7 +28,7 @@ public class InputTypeTextareaTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
-		setAttributeNamespace("nhs-forms-ui:textarea");
+		setAttributeNamespace("nhs-forms-ui:input-textarea");
 		return EVAL_BODY_INCLUDE;
 	}
 

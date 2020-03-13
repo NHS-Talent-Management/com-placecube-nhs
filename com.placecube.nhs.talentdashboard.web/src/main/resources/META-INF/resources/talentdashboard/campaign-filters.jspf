@@ -1,0 +1,14 @@
+<fieldset class="nhsuk-fieldset talent-search-filters">
+	<c:forEach items="${availableFilters}" var="availableFilter">
+		<nhs-search-ui:filter-checkbox 
+				fieldLabel="${availableFilter.getFieldLabel()}" 
+				fieldOptions="${availableFilter.getFieldValues()}" 
+				fieldSelectedValues="${availableFilter.getFieldSelectedValuesList()}"
+				portletNamespace="${portletNamespace}" 
+				fieldName="${availableFilter.getSearchableFieldName()}"/>
+	</c:forEach>
+	
+	<aui:button-row>
+		<aui:button type="submit" cssClass="nhsuk-button nhsuk-button--primary btn-primary" value="search" onClick="submitTalentSearchForm('${searchTalentSearchURL}')"/>
+	</aui:button-row>
+</fieldset>

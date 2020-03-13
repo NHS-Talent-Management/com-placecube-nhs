@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder package-path="com.placecube.nhs.talentsearch">
+	<namespace>NHS_TalentSearch</namespace>
+	
+	<entity local-service="true" name="TalentSearch" remote-service="false" uuid="true">
+
+		<column name="talentSearchId" primary="true" type="long" />
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<column name="name" type="String" />
+		<column name="typeId" type="long" />
+		<column name="categoryId" type="long" />
+		<column name="queryFilter" type="String" />
+
+		<order>
+			<order-column name="createDate" order-by="desc"/>
+		</order>
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		 
+		<reference entity="User" package-path="com.liferay.portal" />
+		
+	</entity>
+	
+</service-builder>

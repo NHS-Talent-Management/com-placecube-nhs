@@ -4,15 +4,16 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.placecube.nhs.readiness.configuration.ReadinessInstanceConfiguration;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
 import com.placecube.nhs.readiness.model.impl.ModelFactoryBuilder;
@@ -58,6 +61,9 @@ public class ReadinessServiceImplTest extends PowerMockito {
 	private ReadinessInstanceConfiguration mockReadinessInstanceConfiguration;
 
 	@Mock
+	private IndexerRegistry mockIndexerRegistry;
+
+	@Mock
 	private User mockUser;
 
 	@Mock
@@ -75,28 +81,8 @@ public class ReadinessServiceImplTest extends PowerMockito {
 	@Mock
 	private Company mockCompany;
 
-	@Before
-	public void setUp() {
-		initMocks(this);
-	}
-
-	@Test
-	public void deleteAnswer_WhenNoError_ThenDeletesTheExpandoValue() throws PortalException {
-		when(mockExpandoColumnLocalService.getColumn(COLUMN_ID_1)).thenReturn(mockExpandoColumn);
-		when(mockExpandoColumn.getCompanyId()).thenReturn(COMPANY_ID);
-		when(mockExpandoColumn.getName()).thenReturn(NAME);
-
-		readinessServiceImpl.deleteAnswer(COLUMN_ID_1, USER_ID);
-
-		verify(mockExpandoValueLocalService, times(1)).deleteValue(COMPANY_ID, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, NAME, USER_ID);
-	}
-
-	@Test(expected = PortalException.class)
-	public void deleteAnswer_WhenExceptionRetrievingTheColumn_ThenThrowsPortalException() throws PortalException {
-		when(mockExpandoColumnLocalService.getColumn(COLUMN_ID_1)).thenThrow(new PortalException());
-
-		readinessServiceImpl.deleteAnswer(COLUMN_ID_1, USER_ID);
-	}
+	@Mock
+	private Indexer<Object> mockIndexer;
 
 	@Test(expected = PortalException.class)
 	public void deleteAnswer_WhenExceptionDeletingTheValue_ThenThrowsPortalException() throws PortalException {
@@ -106,6 +92,34 @@ public class ReadinessServiceImplTest extends PowerMockito {
 		doThrow(new PortalException()).when(mockExpandoValueLocalService).deleteValue(COMPANY_ID, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, NAME, USER_ID);
 
 		readinessServiceImpl.deleteAnswer(COLUMN_ID_1, USER_ID);
+	}
+
+	@Test(expected = PortalException.class)
+	public void deleteAnswer_WhenExceptionRetrievingTheColumn_ThenThrowsPortalException() throws PortalException {
+		when(mockExpandoColumnLocalService.getColumn(COLUMN_ID_1)).thenThrow(new PortalException());
+
+		readinessServiceImpl.deleteAnswer(COLUMN_ID_1, USER_ID);
+	}
+
+	@Test
+	public void deleteAnswer_WhenNoError_ThenDeletesTheExpandoValueAndExecutesTheUserReindex() throws PortalException {
+		when(mockExpandoColumnLocalService.getColumn(COLUMN_ID_1)).thenReturn(mockExpandoColumn);
+		when(mockExpandoColumn.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockExpandoColumn.getName()).thenReturn(NAME);
+		when(mockIndexerRegistry.getIndexer(User.class.getName())).thenReturn(mockIndexer);
+
+		readinessServiceImpl.deleteAnswer(COLUMN_ID_1, USER_ID);
+
+		InOrder inOrder = Mockito.inOrder(mockExpandoValueLocalService, mockIndexer);
+		inOrder.verify(mockExpandoValueLocalService, times(1)).deleteValue(COMPANY_ID, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, NAME, USER_ID);
+		inOrder.verify(mockIndexer, times(1)).reindex(User.class.getName(), USER_ID);
+	}
+
+	@Test(expected = PortalException.class)
+	public void getCloseURL_WhenExceptionRetrievingConfiguration_ThenThrowsPortalException() throws PortalException {
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenThrow(new ConfigurationException());
+
+		readinessServiceImpl.getCloseURL(COMPANY_ID);
 	}
 
 	@Test
@@ -120,22 +134,6 @@ public class ReadinessServiceImplTest extends PowerMockito {
 	}
 
 	@Test(expected = PortalException.class)
-	public void getCloseURL_WhenExceptionRetrievingConfiguration_ThenThrowsPortalException() throws PortalException {
-		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenThrow(new ConfigurationException());
-
-		readinessServiceImpl.getCloseURL(COMPANY_ID);
-	}
-
-	@Test(expected = PortalException.class)
-	public void getQuestion_WhenNoQuestionsFound_ThenThrowsPortalException() throws Exception {
-		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
-		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
-		when(mockReadinessInstanceConfiguration.questions()).thenReturn(null);
-
-		readinessServiceImpl.getQuestion(COLUMN_ID_1, mockUser);
-	}
-
-	@Test(expected = PortalException.class)
 	public void getQuestion_WhenNoQuestionFoundWithTheGivenId_ThenThrowsPortalException() throws Exception {
 		String[] questions = new String[] { "questionName1=Question title 1", "questionName2=Question title 2", "questionName3=Question title 3" };
 		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
@@ -146,6 +144,15 @@ public class ReadinessServiceImplTest extends PowerMockito {
 		mockQuestion("questionName3=Question title 3", COLUMN_ID_3, mockReadinessQuestion3, 2);
 
 		readinessServiceImpl.getQuestion(456789456789l, mockUser);
+	}
+
+	@Test(expected = PortalException.class)
+	public void getQuestion_WhenNoQuestionsFound_ThenThrowsPortalException() throws Exception {
+		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(null);
+
+		readinessServiceImpl.getQuestion(COLUMN_ID_1, mockUser);
 	}
 
 	@Test
@@ -164,12 +171,44 @@ public class ReadinessServiceImplTest extends PowerMockito {
 	}
 
 	@Test(expected = PortalException.class)
-	public void getQuestions_WhenNoQuestionsFound_ThenThrowsPortalException() throws Exception {
+	public void getQuestionnaire_WhenNoQuestionConfigured_ThenThrowsPortalException() throws Exception {
 		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(new String[0]);
+
+		readinessServiceImpl.getQuestionnaire(mockCompany);
+	}
+
+	@Test(expected = PortalException.class)
+	public void getQuestionnaire_WhenNoQuestionsFound_ThenThrowsPortalException() throws Exception {
 		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
 		when(mockReadinessInstanceConfiguration.questions()).thenReturn(null);
 
-		readinessServiceImpl.getQuestions(mockUser);
+		readinessServiceImpl.getQuestionnaire(mockCompany);
+	}
+
+	@Test(expected = PortalException.class)
+	public void getQuestionnaire_WhenQuestionConfiguredWithEmptyValue_ThenThrowsPortalException() throws Exception {
+		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(new String[] { StringPool.BLANK });
+
+		readinessServiceImpl.getQuestionnaire(mockCompany);
+	}
+
+	@Test
+	public void getQuestionnaire_WhenQuestionsConfigured_ThenReturnsTheQuestions() throws Exception {
+		String[] questions = new String[] { "questionName1=Question title 1", "questionName2=Question title 2", "questionName3=Question title 3" };
+		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(questions);
+		mockCompanyQuestion("questionName1=Question title 1", COLUMN_ID_1, mockReadinessQuestion1, 0);
+		mockCompanyQuestion("questionName2=Question title 2", COLUMN_ID_2, mockReadinessQuestion2, 1);
+		mockCompanyQuestion("questionName3=Question title 3", COLUMN_ID_3, mockReadinessQuestion3, 2);
+
+		List<ReadinessQuestion> results = readinessServiceImpl.getQuestionnaire(mockCompany);
+
+		assertThat(results, contains(mockReadinessQuestion1, mockReadinessQuestion2, mockReadinessQuestion3));
 	}
 
 	@Test(expected = PortalException.class)
@@ -177,6 +216,15 @@ public class ReadinessServiceImplTest extends PowerMockito {
 		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
 		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
 		when(mockReadinessInstanceConfiguration.questions()).thenReturn(new String[0]);
+
+		readinessServiceImpl.getQuestions(mockUser);
+	}
+
+	@Test(expected = PortalException.class)
+	public void getQuestions_WhenNoQuestionsFound_ThenThrowsPortalException() throws Exception {
+		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(null);
 
 		readinessServiceImpl.getQuestions(mockUser);
 	}
@@ -205,6 +253,11 @@ public class ReadinessServiceImplTest extends PowerMockito {
 		assertThat(results, contains(mockReadinessQuestion1, mockReadinessQuestion2, mockReadinessQuestion3));
 	}
 
+	@Before
+	public void setUp() {
+		initMocks(this);
+	}
+
 	@Test(expected = PortalException.class)
 	public void updateAnswer_WhenExceptionRetrievingColumn_ThenThrowsPortalException() throws PortalException {
 		when(mockExpandoColumnLocalService.getColumn(COLUMN_ID_1)).thenThrow(new PortalException());
@@ -212,12 +265,19 @@ public class ReadinessServiceImplTest extends PowerMockito {
 		readinessServiceImpl.updateAnswer(COLUMN_ID_1, USER_ID, VALUE);
 	}
 
-	@Test(expected = PortalException.class)
-	public void updateAnswer_WhenValueIsNotAccepted_ThenThrowsPortalException() throws PortalException {
+	@Test
+	public void updateAnswer_WhenValueIsAccepted_ThenUpdatesTheValueAndReindexTheUser() throws PortalException {
 		when(mockExpandoColumnLocalService.getColumn(COLUMN_ID_1)).thenReturn(mockExpandoColumn);
-		when(mockExpandoColumn.getDefaultData()).thenReturn("someOther,values");
+		when(mockExpandoColumn.getDefaultData()).thenReturn("someOther,values," + VALUE + ",andAnother one");
+		when(mockExpandoColumn.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockExpandoColumn.getName()).thenReturn(NAME);
+		when(mockIndexerRegistry.getIndexer(User.class.getName())).thenReturn(mockIndexer);
 
 		readinessServiceImpl.updateAnswer(COLUMN_ID_1, USER_ID, VALUE);
+
+		InOrder inOrder = Mockito.inOrder(mockExpandoValueLocalService, mockIndexer);
+		inOrder.verify(mockExpandoValueLocalService, times(1)).addValue(COMPANY_ID, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, NAME, USER_ID, new String[] { VALUE });
+		inOrder.verify(mockIndexer, times(1)).reindex(User.class.getName(), USER_ID);
 	}
 
 	@Test(expected = PortalException.class)
@@ -232,68 +292,26 @@ public class ReadinessServiceImplTest extends PowerMockito {
 	}
 
 	@Test
-	public void updateAnswer_WhenValueIsAccepted_ThenUpdatesTheValue() throws PortalException {
+	public void updateAnswer_WhenValueIsEmpty_ThenRemovesValueAndReindexTheUser() throws PortalException {
 		when(mockExpandoColumnLocalService.getColumn(COLUMN_ID_1)).thenReturn(mockExpandoColumn);
 		when(mockExpandoColumn.getDefaultData()).thenReturn("someOther,values," + VALUE + ",andAnother one");
 		when(mockExpandoColumn.getCompanyId()).thenReturn(COMPANY_ID);
 		when(mockExpandoColumn.getName()).thenReturn(NAME);
-
-		readinessServiceImpl.updateAnswer(COLUMN_ID_1, USER_ID, VALUE);
-
-		verify(mockExpandoValueLocalService, times(1)).addValue(COMPANY_ID, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, NAME, USER_ID, new String[] { VALUE });
-	}
-
-	@Test
-	public void updateAnswer_WhenValueIsEmpty_ThenRemovesValue() throws PortalException {
-		when(mockExpandoColumnLocalService.getColumn(COLUMN_ID_1)).thenReturn(mockExpandoColumn);
-		when(mockExpandoColumn.getDefaultData()).thenReturn("someOther,values," + VALUE + ",andAnother one");
-		when(mockExpandoColumn.getCompanyId()).thenReturn(COMPANY_ID);
-		when(mockExpandoColumn.getName()).thenReturn(NAME);
+		when(mockIndexerRegistry.getIndexer(User.class.getName())).thenReturn(mockIndexer);
 
 		readinessServiceImpl.updateAnswer(COLUMN_ID_1, USER_ID, StringPool.BLANK);
 
-		verify(mockExpandoValueLocalService, times(1)).deleteValue(COMPANY_ID, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, NAME, USER_ID);
+		InOrder inOrder = Mockito.inOrder(mockExpandoValueLocalService, mockIndexer);
+		inOrder.verify(mockExpandoValueLocalService, times(1)).deleteValue(COMPANY_ID, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, NAME, USER_ID);
+		inOrder.verify(mockIndexer, times(1)).reindex(User.class.getName(), USER_ID);
 	}
 
 	@Test(expected = PortalException.class)
-	public void getQuestionnaire_WhenNoQuestionsFound_ThenThrowsPortalException() throws Exception {
-		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
-		when(mockReadinessInstanceConfiguration.questions()).thenReturn(null);
+	public void updateAnswer_WhenValueIsNotAccepted_ThenThrowsPortalException() throws PortalException {
+		when(mockExpandoColumnLocalService.getColumn(COLUMN_ID_1)).thenReturn(mockExpandoColumn);
+		when(mockExpandoColumn.getDefaultData()).thenReturn("someOther,values");
 
-		readinessServiceImpl.getQuestionnaire(mockCompany);
-	}
-
-	@Test(expected = PortalException.class)
-	public void getQuestionnaire_WhenNoQuestionConfigured_ThenThrowsPortalException() throws Exception {
-		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
-		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
-		when(mockReadinessInstanceConfiguration.questions()).thenReturn(new String[0]);
-
-		readinessServiceImpl.getQuestionnaire(mockCompany);
-	}
-
-	@Test(expected = PortalException.class)
-	public void getQuestionnaire_WhenQuestionConfiguredWithEmptyValue_ThenThrowsPortalException() throws Exception {
-		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
-		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
-		when(mockReadinessInstanceConfiguration.questions()).thenReturn(new String[] { StringPool.BLANK });
-
-		readinessServiceImpl.getQuestionnaire(mockCompany);
-	}
-
-	@Test
-	public void getQuestionnaire_WhenQuestionsConfigured_ThenReturnsTheQuestions() throws Exception {
-		String[] questions = new String[] { "questionName1=Question title 1", "questionName2=Question title 2", "questionName3=Question title 3" };
-		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
-		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
-		when(mockReadinessInstanceConfiguration.questions()).thenReturn(questions);
-		mockCompanyQuestion("questionName1=Question title 1", COLUMN_ID_1, mockReadinessQuestion1, 0);
-		mockCompanyQuestion("questionName2=Question title 2", COLUMN_ID_2, mockReadinessQuestion2, 1);
-		mockCompanyQuestion("questionName3=Question title 3", COLUMN_ID_3, mockReadinessQuestion3, 2);
-
-		List<ReadinessQuestion> results = readinessServiceImpl.getQuestionnaire(mockCompany);
-
-		assertThat(results, contains(mockReadinessQuestion1, mockReadinessQuestion2, mockReadinessQuestion3));
+		readinessServiceImpl.updateAnswer(COLUMN_ID_1, USER_ID, VALUE);
 	}
 
 	private void mockCompanyQuestion(String questionConfig, long columnId, ReadinessQuestion readinessQuestion, int index) throws PortalException {

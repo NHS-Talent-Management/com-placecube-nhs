@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<description>Provides the NHS User UI component tags, prefixed with <![CDATA[<code>nhs-user-ui:</code>]]>.</description>
+	<tlib-version>1.1</tlib-version>
+	<short-name>nhs-user-ui</short-name>
+	<uri>http://placecube.com/tld/nhs-user-ui</uri>
+	
+	<tag>
+		<name>view-expando</name>
+		<tag-class>com.placecube.nhs.taglibs.tag.UserViewExpandoTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>expandoFieldName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>expandoFieldLabel</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>user</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.model.User</type>
+		</attribute>
+	</tag>
+	
+</taglib>

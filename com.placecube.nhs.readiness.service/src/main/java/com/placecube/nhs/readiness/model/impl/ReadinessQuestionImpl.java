@@ -1,18 +1,21 @@
 package com.placecube.nhs.readiness.model.impl;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
 
 public class ReadinessQuestionImpl implements ReadinessQuestion {
 
 	private final long questionId;
+	private final ExpandoColumn expandoColumn;
 	private final String questionTitle;
 	private final String questionName;
 	private final int index;
 	private final String[] availableAnswers;
 	private final String userAnswer;
 
-	ReadinessQuestionImpl(long questionId, String questionName, String questionTitle, String[] availableAnswers, int index, String userAnswer) {
-		this.questionId = questionId;
+	ReadinessQuestionImpl(ExpandoColumn expandoColumn, String questionName, String questionTitle, String[] availableAnswers, int index, String userAnswer) {
+		questionId = expandoColumn.getColumnId();
+		this.expandoColumn = expandoColumn;
 		this.questionName = questionName;
 		this.questionTitle = questionTitle;
 		this.availableAnswers = availableAnswers;
@@ -21,18 +24,13 @@ public class ReadinessQuestionImpl implements ReadinessQuestion {
 	}
 
 	@Override
-	public long getQuestionId() {
-		return questionId;
+	public String[] getAvailableAnswers() {
+		return availableAnswers;
 	}
 
 	@Override
-	public String getQuestionTitle() {
-		return questionTitle;
-	}
-
-	@Override
-	public String getQuestionName() {
-		return questionName;
+	public ExpandoColumn getExpandoColumn() {
+		return expandoColumn;
 	}
 
 	@Override
@@ -41,8 +39,18 @@ public class ReadinessQuestionImpl implements ReadinessQuestion {
 	}
 
 	@Override
-	public String[] getAvailableAnswers() {
-		return availableAnswers;
+	public long getQuestionId() {
+		return questionId;
+	}
+
+	@Override
+	public String getQuestionName() {
+		return questionName;
+	}
+
+	@Override
+	public String getQuestionTitle() {
+		return questionTitle;
 	}
 
 	@Override
