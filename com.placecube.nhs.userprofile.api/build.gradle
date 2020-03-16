@@ -10,10 +10,10 @@ dependencies {
  
 sonarqube {
    properties {
-	   	properties['sonar.exclusions'] += '**/exception/*.java'
-	    properties['sonar.exclusions'] = '**/model/*.java,'
-	   	properties['sonar.exclusions'] += '**/service/*.java,'
-	    properties['sonar.exclusions'] += '**/service/persistence/*.java,'
+		properties['sonar.exclusions'] += '**/exception/*.java'
+		properties['sonar.exclusions'] += '**/model/*.java,'
+		properties['sonar.exclusions'] += '**/service/*.java,'
+		properties['sonar.exclusions'] += '**/service/persistence/*.java,'
 	}
 }
 

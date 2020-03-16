@@ -1,3 +1,9 @@
+<portlet:actionURL name="<%=MVCCommandKeys.UPDATE_FILTER%>" var="updateFilterSearchURL">
+	<portlet:param name="cmd" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_ACTION %>"/>
+	<portlet:param name="fieldName" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_FIELD_NAME %>"/>
+	<portlet:param name="fieldValue" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_FIELD_VALUE %>"/>
+</portlet:actionURL>
+
 <fieldset class="nhsuk-fieldset talent-search-filters">
 	<c:forEach items="${availableFilters}" var="availableFilter">
 		<nhs-search-ui:filter-checkbox 
@@ -5,10 +11,7 @@
 				fieldOptions="${availableFilter.getFieldValues()}" 
 				fieldSelectedValues="${availableFilter.getFieldSelectedValuesList()}"
 				portletNamespace="${portletNamespace}" 
-				fieldName="${availableFilter.getSearchableFieldName()}"/>
+				fieldName="${availableFilter.getSearchableFieldName()}"
+				updateFilterSearchURL="${updateFilterSearchURL}"/>
 	</c:forEach>
-	
-	<aui:button-row>
-		<aui:button type="submit" cssClass="nhsuk-button nhsuk-button--primary btn-primary" value="search" onClick="submitTalentSearchForm('${searchTalentSearchURL}')"/>
-	</aui:button-row>
 </fieldset>

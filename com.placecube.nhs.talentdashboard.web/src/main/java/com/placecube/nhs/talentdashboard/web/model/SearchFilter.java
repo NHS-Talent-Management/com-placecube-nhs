@@ -1,7 +1,8 @@
 package com.placecube.nhs.talentdashboard.web.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,9 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
 
-public class SearchFilter {
+public class SearchFilter implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final String fieldName;
 	private final String searchableFieldName;
@@ -23,11 +26,14 @@ public class SearchFilter {
 		searchableFieldName = "expando__keyword__custom_fields__" + expandoColumn.getName();
 		fieldLabel = readinessQuestion.getQuestionName();
 		fieldSelectedValues = new String[0];
-		fieldValues = new HashMap<>();
-		String[] availableAnswers = readinessQuestion.getAvailableAnswers();
-		for (String answer : availableAnswers) {
+		fieldValues = new LinkedHashMap<>();
+		for (String answer : readinessQuestion.getAvailableAnswers()) {
 			fieldValues.put(answer, answer);
 		}
+	}
+
+	public void addSelectedValue(String fieldValue) {
+		fieldSelectedValues = ArrayUtil.append(fieldSelectedValues, fieldValue);
 	}
 
 	public String getFieldLabel() {
@@ -56,6 +62,10 @@ public class SearchFilter {
 
 	public boolean isActive() {
 		return ArrayUtil.isNotEmpty(fieldSelectedValues);
+	}
+
+	public void removeSelectedValue(String fieldValue) {
+		fieldSelectedValues = ArrayUtil.remove(fieldSelectedValues, fieldValue);
 	}
 
 	public void setFieldSelectedValues(String[] fieldSelectedValues) {

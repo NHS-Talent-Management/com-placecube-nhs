@@ -36,6 +36,10 @@ public class ReadinessWebContentService {
 		return journalArticleCreationService.getOrCreateJournalFolder("Readiness Questionnaire", serviceContext);
 	}
 
+	public JournalArticle getArticle(Company company, WebContentArticles webContentArticle) throws PortalException {
+		return journalArticleLocalService.getLatestArticle(company.getGroupId(), webContentArticle.getArticleId());
+	}
+
 	public ServiceContext getServiceContext(Group globalGroup) {
 		ServiceContext serviceContext = new ServiceContext();
 		serviceContext.setScopeGroupId(globalGroup.getGroupId());
@@ -43,10 +47,6 @@ public class ReadinessWebContentService {
 		serviceContext.setUserId(globalGroup.getCreatorUserId());
 		serviceContext.setLanguageId(globalGroup.getDefaultLanguageId());
 		return serviceContext;
-	}
-
-	public JournalArticle getArticle(Company company, WebContentArticles webContentArticle) throws PortalException {
-		return journalArticleLocalService.getLatestArticle(company.getGroupId(), webContentArticle.getArticleId());
 	}
 
 }

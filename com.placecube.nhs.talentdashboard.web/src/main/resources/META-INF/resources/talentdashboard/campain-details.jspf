@@ -22,7 +22,7 @@
 			errorMessage="${validationErrors.get('talentSearchCategoryId')}" />
 	
 	<aui:button-row cssClass="pull-right">
-		<aui:button type="submit" cssClass="nhsuk-button nhsuk-button--secondary btn-secondary" value="save" onClick="submitTalentSearchForm('${saveTalentSearchURL}')"/>
+		<aui:button type="submit" cssClass="nhsuk-button nhsuk-button--secondary btn-secondary" value="save" />
 	</aui:button-row>
 	
 </fieldset>

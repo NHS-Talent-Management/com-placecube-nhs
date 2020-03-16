@@ -45,6 +45,12 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.List</type>
 		</attribute>
+		<attribute>
+			<name>updateFilterSearchURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
 	</tag>
 	
 	

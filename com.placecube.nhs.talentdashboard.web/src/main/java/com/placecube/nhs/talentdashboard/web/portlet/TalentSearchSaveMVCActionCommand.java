@@ -20,12 +20,16 @@ import com.placecube.nhs.talentdashboard.web.constants.PortletKeys;
 import com.placecube.nhs.talentdashboard.web.model.SearchFilter;
 import com.placecube.nhs.talentdashboard.web.model.TalentSearchContext;
 import com.placecube.nhs.talentdashboard.web.service.TalentDashboardService;
+import com.placecube.nhs.talentdashboard.web.service.ValidationService;
 
-@Component(immediate = true, property = { "javax.portlet.name=" + PortletKeys.TALENT_DASHBOARD, "mvc.command.name=" + MVCCommandKeys.SEARCH }, service = MVCActionCommand.class)
+@Component(immediate = true, property = { "javax.portlet.name=" + PortletKeys.TALENT_DASHBOARD, "mvc.command.name=" + MVCCommandKeys.SAVE }, service = MVCActionCommand.class)
 public class TalentSearchSaveMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private TalentDashboardService talentDashboardService;
+
+	@Reference
+	private ValidationService validationService;
 
 	@Override
 	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
@@ -34,18 +38,16 @@ public class TalentSearchSaveMVCActionCommand extends BaseMVCActionCommand {
 		Locale locale = user.getLocale();
 
 		List<SearchFilter> availableFilters = talentDashboardService.getSearchFilters(actionRequest, themeDisplay.getCompany(), locale, true);
-		talentDashboardService.configureSelectedFilterValues(actionRequest, availableFilters);
+		talentDashboardService.updateFiltersWithSelectedValues(actionRequest, availableFilters);
 
-		TalentSearchContext talentSearchContext = talentDashboardService.getFromSession(actionRequest, true);
-		talentDashboardService.configureTalentSearchDetails(actionRequest, talentSearchContext, availableFilters);
+		TalentSearchContext talentSearchContext = talentDashboardService.getTalentSearchContext(actionRequest, true);
+		talentDashboardService.updateTalentSearchWithSelectedValues(actionRequest, talentSearchContext);
 
-		if (!talentSearchContext.isSearchExecuted()) {
-			Map<String, String> validationErrors = talentDashboardService.getValidationErrors(talentSearchContext, locale);
-			if (validationErrors.isEmpty()) {
-				talentDashboardService.saveSearch(user, talentSearchContext, availableFilters);
-			} else {
-				actionRequest.setAttribute("validationErrors", validationErrors);
-			}
+		Map<String, String> validationErrors = validationService.getValidationErrors(talentSearchContext, locale);
+		if (validationErrors.isEmpty()) {
+			talentDashboardService.saveSearch(user, talentSearchContext, availableFilters);
+		} else {
+			actionRequest.setAttribute("validationErrors", validationErrors);
 		}
 		actionResponse.getRenderParameters().setValue("keepFilters", "true");
 	}

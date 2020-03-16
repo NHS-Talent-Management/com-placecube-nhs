@@ -8,6 +8,7 @@
 <%@ taglib uri="http://placecube.com/tld/nhs-user-ui" prefix="nhs-user-ui" %>
 
 <%@page import="com.placecube.nhs.talentdashboard.web.constants.MVCCommandKeys"%>
+<%@page import="com.placecube.nhs.taglibs.constants.SearchFilterConstants"%>
 
 <liferay-theme:defineObjects />
 

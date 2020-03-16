@@ -2,6 +2,7 @@ package com.placecube.nhs.readiness.service.impl;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -20,6 +21,7 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.placecube.nhs.readiness.configuration.ReadinessInstanceConfiguration;
+import com.placecube.nhs.readiness.constants.WebContentArticles;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
 import com.placecube.nhs.readiness.model.impl.ModelFactoryBuilder;
 
@@ -61,6 +64,9 @@ public class ReadinessServiceImplTest extends PowerMockito {
 	private ReadinessInstanceConfiguration mockReadinessInstanceConfiguration;
 
 	@Mock
+	private ReadinessWebContentService mockReadinessWebContentService;
+
+	@Mock
 	private IndexerRegistry mockIndexerRegistry;
 
 	@Mock
@@ -83,6 +89,9 @@ public class ReadinessServiceImplTest extends PowerMockito {
 
 	@Mock
 	private Indexer<Object> mockIndexer;
+
+	@Mock
+	private JournalArticle mockJournalArticle;
 
 	@Test(expected = PortalException.class)
 	public void deleteAnswer_WhenExceptionDeletingTheValue_ThenThrowsPortalException() throws PortalException {
@@ -171,6 +180,14 @@ public class ReadinessServiceImplTest extends PowerMockito {
 	}
 
 	@Test(expected = PortalException.class)
+	public void getQuestionnaire_WhenNoQuestionsFound_ThenThrowsPortalException() throws Exception {
+		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(null);
+
+		readinessServiceImpl.getQuestionnaire(mockCompany);
+	}
+
+	@Test(expected = PortalException.class)
 	public void getQuestionnaire_WhenNoQuestionConfigured_ThenThrowsPortalException() throws Exception {
 		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
 		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
@@ -180,18 +197,19 @@ public class ReadinessServiceImplTest extends PowerMockito {
 	}
 
 	@Test(expected = PortalException.class)
-	public void getQuestionnaire_WhenNoQuestionsFound_ThenThrowsPortalException() throws Exception {
+	public void getQuestionnaire_WhenQuestionConfiguredWithEmptyValue_ThenThrowsPortalException() throws Exception {
+		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
 		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
-		when(mockReadinessInstanceConfiguration.questions()).thenReturn(null);
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(new String[] { StringPool.BLANK });
 
 		readinessServiceImpl.getQuestionnaire(mockCompany);
 	}
 
 	@Test(expected = PortalException.class)
-	public void getQuestionnaire_WhenQuestionConfiguredWithEmptyValue_ThenThrowsPortalException() throws Exception {
+	public void getQuestionnaire_WhenQuestionConfiguredWithNullValue_ThenThrowsPortalException() throws Exception {
 		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
 		when(mockConfigurationProvider.getCompanyConfiguration(ReadinessInstanceConfiguration.class, COMPANY_ID)).thenReturn(mockReadinessInstanceConfiguration);
-		when(mockReadinessInstanceConfiguration.questions()).thenReturn(new String[] { StringPool.BLANK });
+		when(mockReadinessInstanceConfiguration.questions()).thenReturn(new String[] { null });
 
 		readinessServiceImpl.getQuestionnaire(mockCompany);
 	}
@@ -209,6 +227,38 @@ public class ReadinessServiceImplTest extends PowerMockito {
 		List<ReadinessQuestion> results = readinessServiceImpl.getQuestionnaire(mockCompany);
 
 		assertThat(results, contains(mockReadinessQuestion1, mockReadinessQuestion2, mockReadinessQuestion3));
+	}
+
+	@Test
+	public void getQuestionnaireCompleted_WhenNoError_ThenReturnsTheQuestionnaireCompletedArticle() throws PortalException {
+		when(mockReadinessWebContentService.getArticle(mockCompany, WebContentArticles.READINESS_QUESTIONNAIRE_COMPLETED)).thenReturn(mockJournalArticle);
+
+		JournalArticle result = readinessServiceImpl.getQuestionnaireCompleted(mockCompany);
+
+		assertThat(result, sameInstance(mockJournalArticle));
+	}
+
+	@Test(expected = PortalException.class)
+	public void getQuestionnaireCompleted_WhenException_ThenThrowsPortalException() throws PortalException {
+		when(mockReadinessWebContentService.getArticle(mockCompany, WebContentArticles.READINESS_QUESTIONNAIRE_COMPLETED)).thenThrow(new PortalException());
+
+		readinessServiceImpl.getQuestionnaireCompleted(mockCompany);
+	}
+
+	@Test
+	public void getQuestionnaireIntro_WhenNoError_ThenReturnsTheQuestionnaireIntroArticle() throws PortalException {
+		when(mockReadinessWebContentService.getArticle(mockCompany, WebContentArticles.READINESS_QUESTIONNAIRE_INTRO)).thenReturn(mockJournalArticle);
+
+		JournalArticle result = readinessServiceImpl.getQuestionnaireIntro(mockCompany);
+
+		assertThat(result, sameInstance(mockJournalArticle));
+	}
+
+	@Test(expected = PortalException.class)
+	public void getQuestionnaireIntro_WhenException_ThenThrowsPortalException() throws PortalException {
+		when(mockReadinessWebContentService.getArticle(mockCompany, WebContentArticles.READINESS_QUESTIONNAIRE_INTRO)).thenThrow(new PortalException());
+
+		readinessServiceImpl.getQuestionnaireIntro(mockCompany);
 	}
 
 	@Test(expected = PortalException.class)

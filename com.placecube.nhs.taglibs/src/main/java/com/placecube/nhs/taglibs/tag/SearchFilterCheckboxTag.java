@@ -16,6 +16,7 @@ public class SearchFilterCheckboxTag extends IncludeTag {
 	private String portletNamespace;
 	private String fieldName;
 	private String fieldLabel;
+	private String updateFilterSearchURL;
 	private Map<String, String> fieldOptions;
 	private List<String> fieldSelectedValues;
 
@@ -27,6 +28,7 @@ public class SearchFilterCheckboxTag extends IncludeTag {
 		fieldName = null;
 		fieldSelectedValues = new ArrayList<>();
 		fieldLabel = null;
+		updateFilterSearchURL = null;
 	}
 
 	@Override
@@ -47,6 +49,7 @@ public class SearchFilterCheckboxTag extends IncludeTag {
 		request.setAttribute("fieldSelectedValues", fieldSelectedValues);
 		request.setAttribute("fieldLabel", fieldLabel);
 		request.setAttribute("fieldOptions", fieldOptions);
+		request.setAttribute("updateFilterSearchURL", updateFilterSearchURL);
 	}
 
 	@Override
@@ -73,6 +76,10 @@ public class SearchFilterCheckboxTag extends IncludeTag {
 
 	public void setFieldSelectedValues(List<String> fieldSelectedValues) {
 		this.fieldSelectedValues = fieldSelectedValues;
+	}
+
+	public void setUpdateFilterSearchURL(String updateFilterSearchURL) {
+		this.updateFilterSearchURL = updateFilterSearchURL;
 	}
 
 }

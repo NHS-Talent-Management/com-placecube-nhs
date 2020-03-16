@@ -17,8 +17,11 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,6 +39,9 @@ public class ReadinessWebContentServiceTest extends PowerMockito {
 	private JournalArticleCreationService mockJournalArticleCreationService;
 
 	@Mock
+	private JournalArticleLocalService mockJournalArticleLocalService;
+
+	@Mock
 	private JournalFolder mockJournalFolder;
 
 	@Mock
@@ -43,6 +49,12 @@ public class ReadinessWebContentServiceTest extends PowerMockito {
 
 	@Mock
 	private Group mockGroup;
+
+	@Mock
+	private JournalArticle mockJournalArticle;
+
+	@Mock
+	private Company mockCompany;
 
 	@Before
 	public void setUp() {
@@ -94,6 +106,28 @@ public class ReadinessWebContentServiceTest extends PowerMockito {
 		when(mockJournalArticleCreationService.getOrCreateJournalFolder("Readiness Questionnaire", mockServiceContext)).thenThrow(new PortalException());
 
 		readinessWebContentService.addFolder(mockServiceContext);
+	}
+
+	@Test
+	public void getArticle_WhenNoError_ThenReturnsTheJournalArticle() throws PortalException {
+		WebContentArticles webContentArticle = WebContentArticles.READINESS_QUESTIONNAIRE_COMPLETED;
+		long groupId = 123;
+		when(mockCompany.getGroupId()).thenReturn(groupId);
+		when(mockJournalArticleLocalService.getLatestArticle(groupId, webContentArticle.getArticleId())).thenReturn(mockJournalArticle);
+
+		JournalArticle result = readinessWebContentService.getArticle(mockCompany, webContentArticle);
+
+		assertThat(result, sameInstance(mockJournalArticle));
+	}
+
+	@Test(expected = PortalException.class)
+	public void getArticle_WhenExceptionRetrievingTheJournalArticle_ThenThrowsPortalException() throws PortalException {
+		WebContentArticles webContentArticle = WebContentArticles.READINESS_QUESTIONNAIRE_COMPLETED;
+		long groupId = 123;
+		when(mockCompany.getGroupId()).thenReturn(groupId);
+		when(mockJournalArticleLocalService.getLatestArticle(groupId, webContentArticle.getArticleId())).thenThrow(new PortalException());
+
+		readinessWebContentService.getArticle(mockCompany, webContentArticle);
 	}
 
 	@Test
