@@ -1,8 +1,0 @@
-Bundle-Name: Placecube Javascript theme contributor
-Bundle-SymbolicName: javascript-theme-contributor
-Bundle-Category: Placecube
-Bundle-Version: 1.0.1.SNAPSHOT
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
-Liferay-Theme-Contributor-Type: javascript-theme-contributor
-Web-ContextPath: /javascript-theme-contributor
