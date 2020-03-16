@@ -23,8 +23,7 @@ def modules = [
 	'com.placecube.nhs.userprofile.service',
 	'com.placecube.nhs.user.profile.web',
 	'com.placecube.nhs.webcontent.listing.web',
-	'com.placecube.nhs.webcontent.structures',
-	'javascript-theme-contributor'
+	'com.placecube.nhs.webcontent.structures'
 ] as String[]
 
 include modules
