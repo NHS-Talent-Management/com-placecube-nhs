@@ -1,0 +1,8 @@
+Bundle-SymbolicName: com.placecube.nhs.userprivacy.api
+Bundle-Name: Placecube NHS - User Privacy API
+Bundle-Version: 1.0.0
+Export-Package: \
+	com.placecube.nhs.userprivacy.exception,\
+	com.placecube.nhs.userprivacy.model,\
+	com.placecube.nhs.userprivacy.service.persistence,\
+	com.placecube.nhs.userprivacy.service

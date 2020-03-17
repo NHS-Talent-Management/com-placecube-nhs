@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.placecube.nhs.userprivacy.model.UserPrivacy">
+		<field name="uuid" type="String" />
+		<field name="userPrivacyId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="fieldId" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="roleIds" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+</model-hints>

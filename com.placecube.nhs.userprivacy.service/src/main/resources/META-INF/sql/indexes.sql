@@ -1,0 +1,1 @@
+create index IX_541A2F9A on NHS_Privacy_UserPrivacy (uuid_[$COLUMN_LENGTH:75$], companyId);
