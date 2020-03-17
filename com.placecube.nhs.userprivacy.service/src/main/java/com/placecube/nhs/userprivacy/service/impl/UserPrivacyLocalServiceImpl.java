@@ -81,6 +81,17 @@ public class UserPrivacyLocalServiceImpl extends UserPrivacyLocalServiceBaseImpl
 	}
 
 	/**
+	 * Removes all the privacy settings for the company for the given fieldId
+	 *
+	 * @param companyId the comapnyId
+	 * @param fieldId the fieldId
+	 */
+	@Override
+	public void deleteByFieldId(long companyId, String fieldId) {
+		userPrivacyPersistence.removeByCompanyIdFieldId(companyId, fieldId);
+	}
+
+	/**
 	 * Returns a set of distinct fieldIds that are configured in the company
 	 * with privacy values
 	 *

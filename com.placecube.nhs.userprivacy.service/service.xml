@@ -16,6 +16,11 @@
 		<finder return-type="Collection" name="UserId">
 			<finder-column name="userId"/>
 		</finder>
+		
+		<finder return-type="Collection" name="CompanyIdFieldId">
+			<finder-column name="companyId"/>
+			<finder-column name="fieldId"/>
+		</finder>
 	</entity>
 	
 </service-builder>

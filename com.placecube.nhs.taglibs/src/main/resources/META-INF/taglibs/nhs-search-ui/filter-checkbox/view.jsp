@@ -26,14 +26,15 @@
 	<aui:script use="aui-tree-view">
 		$('.search-filter.search-filter-checkbox input.nhsuk-checkboxes__input').on('change', function(){
 			var fieldName = $(this).attr('searchablename');
-			var fieldValue = $(this).val();
+			var fieldValue = encodeURIComponent($(this).val());
 			var cmdValue = '';
 			if(this.checked){
 				cmdValue = 'add';
 			} else {
 				cmdValue = 'remove';
 			}
-			document.location = "${updateFilterSearchURL}".replace("FILTER_FIELD_NAME",fieldName).replace("FILTER_FIELD_VALUE",fieldValue).replace("FILTER_ACTION",cmdValue);
+			var updatedURL = "${updateFilterSearchURL}".replace("FILTER_FIELD_NAME",fieldName).replace("FILTER_FIELD_VALUE",fieldValue).replace("FILTER_ACTION",cmdValue);
+			document.location = updatedURL;
 		});
 	</aui:script>
 </c:if>

@@ -84,6 +84,14 @@ public interface UserPrivacyLocalService
 	public UserPrivacy createUserPrivacy(long userPrivacyId);
 
 	/**
+	 * Removes all the privacy settings for the company for the given fieldId
+	 *
+	 * @param companyId the comapnyId
+	 * @param fieldId the fieldId
+	 */
+	public void deleteByFieldId(long companyId, String fieldId);
+
+	/**
 	 * Removes all the privacy settings for the user
 	 *
 	 * @param userId the userId to remove settings from

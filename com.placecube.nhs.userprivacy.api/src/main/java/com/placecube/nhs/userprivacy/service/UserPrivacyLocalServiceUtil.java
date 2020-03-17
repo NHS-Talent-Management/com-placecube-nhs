@@ -66,6 +66,16 @@ public class UserPrivacyLocalServiceUtil {
 	}
 
 	/**
+	 * Removes all the privacy settings for the company for the given fieldId
+	 *
+	 * @param companyId the comapnyId
+	 * @param fieldId the fieldId
+	 */
+	public static void deleteByFieldId(long companyId, String fieldId) {
+		getService().deleteByFieldId(companyId, fieldId);
+	}
+
+	/**
 	 * Removes all the privacy settings for the user
 	 *
 	 * @param userId the userId to remove settings from

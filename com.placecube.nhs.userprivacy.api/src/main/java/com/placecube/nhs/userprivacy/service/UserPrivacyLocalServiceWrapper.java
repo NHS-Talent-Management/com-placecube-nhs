@@ -63,6 +63,17 @@ public class UserPrivacyLocalServiceWrapper
 	}
 
 	/**
+	 * Removes all the privacy settings for the company for the given fieldId
+	 *
+	 * @param companyId the comapnyId
+	 * @param fieldId the fieldId
+	 */
+	@Override
+	public void deleteByFieldId(long companyId, String fieldId) {
+		_userPrivacyLocalService.deleteByFieldId(companyId, fieldId);
+	}
+
+	/**
 	 * Removes all the privacy settings for the user
 	 *
 	 * @param userId the userId to remove settings from
