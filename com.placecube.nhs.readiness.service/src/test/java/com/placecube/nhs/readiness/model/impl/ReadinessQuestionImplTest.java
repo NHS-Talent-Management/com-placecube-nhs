@@ -91,10 +91,10 @@ public class ReadinessQuestionImplTest extends PowerMockito {
 	}
 
 	@Test
-	public void init_WhenNoError_ThenSetsQuestionIdWithTheUserAnswerConfiguredWithEmptyString() throws PortalException {
+	public void init_WhenNoError_ThenSetsQuestionIdWithTheUserAnswerConfiguredWithTheUserAnswer() throws PortalException {
 		ReadinessQuestion result = ReadinessQuestionImpl.init(mockExpandoColumn, LOCALE, QUESTION_TITLE, INDEX, USER_ANSWER);
 
-		assertThat(result.getUserAnswer(), equalTo(StringPool.BLANK));
+		assertThat(result.getUserAnswer(), equalTo(USER_ANSWER));
 	}
 
 	private void mockExpandoColumnDetails() {
