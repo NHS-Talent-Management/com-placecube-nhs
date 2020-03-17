@@ -12,6 +12,10 @@
 		<column name="roleIds" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+		
+		<finder return-type="Collection" name="UserId">
+			<finder-column name="userId"/>
+		</finder>
 	</entity>
 	
 </service-builder>

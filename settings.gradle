@@ -19,6 +19,8 @@ def modules = [
 	'com.placecube.nhs.taglibs',
 	'com.placecube.nhs.template.utils',
 	'com.placecube.nhs.user.expando',
+	'com.placecube.nhs.userprivacy.api',
+	'com.placecube.nhs.userprivacy.service',
 	'com.placecube.nhs.userprofile.api',
 	'com.placecube.nhs.userprofile.service',
 	'com.placecube.nhs.user.profile.web',

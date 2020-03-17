@@ -37,6 +37,7 @@ import com.placecube.nhs.userprivacy.model.UserPrivacy;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -81,6 +82,13 @@ public interface UserPrivacyLocalService
 	 */
 	@Transactional(enabled = false)
 	public UserPrivacy createUserPrivacy(long userPrivacyId);
+
+	/**
+	 * Removes all the privacy settings for the user
+	 *
+	 * @param userId the userId to remove settings from
+	 */
+	public void deleteByUserId(long userId);
 
 	/**
 	 * @throws PortalException
@@ -191,6 +199,25 @@ public interface UserPrivacyLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	 * Returns the UserPrivacy settings for the specified user
+	 *
+	 * @param userId the userId to retrieve settings for
+	 * @return list of privacy settings for the user
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserPrivacy> getByUserId(long userId);
+
+	/**
+	 * Returns a set of distinct fieldIds that are configured in the company
+	 * with privacy values
+	 *
+	 * @param companyId the companyId
+	 * @return set of unique fieldIds
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Set<String> getConfiguredPrivacyFieldIds(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

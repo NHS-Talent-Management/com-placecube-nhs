@@ -63,6 +63,16 @@ public class UserPrivacyLocalServiceWrapper
 	}
 
 	/**
+	 * Removes all the privacy settings for the user
+	 *
+	 * @param userId the userId to remove settings from
+	 */
+	@Override
+	public void deleteByUserId(long userId) {
+		_userPrivacyLocalService.deleteByUserId(userId);
+	}
+
+	/**
 	 * @throws PortalException
 	 */
 	@Override
@@ -218,6 +228,31 @@ public class UserPrivacyLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _userPrivacyLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	 * Returns the UserPrivacy settings for the specified user
+	 *
+	 * @param userId the userId to retrieve settings for
+	 * @return list of privacy settings for the user
+	 */
+	@Override
+	public java.util.List<com.placecube.nhs.userprivacy.model.UserPrivacy>
+		getByUserId(long userId) {
+
+		return _userPrivacyLocalService.getByUserId(userId);
+	}
+
+	/**
+	 * Returns a set of distinct fieldIds that are configured in the company
+	 * with privacy values
+	 *
+	 * @param companyId the companyId
+	 * @return set of unique fieldIds
+	 */
+	@Override
+	public java.util.Set<String> getConfiguredPrivacyFieldIds(long companyId) {
+		return _userPrivacyLocalService.getConfiguredPrivacyFieldIds(companyId);
 	}
 
 	@Override

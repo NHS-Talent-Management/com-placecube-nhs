@@ -66,6 +66,15 @@ public class UserPrivacyLocalServiceUtil {
 	}
 
 	/**
+	 * Removes all the privacy settings for the user
+	 *
+	 * @param userId the userId to remove settings from
+	 */
+	public static void deleteByUserId(long userId) {
+		getService().deleteByUserId(userId);
+	}
+
+	/**
 	 * @throws PortalException
 	 */
 	public static com.liferay.portal.kernel.model.PersistedModel
@@ -211,6 +220,32 @@ public class UserPrivacyLocalServiceUtil {
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	 * Returns the UserPrivacy settings for the specified user
+	 *
+	 * @param userId the userId to retrieve settings for
+	 * @return list of privacy settings for the user
+	 */
+	public static java.util.List
+		<com.placecube.nhs.userprivacy.model.UserPrivacy> getByUserId(
+			long userId) {
+
+		return getService().getByUserId(userId);
+	}
+
+	/**
+	 * Returns a set of distinct fieldIds that are configured in the company
+	 * with privacy values
+	 *
+	 * @param companyId the companyId
+	 * @return set of unique fieldIds
+	 */
+	public static java.util.Set<String> getConfiguredPrivacyFieldIds(
+		long companyId) {
+
+		return getService().getConfiguredPrivacyFieldIds(companyId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

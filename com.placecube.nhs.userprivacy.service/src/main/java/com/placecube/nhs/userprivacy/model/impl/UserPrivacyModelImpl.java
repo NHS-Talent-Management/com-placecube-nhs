@@ -113,9 +113,11 @@ public class UserPrivacyModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long USERID_COLUMN_BITMASK = 2L;
 
-	public static final long USERPRIVACYID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 4L;
+
+	public static final long USERPRIVACYID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -353,6 +355,14 @@ public class UserPrivacyModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -370,6 +380,10 @@ public class UserPrivacyModelImpl
 
 	@Override
 	public void setUserUuid(String userUuid) {
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@Override
@@ -542,6 +556,10 @@ public class UserPrivacyModelImpl
 
 		userPrivacyModelImpl._setOriginalCompanyId = false;
 
+		userPrivacyModelImpl._originalUserId = userPrivacyModelImpl._userId;
+
+		userPrivacyModelImpl._setOriginalUserId = false;
+
 		userPrivacyModelImpl._setModifiedDate = false;
 
 		userPrivacyModelImpl._columnBitmask = 0;
@@ -678,6 +696,8 @@ public class UserPrivacyModelImpl
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _fieldId;
 	private String _roleIds;
 	private Date _createDate;

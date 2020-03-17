@@ -481,6 +481,174 @@ public class UserPrivacyUtil {
 	}
 
 	/**
+	 * Returns all the user privacies where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching user privacies
+	 */
+	public static List<UserPrivacy> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the user privacies where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserPrivacyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user privacies
+	 * @param end the upper bound of the range of user privacies (not inclusive)
+	 * @return the range of matching user privacies
+	 */
+	public static List<UserPrivacy> findByUserId(
+		long userId, int start, int end) {
+
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the user privacies where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserPrivacyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user privacies
+	 * @param end the upper bound of the range of user privacies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user privacies
+	 */
+	public static List<UserPrivacy> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<UserPrivacy> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the user privacies where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserPrivacyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user privacies
+	 * @param end the upper bound of the range of user privacies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching user privacies
+	 */
+	public static List<UserPrivacy> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<UserPrivacy> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first user privacy in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user privacy
+	 * @throws NoSuchUserPrivacyException if a matching user privacy could not be found
+	 */
+	public static UserPrivacy findByUserId_First(
+			long userId, OrderByComparator<UserPrivacy> orderByComparator)
+		throws com.placecube.nhs.userprivacy.exception.
+			NoSuchUserPrivacyException {
+
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first user privacy in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user privacy, or <code>null</code> if a matching user privacy could not be found
+	 */
+	public static UserPrivacy fetchByUserId_First(
+		long userId, OrderByComparator<UserPrivacy> orderByComparator) {
+
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last user privacy in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user privacy
+	 * @throws NoSuchUserPrivacyException if a matching user privacy could not be found
+	 */
+	public static UserPrivacy findByUserId_Last(
+			long userId, OrderByComparator<UserPrivacy> orderByComparator)
+		throws com.placecube.nhs.userprivacy.exception.
+			NoSuchUserPrivacyException {
+
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last user privacy in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user privacy, or <code>null</code> if a matching user privacy could not be found
+	 */
+	public static UserPrivacy fetchByUserId_Last(
+		long userId, OrderByComparator<UserPrivacy> orderByComparator) {
+
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the user privacies before and after the current user privacy in the ordered set where userId = &#63;.
+	 *
+	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user privacy
+	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
+	 */
+	public static UserPrivacy[] findByUserId_PrevAndNext(
+			long userPrivacyId, long userId,
+			OrderByComparator<UserPrivacy> orderByComparator)
+		throws com.placecube.nhs.userprivacy.exception.
+			NoSuchUserPrivacyException {
+
+		return getPersistence().findByUserId_PrevAndNext(
+			userPrivacyId, userId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the user privacies where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	 * Returns the number of user privacies where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching user privacies
+	 */
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
 	 * Caches the user privacy in the entity cache if it is enabled.
 	 *
 	 * @param userPrivacy the user privacy
