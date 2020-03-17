@@ -1,6 +1,5 @@
 package com.placecube.nhs.readiness.model.impl;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
@@ -22,13 +21,12 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(LanguageUtil.class)
+@PrepareForTest(ReadinessQuestionImpl.class)
 public class ModelFactoryBuilderTest extends PowerMockito {
 
 	private static final int INDEX = 10;
@@ -40,7 +38,7 @@ public class ModelFactoryBuilderTest extends PowerMockito {
 	private static final String QUESTION_TITLE = "question Title";
 	private static final String NAME = "columnName";
 	private static final String LOCALISED_NAME = "column localised Name";
-	private static final String VALUE = "selectedValue";
+	private static final String USER_EXANDO_VALUE = "selectedValue";
 	private static final String DEFAULT_DATA = "availableValue1,availableValue2";
 
 	@InjectMocks
@@ -64,192 +62,59 @@ public class ModelFactoryBuilderTest extends PowerMockito {
 	@Mock
 	private Company mockCompany;
 
-	@Test
-	public void getQuestion_WithCompanyParameter_WhenNoError_ThenReturnsTheQuestionWithAvailableValuesConfigured() {
-		mockUserDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getAvailableAnswers(), equalTo(DEFAULT_DATA.split(StringPool.COMMA)));
-	}
-
-	@Test
-	public void getQuestion_WithCompanyParameter_WhenNoError_ThenReturnsTheQuestionWithIndexPlusOneConfigured() throws PortalException {
-		mockCompanyDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockCompany, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getIndex(), equalTo(INDEX + 1));
-	}
-
-	@Test
-	public void getQuestion_WithCompanyParameter_WhenNoError_ThenReturnsTheQuestionWithLocalisedNameConfigured() throws PortalException {
-		mockCompanyDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockCompany, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getQuestionName(), equalTo(LOCALISED_NAME));
-	}
-
-	@Test
-	public void getQuestion_WithCompanyParameter_WhenNoError_ThenReturnsTheQuestionWithQuestionIdConfigured() throws PortalException {
-		mockCompanyDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockCompany, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getQuestionId(), equalTo(COLUMN_ID));
-	}
-
-	@Test
-	public void getQuestion_WithCompanyParameter_WhenNoError_ThenReturnsTheQuestionWithQuestionTitleConfigured() throws PortalException {
-		mockCompanyDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockCompany, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getQuestionTitle(), equalTo(QUESTION_TITLE));
-	}
-
-	@Test
-	public void getQuestion_WithCompanyParameter_WhenNoError_ThenReturnsTheQuestionWithExpandoColumnConfigured() throws PortalException {
-		mockCompanyDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockCompany, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getExpandoColumn(), sameInstance(mockExpandoColumn));
-	}
-
-	@Test
-	public void getQuestion_WithCompanyParameter_WhenNoError_ThenReturnsTheQuestionWithUserAnswerConfiguredWithEmptyString() throws PortalException {
-		mockCompanyDetails();
-		mockColumnDetails();
-		when(mockExpandoValueLocalService.getValue(TABLE_ID, COLUMN_ID, USER_ID)).thenReturn(null);
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockCompany, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getUserAnswer(), equalTo(StringPool.BLANK));
-	}
-
-	@Test
-	public void getQuestion_WithUserParameter_WhenNoError_ThenReturnsTheQuestionWithAvailableValuesConfigured() {
-		mockUserDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getAvailableAnswers(), equalTo(DEFAULT_DATA.split(StringPool.COMMA)));
-	}
-
-	@Test
-	public void getQuestion_WithUserParameter_WhenNoError_ThenReturnsTheQuestionWithIndexPlusOneConfigured() {
-		mockUserDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getIndex(), equalTo(INDEX + 1));
-	}
-
-	@Test
-	public void getQuestion_WithUserParameter_WhenNoError_ThenReturnsTheQuestionWithLocalisedNameConfigured() {
-		mockUserDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getQuestionName(), equalTo(LOCALISED_NAME));
-	}
-
-	@Test
-	public void getQuestion_WithUserParameter_WhenNoError_ThenReturnsTheQuestionWithQuestionIdConfigured() {
-		mockUserDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getQuestionId(), equalTo(COLUMN_ID));
-	}
-
-	@Test
-	public void getQuestion_WithUserParameter_WhenNoError_ThenReturnsTheQuestionWithQuestionTitleConfigured() {
-		mockUserDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getQuestionTitle(), equalTo(QUESTION_TITLE));
-	}
-
-	@Test
-	public void getQuestion_WithUserParameter_WhenNoError_ThenReturnsTheQuestionWithExpandoColumnConfigured() {
-		mockUserDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getExpandoColumn(), sameInstance(mockExpandoColumn));
-	}
-
-	@Test
-	public void getQuestion_WithUserParameter_WhenNoErrorAndExpandoValueFound_ThenReturnsTheQuestionWithUserAnswerConfiguredWithTheExpandoValueData() {
-		mockUserDetails();
-		mockColumnDetails();
-		mockExpandoValueDetails();
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getUserAnswer(), equalTo(VALUE));
-	}
-
-	@Test
-	public void getQuestion_WithUserParameter_WhenNoErrorAndExpandoValueNotFound_ThenReturnsTheQuestionWithUserAnswerConfiguredWithEmptyString() {
-		mockUserDetails();
-		mockColumnDetails();
-		when(mockExpandoValueLocalService.getValue(TABLE_ID, COLUMN_ID, USER_ID)).thenReturn(null);
-
-		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
-
-		assertThat(result.getUserAnswer(), equalTo(StringPool.BLANK));
-	}
+	@Mock
+	private ReadinessQuestionImpl mockReadinessQuestionImpl;
 
 	@Before
 	public void setUp() {
-		mockStatic(LanguageUtil.class);
+		mockStatic(ReadinessQuestionImpl.class);
+	}
+
+	@Test
+	public void getQuestion_WithCompanyParameter_WhenNoError_ThenReturnsTheQuestionConfigured() throws PortalException {
+		mockCompanyDetails();
+		mockColumnDetails();
+		when(ReadinessQuestionImpl.init(mockExpandoColumn, LOCALE, QUESTION_TITLE, INDEX + 1, StringPool.BLANK)).thenReturn(mockReadinessQuestionImpl);
+
+		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockCompany, INDEX, NAME + "=" + QUESTION_TITLE);
+
+		assertThat(result, sameInstance(mockReadinessQuestionImpl));
+	}
+
+	@Test
+	public void getQuestion_WithUserParameter_WhenNoErrorAndExpandoValueFoundForUser_ThenReturnsTheQuestionConfigured() {
+		mockUserDetails();
+		mockColumnDetails();
+		when(mockExpandoValueLocalService.getValue(TABLE_ID, COLUMN_ID, USER_ID)).thenReturn(mockExpandoValue);
+		when(mockExpandoValue.getData()).thenReturn(USER_EXANDO_VALUE);
+		when(ReadinessQuestionImpl.init(mockExpandoColumn, LOCALE, QUESTION_TITLE, INDEX + 1, USER_EXANDO_VALUE)).thenReturn(mockReadinessQuestionImpl);
+
+		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
+
+		assertThat(result, sameInstance(mockReadinessQuestionImpl));
+	}
+
+	@Test
+	public void getQuestion_WithUserParameter_WhenNoErrorAndNoExpandoValueFoundForUser_ThenReturnsTheQuestionConfigured() {
+		mockUserDetails();
+		mockColumnDetails();
+		when(mockExpandoValueLocalService.getValue(TABLE_ID, COLUMN_ID, USER_ID)).thenReturn(null);
+		when(ReadinessQuestionImpl.init(mockExpandoColumn, LOCALE, QUESTION_TITLE, INDEX + 1, StringPool.BLANK)).thenReturn(mockReadinessQuestionImpl);
+
+		ReadinessQuestion result = modelFactoryBuilder.getQuestion(mockUser, INDEX, NAME + "=" + QUESTION_TITLE);
+
+		assertThat(result, sameInstance(mockReadinessQuestionImpl));
 	}
 
 	private void mockColumnDetails() {
 		when(mockExpandoColumnLocalService.getColumn(COMPANY_ID, User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, NAME)).thenReturn(mockExpandoColumn);
 		when(mockExpandoColumn.getTableId()).thenReturn(TABLE_ID);
 		when(mockExpandoColumn.getColumnId()).thenReturn(COLUMN_ID);
-		when(LanguageUtil.get(LOCALE, NAME)).thenReturn(LOCALISED_NAME);
-		when(mockExpandoColumn.getDefaultData()).thenReturn(DEFAULT_DATA);
 	}
 
 	private void mockCompanyDetails() throws PortalException {
 		when(mockCompany.getCompanyId()).thenReturn(COMPANY_ID);
 		when(mockCompany.getLocale()).thenReturn(LOCALE);
-	}
-
-	private void mockExpandoValueDetails() {
-		when(mockExpandoValueLocalService.getValue(TABLE_ID, COLUMN_ID, USER_ID)).thenReturn(mockExpandoValue);
-		when(mockExpandoValue.getData()).thenReturn(VALUE);
 	}
 
 	private void mockUserDetails() {

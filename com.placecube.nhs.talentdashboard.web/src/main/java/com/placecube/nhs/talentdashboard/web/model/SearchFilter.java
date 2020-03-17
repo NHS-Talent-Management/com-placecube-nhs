@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
 
@@ -21,10 +20,9 @@ public class SearchFilter implements Serializable {
 	private String[] fieldSelectedValues;
 
 	public SearchFilter(ReadinessQuestion readinessQuestion) {
-		ExpandoColumn expandoColumn = readinessQuestion.getExpandoColumn();
-		fieldName = expandoColumn.getName();
-		searchableFieldName = "expando__keyword__custom_fields__" + expandoColumn.getName();
-		fieldLabel = readinessQuestion.getQuestionName();
+		fieldName = readinessQuestion.getQuestionName();
+		searchableFieldName = readinessQuestion.getQuestionSearchableName();
+		fieldLabel = readinessQuestion.getQuestionShortTitle();
 		fieldSelectedValues = new String[0];
 		fieldValues = new LinkedHashMap<>();
 		for (String answer : readinessQuestion.getAvailableAnswers()) {

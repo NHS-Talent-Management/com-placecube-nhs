@@ -30,7 +30,7 @@
 							
 							<div class="nhsuk-summary-list__row">
 								<dt class="nhsuk-summary-list__key">
-									${question.getQuestionName()}
+									${question.getQuestionShortTitle()}
 								</dt>
 								
 								<dd class="nhsuk-summary-list__value">
@@ -44,7 +44,7 @@
 									</liferay-portlet:renderURL>
 									
 									<a href="${editQuestionURL}">
-										<liferay-ui:message key="change"/><span class="nhsuk-u-visually-hidden"> ${question.getQuestionName()}</span>
+										<liferay-ui:message key="change"/><span class="nhsuk-u-visually-hidden"> ${question.getQuestionShortTitle()}</span>
 									</a>
 								</dd>
 							</div>
