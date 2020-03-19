@@ -17,6 +17,11 @@
 			<finder-column name="userId"/>
 		</finder>
 		
+		<finder return-type="UserPrivacy" name="UserIdFieldId">
+			<finder-column name="userId"/>
+			<finder-column name="fieldId"/>
+		</finder>
+		
 		<finder return-type="Collection" name="CompanyIdFieldId">
 			<finder-column name="companyId"/>
 			<finder-column name="fieldId"/>

@@ -14,9 +14,12 @@
 
 package com.placecube.nhs.userprivacy.service.impl;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,6 +27,9 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.placecube.nhs.userprivacy.constants.UserPrivacyConstants;
 import com.placecube.nhs.userprivacy.model.UserPrivacy;
 import com.placecube.nhs.userprivacy.service.base.UserPrivacyLocalServiceBaseImpl;
 
@@ -105,5 +111,49 @@ public class UserPrivacyLocalServiceImpl extends UserPrivacyLocalServiceBaseImpl
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("fieldId"));
 		List<String> privacyFieldIds = userPrivacyLocalService.dynamicQuery(dynamicQuery);
 		return new HashSet<>(privacyFieldIds);
+	}
+
+	/**
+	 * Returns a long array of privacy roleIds
+	 * 
+	 * @param userId the userId
+	 * @param userPrivacyFieldId the userPrivacyFieldId
+	 */
+	public long[] getUserPrivacyRoleIds(long userId, String userPrivacyFieldId) {
+		long[] roleIds = new long[0];
+		UserPrivacy userPrivacy = userPrivacyPersistence.fetchByUserIdFieldId(userId, userPrivacyFieldId);
+		String[] roleIdsAsString;
+		if (Validator.isNotNull(userPrivacy)) {
+			roleIdsAsString = StringUtil.split(userPrivacy.getRoleIds(), UserPrivacyConstants.ROLE_IDS_SEPARATOR);
+			roleIds = Arrays.stream(roleIdsAsString).mapToLong(i -> Long.valueOf(i)).toArray();
+		}
+		return roleIds;
+	}
+
+	/**
+	 * Update UserPrivacy or create if not exist
+	 * 
+	 * @param userId the userId
+	 * @param userPrivacyFieldId the userPrivacyFieldId
+	 * @param companyId the companyId
+	 * @param roleIds the roleIds
+	 * @return UserPrivacy model updated or created
+	 */
+	public UserPrivacy updateUserPrivacy(long userId, String userPrivacyFieldId, long companyId, List<Long> roleIds) {
+		String roleIdsValues = roleIds.stream().map(String::valueOf).collect(Collectors.joining(UserPrivacyConstants.ROLE_IDS_SEPARATOR));
+		UserPrivacy userPrivacy = userPrivacyPersistence.fetchByUserIdFieldId(userId, userPrivacyFieldId);
+		if (Validator.isNotNull(userPrivacy)) {
+			userPrivacy.setModifiedDate(new Date());
+			userPrivacy.setRoleIds(roleIdsValues);
+		} else {
+			userPrivacy = userPrivacyLocalService.createUserPrivacy(counterLocalService.increment(UserPrivacy.class.getName(), 1));
+			userPrivacy.setCompanyId(companyId);
+			userPrivacy.setCreateDate(new Date());
+			userPrivacy.setFieldId(userPrivacyFieldId);
+			userPrivacy.setModifiedDate(new Date());
+			userPrivacy.setRoleIds(roleIdsValues);
+			userPrivacy.setUserId(userId);
+		}
+		return userPrivacyPersistence.update(userPrivacy);
 	}
 }

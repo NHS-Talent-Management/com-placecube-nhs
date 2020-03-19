@@ -649,6 +649,74 @@ public class UserPrivacyUtil {
 	}
 
 	/**
+	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or throws a <code>NoSuchUserPrivacyException</code> if it could not be found.
+	 *
+	 * @param userId the user ID
+	 * @param fieldId the field ID
+	 * @return the matching user privacy
+	 * @throws NoSuchUserPrivacyException if a matching user privacy could not be found
+	 */
+	public static UserPrivacy findByUserIdFieldId(long userId, String fieldId)
+		throws com.placecube.nhs.userprivacy.exception.
+			NoSuchUserPrivacyException {
+
+		return getPersistence().findByUserIdFieldId(userId, fieldId);
+	}
+
+	/**
+	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param fieldId the field ID
+	 * @return the matching user privacy, or <code>null</code> if a matching user privacy could not be found
+	 */
+	public static UserPrivacy fetchByUserIdFieldId(
+		long userId, String fieldId) {
+
+		return getPersistence().fetchByUserIdFieldId(userId, fieldId);
+	}
+
+	/**
+	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param fieldId the field ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching user privacy, or <code>null</code> if a matching user privacy could not be found
+	 */
+	public static UserPrivacy fetchByUserIdFieldId(
+		long userId, String fieldId, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByUserIdFieldId(
+			userId, fieldId, retrieveFromCache);
+	}
+
+	/**
+	 * Removes the user privacy where userId = &#63; and fieldId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param fieldId the field ID
+	 * @return the user privacy that was removed
+	 */
+	public static UserPrivacy removeByUserIdFieldId(long userId, String fieldId)
+		throws com.placecube.nhs.userprivacy.exception.
+			NoSuchUserPrivacyException {
+
+		return getPersistence().removeByUserIdFieldId(userId, fieldId);
+	}
+
+	/**
+	 * Returns the number of user privacies where userId = &#63; and fieldId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param fieldId the field ID
+	 * @return the number of matching user privacies
+	 */
+	public static int countByUserIdFieldId(long userId, String fieldId) {
+		return getPersistence().countByUserIdFieldId(userId, fieldId);
+	}
+
+	/**
 	 * Returns all the user privacies where companyId = &#63; and fieldId = &#63;.
 	 *
 	 * @param companyId the company ID

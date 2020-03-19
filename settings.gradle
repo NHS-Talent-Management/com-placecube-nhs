@@ -26,6 +26,7 @@ def modules = [
 	'com.placecube.nhs.userprofile.api',
 	'com.placecube.nhs.userprofile.service',
 	'com.placecube.nhs.user.profile.web',
+	'com.placecube.nhs.user.settings.web',
 	'com.placecube.nhs.webcontent.listing.web',
 	'com.placecube.nhs.webcontent.structures'
 ] as String[]

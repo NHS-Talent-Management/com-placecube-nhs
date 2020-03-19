@@ -346,6 +346,36 @@ public class UserPrivacyLocalServiceUtil {
 	}
 
 	/**
+	 * Returns a Long array of privacy roleIds
+	 *
+	 * @param userId the userId
+	 * @param userPrivacyFieldId the userPrivacyFieldId
+	 */
+	public static long[] getUserPrivacyRoleIds(
+		long userId, String userPrivacyFieldId) {
+
+		return getService().getUserPrivacyRoleIds(userId, userPrivacyFieldId);
+	}
+
+	/**
+	 * Update UserPrivacy or create if not exist
+	 *
+	 * @param userId the userId
+	 * @param userPrivacyFieldId the userPrivacyFieldId
+	 * @param companyId the companyId
+	 * @param roleIds the roleIds
+	 * @return UserPrivacy model updated or created
+	 */
+	public static com.placecube.nhs.userprivacy.model.UserPrivacy
+		updateUserPrivacy(
+			long userId, String userPrivacyFieldId, long companyId,
+			java.util.List<Long> roleIds) {
+
+		return getService().updateUserPrivacy(
+			userId, userPrivacyFieldId, companyId, roleIds);
+	}
+
+	/**
 	 * Updates the user privacy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param userPrivacy the user privacy

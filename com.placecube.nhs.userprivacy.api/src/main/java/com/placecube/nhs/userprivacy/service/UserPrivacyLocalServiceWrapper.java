@@ -362,6 +362,38 @@ public class UserPrivacyLocalServiceWrapper
 	}
 
 	/**
+	 * Returns a Long array of privacy roleIds
+	 *
+	 * @param userId the userId
+	 * @param userPrivacyFieldId the userPrivacyFieldId
+	 */
+	@Override
+	public long[] getUserPrivacyRoleIds(
+		long userId, String userPrivacyFieldId) {
+
+		return _userPrivacyLocalService.getUserPrivacyRoleIds(
+			userId, userPrivacyFieldId);
+	}
+
+	/**
+	 * Update UserPrivacy or create if not exist
+	 *
+	 * @param userId the userId
+	 * @param userPrivacyFieldId the userPrivacyFieldId
+	 * @param companyId the companyId
+	 * @param roleIds the roleIds
+	 * @return UserPrivacy model updated or created
+	 */
+	@Override
+	public com.placecube.nhs.userprivacy.model.UserPrivacy updateUserPrivacy(
+		long userId, String userPrivacyFieldId, long companyId,
+		java.util.List<Long> roleIds) {
+
+		return _userPrivacyLocalService.updateUserPrivacy(
+			userId, userPrivacyFieldId, companyId, roleIds);
+	}
+
+	/**
 	 * Updates the user privacy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param userPrivacy the user privacy

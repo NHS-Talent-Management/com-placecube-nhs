@@ -293,6 +293,28 @@ public interface UserPrivacyLocalService
 		throws PortalException;
 
 	/**
+	 * Returns a Long array of privacy roleIds
+	 *
+	 * @param userId the userId
+	 * @param userPrivacyFieldId the userPrivacyFieldId
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserPrivacyRoleIds(long userId, String userPrivacyFieldId);
+
+	/**
+	 * Update UserPrivacy or create if not exist
+	 *
+	 * @param userId the userId
+	 * @param userPrivacyFieldId the userPrivacyFieldId
+	 * @param companyId the companyId
+	 * @param roleIds the roleIds
+	 * @return UserPrivacy model updated or created
+	 */
+	public UserPrivacy updateUserPrivacy(
+		long userId, String userPrivacyFieldId, long companyId,
+		List<Long> roleIds);
+
+	/**
 	 * Updates the user privacy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param userPrivacy the user privacy
