@@ -1,5 +1,6 @@
 package com.placecube.nhs.talentdashboard.web.service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -15,18 +16,26 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.placecube.nhs.notification.constants.NotificationType;
+import com.placecube.nhs.notification.service.NotificationLocalService;
 import com.placecube.nhs.taglibs.constants.SearchFilterConstants;
+import com.placecube.nhs.talentdashboard.web.model.NudgeNotification;
 import com.placecube.nhs.talentdashboard.web.model.SearchFilter;
 import com.placecube.nhs.talentdashboard.web.model.TalentSearchContext;
 import com.placecube.nhs.talentsearch.service.TalentSearchLocalService;
@@ -35,6 +44,9 @@ import com.placecube.nhs.talentsearch.service.TalentSearchLocalService;
 public class TalentDashboardService {
 
 	private static final Log LOG = LogFactoryUtil.getLog(TalentDashboardService.class);
+
+	@Reference
+	private NotificationLocalService notificationLocalService;
 
 	@Reference
 	private SessionUtil sessionUtil;
@@ -55,6 +67,22 @@ public class TalentDashboardService {
 		} catch (Exception e) {
 			throw new PortletException(e);
 		}
+	}
+
+	public List<Long> executeSearchForUserIds(ThemeDisplay themeDisplay, List<SearchFilter> searchFilters) throws PortletException {
+		List<Long> userIds = new ArrayList<>();
+		try {
+			SearchContext searchContext = retrievalUtil.getSearchContext(themeDisplay, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			retrievalUtil.configureSearchQueries(searchFilters, searchContext);
+			Hits hits = retrievalUtil.executeSearch(searchContext);
+			for (Document document : hits.getDocs()) {
+				userIds.add(GetterUtil.getLong(document.get(Field.USER_ID)));
+			}
+		} catch (Exception e) {
+			LOG.debug(e);
+			LOG.error("Unable to execute search for userIds " + e.getMessage());
+		}
+		return userIds;
 	}
 
 	public SearchContainer<User> getSearchContainer(RenderRequest renderRequest, RenderResponse renderResponse) {
@@ -130,6 +158,24 @@ public class TalentDashboardService {
 		talentSearchContext.setTalentSearchCategoryId(ParamUtil.getLong(portletRequest, "talentSearchCategoryId"));
 		talentSearchContext.setTalentSearchTypeId(ParamUtil.getLong(portletRequest, "talentSearchTypeId"));
 		sessionUtil.saveTalentSearchInSession(portletRequest, talentSearchContext);
+	}
+
+	public NudgeNotification getNudgeNotification(PortletRequest portletRequest) {
+		NudgeNotification nudgeNotification = (NudgeNotification) portletRequest.getAttribute("nudgeNotification");
+		if (Validator.isNull(nudgeNotification)) {
+			long totalResults = ParamUtil.getLong(portletRequest, "totalResults");
+			nudgeNotification = new NudgeNotification(totalResults);
+		}
+		return nudgeNotification;
+	}
+
+	public void updateNudgeNotificationWithSelectedValues(PortletRequest portletRequest, NudgeNotification nudgeNotification) {
+		nudgeNotification.setEmailBody(ParamUtil.getString(portletRequest, "emailBody"));
+		nudgeNotification.setEmailSubject(ParamUtil.getString(portletRequest, "emailSubject"));
+	}
+
+	public void createEmailNotification(User user, NudgeNotification nudgeNotification, List<Long> userIds) throws PortalException {
+		notificationLocalService.createNotification(user, NotificationType.EMAIL, nudgeNotification.getEmailSubject(), nudgeNotification.getEmailBody(), userIds);
 	}
 
 }

@@ -1,4 +1,4 @@
-<fieldset class="nhsuk-fieldset talent-search-settings">
+<div class="nhsuk-fieldset talent-search-settings">
 	
 	<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
 			fieldName="talentSearchName" 
@@ -22,7 +22,18 @@
 			errorMessage="${validationErrors.get('talentSearchCategoryId')}" />
 	
 	<aui:button-row cssClass="pull-right">
-		<aui:button type="submit" cssClass="nhsuk-button nhsuk-button--secondary btn-secondary" value="save" />
+		<aui:button type="submit" cssClass="nhsuk-button btn-primary" value="save" />
+		
+		<c:if test="${searchExecuted and searchContainer.getTotal() gt 0}">
+			<portlet:renderURL var="sendNudgeURL">
+				<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandKeys.SEND_NUDGE %>"/>
+				<portlet:param name="totalResults" value="${searchContainer.getTotal()}"/>
+			</portlet:renderURL>
+		
+			<a class="nhsuk-button nhsuk-button--secondary nhsuk-u-margin-left-5" href="${sendNudgeURL}">
+				<liferay-ui:message key="send-nudge"/>
+			</a>
+		</c:if>
 	</aui:button-row>
 	
-</fieldset>
+</div>

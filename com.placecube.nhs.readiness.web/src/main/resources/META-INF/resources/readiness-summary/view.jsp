@@ -17,6 +17,7 @@
 						<span class="action-icon">
 							<a href="${startQuestionnaireURL}">
 								<aui:icon cssClass="icon-monospaced" image="pencil" markupView="lexicon" />
+								<span class="nhsuk-u-visually-hidden"><liferay-ui:message key="update-your-career-readiness"/></span>
 							</a>
 						</span>		
 					</h3>

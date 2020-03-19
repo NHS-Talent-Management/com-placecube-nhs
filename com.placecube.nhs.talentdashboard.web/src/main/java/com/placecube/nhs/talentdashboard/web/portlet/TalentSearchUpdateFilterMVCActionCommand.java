@@ -31,6 +31,8 @@ public class TalentSearchUpdateFilterMVCActionCommand extends BaseMVCActionComma
 		talentDashboardService.updateFiltersWithSingleSelectedValue(actionRequest, availableFilters);
 
 		actionResponse.getRenderParameters().setValue("keepFilters", "true");
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 }

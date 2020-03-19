@@ -8,6 +8,7 @@ import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.placecube.nhs.talentdashboard.web.model.NudgeNotification;
 import com.placecube.nhs.talentdashboard.web.model.TalentSearchContext;
 
 @Component(immediate = true, service = ValidationService.class)
@@ -32,4 +33,10 @@ public class ValidationService {
 		}
 	}
 
+	public Map<String, String> getValidationErrors(NudgeNotification nudgeNotification, Locale locale) {
+		Map<String, String> errors = new LinkedHashMap<>();
+		validateMandatoryField(errors, locale, nudgeNotification.getEmailSubject(), "emailSubject", "enter-the-email-subject", 70, "enter-an-email-subject-that-is-70-characters-or-fewer");
+		validateMandatoryField(errors, locale, nudgeNotification.getEmailBody(), "emailBody", "enter-the-email-body", 3000, "enter-an-email-body-that-is-3000-characters-or-fewer");
+		return errors;
+	}
 }

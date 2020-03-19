@@ -17,6 +17,7 @@
 					<span class="action-icon">
 						<a href="${addProfessionalBodyUrl}">
 							<aui:icon cssClass="icon-monospaced" image="plus" markupView="lexicon" />
+							<span class="nhsuk-u-visually-hidden"><liferay-ui:message key="add-professional-body"/></span>
 						</a>
 					</span>		
 				</h3>

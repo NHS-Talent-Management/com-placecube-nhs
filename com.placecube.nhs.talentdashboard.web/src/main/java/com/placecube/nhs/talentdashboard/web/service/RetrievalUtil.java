@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -87,6 +88,8 @@ public class RetrievalUtil {
 		searchContext.setEntryClassNames(new String[] { User.class.getName() });
 		searchContext.setStart(start);
 		searchContext.setEnd(end);
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+		queryConfig.setSelectedFieldNames(Field.USER_ID);
 		return searchContext;
 	}
 

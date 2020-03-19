@@ -31,7 +31,9 @@ public class SearchFilter implements Serializable {
 	}
 
 	public void addSelectedValue(String fieldValue) {
-		fieldSelectedValues = ArrayUtil.append(fieldSelectedValues, fieldValue);
+		if (!ArrayUtil.contains(fieldSelectedValues, fieldValue)) {
+			fieldSelectedValues = ArrayUtil.append(fieldSelectedValues, fieldValue);
+		}
 	}
 
 	public String getFieldLabel() {

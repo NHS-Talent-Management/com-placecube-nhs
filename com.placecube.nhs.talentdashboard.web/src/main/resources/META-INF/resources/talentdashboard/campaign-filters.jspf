@@ -4,7 +4,7 @@
 	<portlet:param name="fieldValue" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_FIELD_VALUE %>"/>
 </portlet:actionURL>
 
-<fieldset class="nhsuk-fieldset talent-search-filters">
+<div class="nhsuk-fieldset talent-search-filters">
 	<c:forEach items="${availableFilters}" var="availableFilter">
 		<nhs-search-ui:filter-checkbox 
 				fieldLabel="${availableFilter.getFieldLabel()}" 
@@ -14,4 +14,4 @@
 				fieldName="${availableFilter.getSearchableFieldName()}"
 				updateFilterSearchURL="${updateFilterSearchURL}"/>
 	</c:forEach>
-</fieldset>
+</div>

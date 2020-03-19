@@ -17,6 +17,7 @@
 					<span class="action-icon">
 						<a href="${editProfileUrl}">
 							<aui:icon cssClass="icon-monospaced" image="pencil" markupView="lexicon" />
+							<span class="nhsuk-u-visually-hidden"><liferay-ui:message key="edit-your-profile-details"/></span>
 						</a>
 					</span>		
 				</h3>

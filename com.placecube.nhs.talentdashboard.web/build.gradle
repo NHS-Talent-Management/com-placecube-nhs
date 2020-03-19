@@ -1,4 +1,5 @@
 dependencies {
+	compile project (':com.placecube.nhs.notification.api')
 	compile project (':com.placecube.nhs.readiness.api')
 	compile project (':com.placecube.nhs.search.utils')
 	compile project (':com.placecube.nhs.talentsearch.api')

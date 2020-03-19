@@ -6,6 +6,8 @@ def modules = [
 	'com.placecube.nhs.indexer.group',
 	'com.placecube.nhs.language',
 	'com.placecube.nhs.navigationmenu',
+	'com.placecube.nhs.notification.api',
+	'com.placecube.nhs.notification.service',
 	'com.placecube.nhs.override.facebooklogin.jsp',
 	'com.placecube.nhs.override.login.jsp',
 	'com.placecube.nhs.readiness.api',

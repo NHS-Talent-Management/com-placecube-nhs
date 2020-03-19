@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder database-name-max-length="50" package-path="com.placecube.nhs.notification">
+	<namespace>NHS_Notification</namespace>
+	
+	<entity local-service="true" name="UserNotificationPreference" remote-service="false" uuid="true">
+		<column name="userId" primary="true" type="long" />
+		<column name="notificationType" primary="true" type="int" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<column name="enabled" type="boolean" />
+		
+		<finder return-type="UserNotificationPreference" name="UserIdTypeEnabled">
+			<finder-column name="userId"/>
+			<finder-column name="notificationType"/>
+			<finder-column name="enabled"/>
+		</finder>
+	</entity>
+	
+	<entity local-service="true" name="Notification" remote-service="false" uuid="true">
+		<column name="notificationId" primary="true" type="long" />
+		<column name="companyId" type="long" />
+		<column name="userId"  type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="notificationType" type="int" />
+		<column name="summary" type="String" />
+		<column name="body" type="String" />
+		<column name="receiverUserIds" type="String" />
+	</entity>
+	
+</service-builder>

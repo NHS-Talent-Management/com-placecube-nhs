@@ -17,6 +17,7 @@
 					<span class="action-icon">
 						<a href="${addExperienceUrl}">
 							<aui:icon cssClass="icon-monospaced" image="plus" markupView="lexicon" />
+							<span class="nhsuk-u-visually-hidden"><liferay-ui:message key="add-experience"/></span>
 						</a>
 					</span>		
 				</h3>

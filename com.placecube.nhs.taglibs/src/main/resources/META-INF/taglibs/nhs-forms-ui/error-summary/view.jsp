@@ -2,7 +2,7 @@
 
 <c:if test="${not empty errors}">
 
-	<div class="nhsuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1">
+	<div class="nhsuk-error-summary" aria-labelledby="${portletNamespace}error-summary-title" role="alert" tabindex="-1">
 		
 		<h2 class="nhsuk-error-summary__title" id="${portletNamespace}error-summary-title">
 			<liferay-ui:message key="there-is-a-problem" />

@@ -1,0 +1,9 @@
+Bundle-SymbolicName: com.placecube.nhs.notification.api
+Bundle-Name: Placecube NHS - Notification API
+Bundle-Version: 1.0.0
+Export-Package: \
+	com.placecube.nhs.notification.exception,\
+	com.placecube.nhs.notification.model,\
+	com.placecube.nhs.notification.service.persistence,\
+	com.placecube.nhs.notification.service,\
+	com.placecube.nhs.notification.constants
