@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.talentdashboard.web
 Bundle-Name: Placecube NHS - Talent Dashboard Web
-Bundle-Version: 1.1.0
+Bundle-Version: 1.1.1.SNAPSHOT
 
 Require-Capability: \
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://placecube.com/tld/nhs-forms-ui))",\
