@@ -91,7 +91,7 @@ public class UserPrivacyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NHS_Privacy_UserPrivacy (uuid_ VARCHAR(75) null,userId LONG not null,fieldId VARCHAR(500) not null,companyId LONG,roleIds VARCHAR(500) null,createDate DATE null,modifiedDate DATE null,primary key (userId, fieldId))";
+		"create table NHS_Privacy_UserPrivacy (uuid_ VARCHAR(75) null,userId LONG not null,fieldId VARCHAR(150) not null,companyId LONG,roleIds VARCHAR(500) null,createDate DATE null,modifiedDate DATE null,primary key (userId, fieldId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NHS_Privacy_UserPrivacy";

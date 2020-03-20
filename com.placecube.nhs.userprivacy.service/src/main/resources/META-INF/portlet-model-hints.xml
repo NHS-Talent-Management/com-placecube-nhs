@@ -5,7 +5,7 @@
 		<field name="uuid" type="String" />
 		<field name="userId" type="long" />
 		<field name="fieldId" type="String">
-			<hint name="max-length">500</hint>
+			<hint name="max-length">150</hint>
 		</field>
 		<field name="companyId" type="long" />
 		<field name="roleIds" type="String">
