@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.notification.service
 Bundle-Name: Placecube NHS - Notification service
-Bundle-Version: 2.0.1
+Bundle-Version: 2.0.2.SNAPSHOT
 
 Liferay-Require-SchemaVersion: 1.1.0
 Liferay-Service: true
