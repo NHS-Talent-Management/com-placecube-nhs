@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.notification.api
 Bundle-Name: Placecube NHS - Notification API
-Bundle-Version: 2.0.0
+Bundle-Version: 2.0.1.SNAPSHOT
 Export-Package: \
 	com.placecube.nhs.notification.exception,\
 	com.placecube.nhs.notification.model,\
