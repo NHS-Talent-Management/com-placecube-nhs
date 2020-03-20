@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import com.placecube.nhs.userprivacy.model.UserPrivacy;
 import com.placecube.nhs.userprivacy.service.UserPrivacyLocalService;
+import com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK;
 import com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPersistence;
 
 import java.io.Serializable;
@@ -95,28 +96,28 @@ public abstract class UserPrivacyLocalServiceBaseImpl
 	/**
 	 * Creates a new user privacy with the primary key. Does not add the user privacy to the database.
 	 *
-	 * @param userPrivacyId the primary key for the new user privacy
+	 * @param userPrivacyPK the primary key for the new user privacy
 	 * @return the new user privacy
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public UserPrivacy createUserPrivacy(long userPrivacyId) {
-		return userPrivacyPersistence.create(userPrivacyId);
+	public UserPrivacy createUserPrivacy(UserPrivacyPK userPrivacyPK) {
+		return userPrivacyPersistence.create(userPrivacyPK);
 	}
 
 	/**
 	 * Deletes the user privacy with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy that was removed
 	 * @throws PortalException if a user privacy with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public UserPrivacy deleteUserPrivacy(long userPrivacyId)
+	public UserPrivacy deleteUserPrivacy(UserPrivacyPK userPrivacyPK)
 		throws PortalException {
 
-		return userPrivacyPersistence.remove(userPrivacyId);
+		return userPrivacyPersistence.remove(userPrivacyPK);
 	}
 
 	/**
@@ -219,8 +220,8 @@ public abstract class UserPrivacyLocalServiceBaseImpl
 	}
 
 	@Override
-	public UserPrivacy fetchUserPrivacy(long userPrivacyId) {
-		return userPrivacyPersistence.fetchByPrimaryKey(userPrivacyId);
+	public UserPrivacy fetchUserPrivacy(UserPrivacyPK userPrivacyPK) {
+		return userPrivacyPersistence.fetchByPrimaryKey(userPrivacyPK);
 	}
 
 	/**
@@ -241,15 +242,15 @@ public abstract class UserPrivacyLocalServiceBaseImpl
 	/**
 	 * Returns the user privacy with the primary key.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy
 	 * @throws PortalException if a user privacy with the primary key could not be found
 	 */
 	@Override
-	public UserPrivacy getUserPrivacy(long userPrivacyId)
+	public UserPrivacy getUserPrivacy(UserPrivacyPK userPrivacyPK)
 		throws PortalException {
 
-		return userPrivacyPersistence.findByPrimaryKey(userPrivacyId);
+		return userPrivacyPersistence.findByPrimaryKey(userPrivacyPK);
 	}
 
 	@Override
@@ -261,7 +262,7 @@ public abstract class UserPrivacyLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserPrivacy.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("userPrivacyId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("primaryKey.userId");
 
 		return actionableDynamicQuery;
 	}
@@ -279,7 +280,7 @@ public abstract class UserPrivacyLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(UserPrivacy.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"userPrivacyId");
+			"primaryKey.userId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -291,7 +292,7 @@ public abstract class UserPrivacyLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserPrivacy.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("userPrivacyId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("primaryKey.userId");
 	}
 
 	@Override

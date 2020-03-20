@@ -1,6 +1,8 @@
 package com.placecube.nhs.taglibs.tag;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,51 @@ public class InputTypeCheckboxTag extends IncludeTag {
 	private Map<String, String> fieldOptions;
 	private String fieldValue;
 	private String errorMessage;
+	private List<String> fieldSelectedValues;
+
+	@Override
+	public int doStartTag() {
+		setAttributeNamespace("nhs-forms-ui:input-checkbox");
+		return EVAL_BODY_INCLUDE;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public void setFieldHint(String fieldHint) {
+		this.fieldHint = fieldHint;
+	}
+
+	public void setFieldLabel(String fieldLabel) {
+		this.fieldLabel = fieldLabel;
+	}
+
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+	}
+
+	public void setFieldOptions(Map<String, String> fieldOptions) {
+		this.fieldOptions = fieldOptions;
+	}
+
+	public void setFieldSelectedValues(List<String> fieldSelectedValues) {
+		this.fieldSelectedValues = fieldSelectedValues;
+	}
+
+	public void setFieldValue(String fieldValue) {
+		this.fieldValue = fieldValue;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+		setServletContext(ServletContextUtil.getServletContext());
+	}
+
+	public void setPortletNamespace(String portletNamespace) {
+		this.portletNamespace = portletNamespace;
+	}
 
 	@Override
 	protected void cleanUp() {
@@ -28,13 +75,8 @@ public class InputTypeCheckboxTag extends IncludeTag {
 		fieldHint = null;
 		fieldLabel = null;
 		fieldValue = null;
+		fieldSelectedValues = new ArrayList<>();
 		errorMessage = null;
-	}
-
-	@Override
-	public int doStartTag() {
-		setAttributeNamespace("nhs-forms-ui:input-checkbox");
-		return EVAL_BODY_INCLUDE;
 	}
 
 	@Override
@@ -51,40 +93,7 @@ public class InputTypeCheckboxTag extends IncludeTag {
 		request.setAttribute("fieldValue", fieldValue);
 		request.setAttribute("errorMessage", errorMessage);
 		request.setAttribute("fieldOptions", fieldOptions);
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-		setServletContext(ServletContextUtil.getServletContext());
-	}
-
-	public void setPortletNamespace(String portletNamespace) {
-		this.portletNamespace = portletNamespace;
-	}
-
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
-
-	public void setFieldHint(String fieldHint) {
-		this.fieldHint = fieldHint;
-	}
-
-	public void setFieldLabel(String fieldLabel) {
-		this.fieldLabel = fieldLabel;
-	}
-
-	public void setFieldOptions(Map<String, String> fieldOptions) {
-		this.fieldOptions = fieldOptions;
-	}
-
-	public void setFieldValue(String fieldValue) {
-		this.fieldValue = fieldValue;
-	}
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+		request.setAttribute("fieldSelectedValues", fieldSelectedValues);
 	}
 
 }

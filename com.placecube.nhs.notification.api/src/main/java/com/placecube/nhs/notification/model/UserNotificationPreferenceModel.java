@@ -106,14 +106,15 @@ public interface UserNotificationPreferenceModel
 	 *
 	 * @return the notification type of this user notification preference
 	 */
-	public int getNotificationType();
+	@AutoEscape
+	public String getNotificationType();
 
 	/**
 	 * Sets the notification type of this user notification preference.
 	 *
 	 * @param notificationType the notification type of this user notification preference
 	 */
-	public void setNotificationType(int notificationType);
+	public void setNotificationType(String notificationType);
 
 	/**
 	 * Returns the create date of this user notification preference.

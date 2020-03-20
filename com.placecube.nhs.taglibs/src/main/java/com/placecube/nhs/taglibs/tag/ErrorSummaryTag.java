@@ -15,27 +15,13 @@ public class ErrorSummaryTag extends IncludeTag {
 	private Map<String, String> errors;
 
 	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-		portletNamespace = null;
-		errors = new HashMap<>();
-	}
-
-	@Override
 	public int doStartTag() {
 		setAttributeNamespace("nhs-forms-ui:errorSummary");
 		return EVAL_BODY_INCLUDE;
 	}
 
-	@Override
-	protected String getPage() {
-		return "/META-INF/taglibs/nhs-forms-ui/error-summary/view.jsp";
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("portletNamespace", portletNamespace);
-		request.setAttribute("errors", errors);
+	public void setErrors(Map<String, String> errors) {
+		this.errors = errors;
 	}
 
 	@Override
@@ -48,8 +34,22 @@ public class ErrorSummaryTag extends IncludeTag {
 		this.portletNamespace = portletNamespace;
 	}
 
-	public void setErrors(Map<String, String> errors) {
-		this.errors = errors;
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+		portletNamespace = null;
+		errors = new HashMap<>();
+	}
+
+	@Override
+	protected String getPage() {
+		return "/META-INF/taglibs/nhs-forms-ui/error-summary/view.jsp";
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("portletNamespace", portletNamespace);
+		request.setAttribute("errors", errors);
 	}
 
 }

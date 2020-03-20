@@ -125,11 +125,11 @@ public class UserNotificationPreferenceSoap implements Serializable {
 		_userId = userId;
 	}
 
-	public int getNotificationType() {
+	public String getNotificationType() {
 		return _notificationType;
 	}
 
-	public void setNotificationType(int notificationType) {
+	public void setNotificationType(String notificationType) {
 		_notificationType = notificationType;
 	}
 
@@ -163,7 +163,7 @@ public class UserNotificationPreferenceSoap implements Serializable {
 
 	private String _uuid;
 	private long _userId;
-	private int _notificationType;
+	private String _notificationType;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _enabled;

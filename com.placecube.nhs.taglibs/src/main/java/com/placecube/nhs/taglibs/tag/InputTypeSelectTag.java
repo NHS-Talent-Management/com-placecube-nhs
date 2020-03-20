@@ -19,6 +19,42 @@ public class InputTypeSelectTag extends IncludeTag {
 	private String errorMessage;
 
 	@Override
+	public int doStartTag() {
+		setAttributeNamespace("nhs-forms-ui:input-select");
+		return EVAL_BODY_INCLUDE;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public void setFieldLabel(String fieldLabel) {
+		this.fieldLabel = fieldLabel;
+	}
+
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+	}
+
+	public void setFieldOptions(Map<String, String> fieldOptions) {
+		this.fieldOptions = fieldOptions;
+	}
+
+	public void setFieldValue(String fieldValue) {
+		this.fieldValue = fieldValue;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+		setServletContext(ServletContextUtil.getServletContext());
+	}
+
+	public void setPortletNamespace(String portletNamespace) {
+		this.portletNamespace = portletNamespace;
+	}
+
+	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 		portletNamespace = null;
@@ -27,12 +63,6 @@ public class InputTypeSelectTag extends IncludeTag {
 		fieldLabel = null;
 		fieldValue = null;
 		errorMessage = null;
-	}
-
-	@Override
-	public int doStartTag() {
-		setAttributeNamespace("nhs-forms-ui:input-select");
-		return EVAL_BODY_INCLUDE;
 	}
 
 	@Override
@@ -48,36 +78,6 @@ public class InputTypeSelectTag extends IncludeTag {
 		request.setAttribute("fieldValue", fieldValue);
 		request.setAttribute("errorMessage", errorMessage);
 		request.setAttribute("fieldOptions", fieldOptions);
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-		setServletContext(ServletContextUtil.getServletContext());
-	}
-
-	public void setPortletNamespace(String portletNamespace) {
-		this.portletNamespace = portletNamespace;
-	}
-
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
-
-	public void setFieldLabel(String fieldLabel) {
-		this.fieldLabel = fieldLabel;
-	}
-
-	public void setFieldOptions(Map<String, String> fieldOptions) {
-		this.fieldOptions = fieldOptions;
-	}
-
-	public void setFieldValue(String fieldValue) {
-		this.fieldValue = fieldValue;
-	}
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
 	}
 
 }

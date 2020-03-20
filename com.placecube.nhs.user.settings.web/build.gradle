@@ -1,7 +1,9 @@
 dependencies {
-	compile project (':com.placecube.nhs.userprofile.api')
+	compile project (':com.placecube.nhs.notification.api')
 	compile project (':com.placecube.nhs.readiness.api')
+	compile project (':com.placecube.nhs.taglibs')
 	compile project (':com.placecube.nhs.userprivacy.api')
+	compile project (':com.placecube.nhs.userprofile.api')
 
 	compile group: 'biz.aQute.bnd', name: 'biz.aQute.bndlib'
 	compile group: 'com.liferay', name: 'com.liferay.portal.configuration.metatype.api'

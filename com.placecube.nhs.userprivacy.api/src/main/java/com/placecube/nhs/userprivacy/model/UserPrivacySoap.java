@@ -14,6 +14,8 @@
 
 package com.placecube.nhs.userprivacy.model;
 
+import com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -35,10 +37,9 @@ public class UserPrivacySoap implements Serializable {
 		UserPrivacySoap soapModel = new UserPrivacySoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setUserPrivacyId(model.getUserPrivacyId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setFieldId(model.getFieldId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setRoleIds(model.getRoleIds());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
@@ -87,12 +88,13 @@ public class UserPrivacySoap implements Serializable {
 	public UserPrivacySoap() {
 	}
 
-	public long getPrimaryKey() {
-		return _userPrivacyId;
+	public UserPrivacyPK getPrimaryKey() {
+		return new UserPrivacyPK(_userId, _fieldId);
 	}
 
-	public void setPrimaryKey(long pk) {
-		setUserPrivacyId(pk);
+	public void setPrimaryKey(UserPrivacyPK pk) {
+		setUserId(pk.userId);
+		setFieldId(pk.fieldId);
 	}
 
 	public String getUuid() {
@@ -101,22 +103,6 @@ public class UserPrivacySoap implements Serializable {
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
-	}
-
-	public long getUserPrivacyId() {
-		return _userPrivacyId;
-	}
-
-	public void setUserPrivacyId(long userPrivacyId) {
-		_userPrivacyId = userPrivacyId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -133,6 +119,14 @@ public class UserPrivacySoap implements Serializable {
 
 	public void setFieldId(String fieldId) {
 		_fieldId = fieldId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	public String getRoleIds() {
@@ -160,10 +154,9 @@ public class UserPrivacySoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _userPrivacyId;
-	private long _companyId;
 	private long _userId;
 	private String _fieldId;
+	private long _companyId;
 	private String _roleIds;
 	private Date _createDate;
 	private Date _modifiedDate;

@@ -56,13 +56,15 @@ public class UserPrivacyLocalServiceUtil {
 	/**
 	 * Creates a new user privacy with the primary key. Does not add the user privacy to the database.
 	 *
-	 * @param userPrivacyId the primary key for the new user privacy
+	 * @param userPrivacyPK the primary key for the new user privacy
 	 * @return the new user privacy
 	 */
 	public static com.placecube.nhs.userprivacy.model.UserPrivacy
-		createUserPrivacy(long userPrivacyId) {
+		createUserPrivacy(
+			com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK
+				userPrivacyPK) {
 
-		return getService().createUserPrivacy(userPrivacyId);
+		return getService().createUserPrivacy(userPrivacyPK);
 	}
 
 	/**
@@ -96,20 +98,6 @@ public class UserPrivacyLocalServiceUtil {
 	}
 
 	/**
-	 * Deletes the user privacy with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userPrivacyId the primary key of the user privacy
-	 * @return the user privacy that was removed
-	 * @throws PortalException if a user privacy with the primary key could not be found
-	 */
-	public static com.placecube.nhs.userprivacy.model.UserPrivacy
-			deleteUserPrivacy(long userPrivacyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().deleteUserPrivacy(userPrivacyId);
-	}
-
-	/**
 	 * Deletes the user privacy from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userPrivacy the user privacy
@@ -120,6 +108,22 @@ public class UserPrivacyLocalServiceUtil {
 			com.placecube.nhs.userprivacy.model.UserPrivacy userPrivacy) {
 
 		return getService().deleteUserPrivacy(userPrivacy);
+	}
+
+	/**
+	 * Deletes the user privacy with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param userPrivacyPK the primary key of the user privacy
+	 * @return the user privacy that was removed
+	 * @throws PortalException if a user privacy with the primary key could not be found
+	 */
+	public static com.placecube.nhs.userprivacy.model.UserPrivacy
+			deleteUserPrivacy(
+				com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK
+					userPrivacyPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteUserPrivacy(userPrivacyPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
@@ -208,9 +212,11 @@ public class UserPrivacyLocalServiceUtil {
 	}
 
 	public static com.placecube.nhs.userprivacy.model.UserPrivacy
-		fetchUserPrivacy(long userPrivacyId) {
+		fetchUserPrivacy(
+			com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK
+				userPrivacyPK) {
 
-		return getService().fetchUserPrivacy(userPrivacyId);
+		return getService().fetchUserPrivacy(userPrivacyPK);
 	}
 
 	/**
@@ -319,15 +325,17 @@ public class UserPrivacyLocalServiceUtil {
 	/**
 	 * Returns the user privacy with the primary key.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy
 	 * @throws PortalException if a user privacy with the primary key could not be found
 	 */
 	public static com.placecube.nhs.userprivacy.model.UserPrivacy
-			getUserPrivacy(long userPrivacyId)
+			getUserPrivacy(
+				com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK
+					userPrivacyPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getUserPrivacy(userPrivacyId);
+		return getService().getUserPrivacy(userPrivacyPK);
 	}
 
 	/**
@@ -346,33 +354,31 @@ public class UserPrivacyLocalServiceUtil {
 	}
 
 	/**
-	 * Returns a Long array of privacy roleIds
+	 * Returns a long array of privacy roleIds
 	 *
 	 * @param userId the userId
-	 * @param userPrivacyFieldId the userPrivacyFieldId
+	 * @param fieldId the fieldId
 	 */
-	public static long[] getUserPrivacyRoleIds(
-		long userId, String userPrivacyFieldId) {
-
-		return getService().getUserPrivacyRoleIds(userId, userPrivacyFieldId);
+	public static long[] getUserPrivacyRoleIds(long userId, String fieldId) {
+		return getService().getUserPrivacyRoleIds(userId, fieldId);
 	}
 
 	/**
 	 * Update UserPrivacy or create if not exist
 	 *
-	 * @param userId the userId
-	 * @param userPrivacyFieldId the userPrivacyFieldId
 	 * @param companyId the companyId
+	 * @param userId the userId
+	 * @param fieldId the fieldId
 	 * @param roleIds the roleIds
 	 * @return UserPrivacy model updated or created
 	 */
 	public static com.placecube.nhs.userprivacy.model.UserPrivacy
 		updateUserPrivacy(
-			long userId, String userPrivacyFieldId, long companyId,
+			long companyId, long userId, String fieldId,
 			java.util.List<Long> roleIds) {
 
 		return getService().updateUserPrivacy(
-			userId, userPrivacyFieldId, companyId, roleIds);
+			companyId, userId, fieldId, roleIds);
 	}
 
 	/**

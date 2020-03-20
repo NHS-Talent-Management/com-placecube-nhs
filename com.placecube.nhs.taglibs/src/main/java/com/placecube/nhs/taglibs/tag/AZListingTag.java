@@ -19,17 +19,35 @@ public class AZListingTag extends IncludeTag {
 	private List<AZEntry> items;
 
 	@Override
+	public int doStartTag() {
+		setAttributeNamespace("nhs-az-ui:azListing");
+		return EVAL_BODY_INCLUDE;
+	}
+
+	public void setItems(List<AZEntry> items) {
+		this.items = items;
+	}
+
+	public void setNoValuesFoundMessage(String noValuesFoundMessage) {
+		this.noValuesFoundMessage = noValuesFoundMessage;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+		setServletContext(ServletContextUtil.getServletContext());
+	}
+
+	public void setPortletNamespace(String portletNamespace) {
+		this.portletNamespace = portletNamespace;
+	}
+
+	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 		portletNamespace = null;
 		noValuesFoundMessage = null;
 		items = new ArrayList<>();
-	}
-
-	@Override
-	public int doStartTag() {
-		setAttributeNamespace("nhs-az-ui:azListing");
-		return EVAL_BODY_INCLUDE;
 	}
 
 	@Override
@@ -47,24 +65,6 @@ public class AZListingTag extends IncludeTag {
 		request.setAttribute("portletNamespace", portletNamespace);
 		request.setAttribute("noValuesFoundMessage", noValuesFoundMessage);
 		request.setAttribute("azListingItems", results);
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-		setServletContext(ServletContextUtil.getServletContext());
-	}
-
-	public void setPortletNamespace(String portletNamespace) {
-		this.portletNamespace = portletNamespace;
-	}
-
-	public void setNoValuesFoundMessage(String noValuesFoundMessage) {
-		this.noValuesFoundMessage = noValuesFoundMessage;
-	}
-
-	public void setItems(List<AZEntry> items) {
-		this.items = items;
 	}
 
 }

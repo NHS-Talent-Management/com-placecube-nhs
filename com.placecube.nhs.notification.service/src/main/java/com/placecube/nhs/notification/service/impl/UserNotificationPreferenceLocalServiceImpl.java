@@ -14,6 +14,8 @@
 
 package com.placecube.nhs.notification.service.impl;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.aop.AopService;
@@ -77,7 +79,27 @@ public class UserNotificationPreferenceLocalServiceImpl extends UserNotification
 		return userNotificationPreferenceLocalService.updateUserNotificationPreference(userNotificationPreference);
 	}
 
+	/**
+	 * Returns all the notification preferences for the user
+	 *
+	 * @param userId the userId
+	 * @return list of all configured notification preferences, both enabled and
+	 *         disabled
+	 */
 	@Override
+	public List<UserNotificationPreference> getByUserId(long userId) {
+		return userNotificationPreferencePersistence.findByuserId(userId);
+	}
+
+	@Override
+	/**
+	 * Checks if the user has a notification enabled for the type
+	 *
+	 * @param userId the userId
+	 * @param notificationType the notificaiton type
+	 * @return true if the user has a notification enabled for the specified
+	 *         type, false otherwise
+	 */
 	public boolean hasNotificationEnabledForType(long userId, NotificationType notificationType) {
 		try {
 			userNotificationPreferencePersistence.findByUserIdTypeEnabled(userId, notificationType.getKey(), true);

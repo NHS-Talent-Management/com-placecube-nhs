@@ -258,20 +258,20 @@ public class UserPrivacyUtil {
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where uuid = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user privacy
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
 	public static UserPrivacy[] findByUuid_PrevAndNext(
-			long userPrivacyId, String uuid,
+			UserPrivacyPK userPrivacyPK, String uuid,
 			OrderByComparator<UserPrivacy> orderByComparator)
 		throws com.placecube.nhs.userprivacy.exception.
 			NoSuchUserPrivacyException {
 
 		return getPersistence().findByUuid_PrevAndNext(
-			userPrivacyId, uuid, orderByComparator);
+			userPrivacyPK, uuid, orderByComparator);
 	}
 
 	/**
@@ -442,7 +442,7 @@ public class UserPrivacyUtil {
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -450,13 +450,13 @@ public class UserPrivacyUtil {
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
 	public static UserPrivacy[] findByUuid_C_PrevAndNext(
-			long userPrivacyId, String uuid, long companyId,
+			UserPrivacyPK userPrivacyPK, String uuid, long companyId,
 			OrderByComparator<UserPrivacy> orderByComparator)
 		throws com.placecube.nhs.userprivacy.exception.
 			NoSuchUserPrivacyException {
 
 		return getPersistence().findByUuid_C_PrevAndNext(
-			userPrivacyId, uuid, companyId, orderByComparator);
+			userPrivacyPK, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -613,20 +613,20 @@ public class UserPrivacyUtil {
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where userId = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user privacy
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
 	public static UserPrivacy[] findByUserId_PrevAndNext(
-			long userPrivacyId, long userId,
+			UserPrivacyPK userPrivacyPK, long userId,
 			OrderByComparator<UserPrivacy> orderByComparator)
 		throws com.placecube.nhs.userprivacy.exception.
 			NoSuchUserPrivacyException {
 
 		return getPersistence().findByUserId_PrevAndNext(
-			userPrivacyId, userId, orderByComparator);
+			userPrivacyPK, userId, orderByComparator);
 	}
 
 	/**
@@ -646,74 +646,6 @@ public class UserPrivacyUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
-	}
-
-	/**
-	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or throws a <code>NoSuchUserPrivacyException</code> if it could not be found.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the matching user privacy
-	 * @throws NoSuchUserPrivacyException if a matching user privacy could not be found
-	 */
-	public static UserPrivacy findByUserIdFieldId(long userId, String fieldId)
-		throws com.placecube.nhs.userprivacy.exception.
-			NoSuchUserPrivacyException {
-
-		return getPersistence().findByUserIdFieldId(userId, fieldId);
-	}
-
-	/**
-	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the matching user privacy, or <code>null</code> if a matching user privacy could not be found
-	 */
-	public static UserPrivacy fetchByUserIdFieldId(
-		long userId, String fieldId) {
-
-		return getPersistence().fetchByUserIdFieldId(userId, fieldId);
-	}
-
-	/**
-	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching user privacy, or <code>null</code> if a matching user privacy could not be found
-	 */
-	public static UserPrivacy fetchByUserIdFieldId(
-		long userId, String fieldId, boolean retrieveFromCache) {
-
-		return getPersistence().fetchByUserIdFieldId(
-			userId, fieldId, retrieveFromCache);
-	}
-
-	/**
-	 * Removes the user privacy where userId = &#63; and fieldId = &#63; from the database.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the user privacy that was removed
-	 */
-	public static UserPrivacy removeByUserIdFieldId(long userId, String fieldId)
-		throws com.placecube.nhs.userprivacy.exception.
-			NoSuchUserPrivacyException {
-
-		return getPersistence().removeByUserIdFieldId(userId, fieldId);
-	}
-
-	/**
-	 * Returns the number of user privacies where userId = &#63; and fieldId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the number of matching user privacies
-	 */
-	public static int countByUserIdFieldId(long userId, String fieldId) {
-		return getPersistence().countByUserIdFieldId(userId, fieldId);
 	}
 
 	/**
@@ -869,7 +801,7 @@ public class UserPrivacyUtil {
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where companyId = &#63; and fieldId = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param companyId the company ID
 	 * @param fieldId the field ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -877,13 +809,13 @@ public class UserPrivacyUtil {
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
 	public static UserPrivacy[] findByCompanyIdFieldId_PrevAndNext(
-			long userPrivacyId, long companyId, String fieldId,
+			UserPrivacyPK userPrivacyPK, long companyId, String fieldId,
 			OrderByComparator<UserPrivacy> orderByComparator)
 		throws com.placecube.nhs.userprivacy.exception.
 			NoSuchUserPrivacyException {
 
 		return getPersistence().findByCompanyIdFieldId_PrevAndNext(
-			userPrivacyId, companyId, fieldId, orderByComparator);
+			userPrivacyPK, companyId, fieldId, orderByComparator);
 	}
 
 	/**
@@ -930,25 +862,25 @@ public class UserPrivacyUtil {
 	/**
 	 * Creates a new user privacy with the primary key. Does not add the user privacy to the database.
 	 *
-	 * @param userPrivacyId the primary key for the new user privacy
+	 * @param userPrivacyPK the primary key for the new user privacy
 	 * @return the new user privacy
 	 */
-	public static UserPrivacy create(long userPrivacyId) {
-		return getPersistence().create(userPrivacyId);
+	public static UserPrivacy create(UserPrivacyPK userPrivacyPK) {
+		return getPersistence().create(userPrivacyPK);
 	}
 
 	/**
 	 * Removes the user privacy with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy that was removed
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
-	public static UserPrivacy remove(long userPrivacyId)
+	public static UserPrivacy remove(UserPrivacyPK userPrivacyPK)
 		throws com.placecube.nhs.userprivacy.exception.
 			NoSuchUserPrivacyException {
 
-		return getPersistence().remove(userPrivacyId);
+		return getPersistence().remove(userPrivacyPK);
 	}
 
 	public static UserPrivacy updateImpl(UserPrivacy userPrivacy) {
@@ -958,25 +890,25 @@ public class UserPrivacyUtil {
 	/**
 	 * Returns the user privacy with the primary key or throws a <code>NoSuchUserPrivacyException</code> if it could not be found.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
-	public static UserPrivacy findByPrimaryKey(long userPrivacyId)
+	public static UserPrivacy findByPrimaryKey(UserPrivacyPK userPrivacyPK)
 		throws com.placecube.nhs.userprivacy.exception.
 			NoSuchUserPrivacyException {
 
-		return getPersistence().findByPrimaryKey(userPrivacyId);
+		return getPersistence().findByPrimaryKey(userPrivacyPK);
 	}
 
 	/**
 	 * Returns the user privacy with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy, or <code>null</code> if a user privacy with the primary key could not be found
 	 */
-	public static UserPrivacy fetchByPrimaryKey(long userPrivacyId) {
-		return getPersistence().fetchByPrimaryKey(userPrivacyId);
+	public static UserPrivacy fetchByPrimaryKey(UserPrivacyPK userPrivacyPK) {
+		return getPersistence().fetchByPrimaryKey(userPrivacyPK);
 	}
 
 	/**
@@ -1056,6 +988,10 @@ public class UserPrivacyUtil {
 	 */
 	public static int countAll() {
 		return getPersistence().countAll();
+	}
+
+	public static Set<String> getCompoundPKColumnNames() {
+		return getPersistence().getCompoundPKColumnNames();
 	}
 
 	public static UserPrivacyPersistence getPersistence() {

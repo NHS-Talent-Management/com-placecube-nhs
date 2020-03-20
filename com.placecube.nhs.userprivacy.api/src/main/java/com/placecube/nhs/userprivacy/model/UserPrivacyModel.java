@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 
+import com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK;
+
 import java.util.Date;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -49,14 +51,14 @@ public interface UserPrivacyModel
 	 *
 	 * @return the primary key of this user privacy
 	 */
-	public long getPrimaryKey();
+	public UserPrivacyPK getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this user privacy.
 	 *
 	 * @param primaryKey the primary key of this user privacy
 	 */
-	public void setPrimaryKey(long primaryKey);
+	public void setPrimaryKey(UserPrivacyPK primaryKey);
 
 	/**
 	 * Returns the uuid of this user privacy.
@@ -74,36 +76,6 @@ public interface UserPrivacyModel
 	 */
 	@Override
 	public void setUuid(String uuid);
-
-	/**
-	 * Returns the user privacy ID of this user privacy.
-	 *
-	 * @return the user privacy ID of this user privacy
-	 */
-	public long getUserPrivacyId();
-
-	/**
-	 * Sets the user privacy ID of this user privacy.
-	 *
-	 * @param userPrivacyId the user privacy ID of this user privacy
-	 */
-	public void setUserPrivacyId(long userPrivacyId);
-
-	/**
-	 * Returns the company ID of this user privacy.
-	 *
-	 * @return the company ID of this user privacy
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this user privacy.
-	 *
-	 * @param companyId the company ID of this user privacy
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this user privacy.
@@ -147,6 +119,22 @@ public interface UserPrivacyModel
 	 * @param fieldId the field ID of this user privacy
 	 */
 	public void setFieldId(String fieldId);
+
+	/**
+	 * Returns the company ID of this user privacy.
+	 *
+	 * @return the company ID of this user privacy
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user privacy.
+	 *
+	 * @param companyId the company ID of this user privacy
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the role IDs of this user privacy.

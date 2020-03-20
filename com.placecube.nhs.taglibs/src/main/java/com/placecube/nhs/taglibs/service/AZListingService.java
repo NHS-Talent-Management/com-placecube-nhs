@@ -27,8 +27,8 @@ public class AZListingService {
 	public void populateMapWithEntries(Map<String, List<AZEntry>> results, List<AZEntry> entries) {
 		if (Validator.isNotNull(entries)) {
 			for (AZEntry entry : entries) {
-				String initial = entry.getInitial();
-				List<AZEntry> communitiesForInitial = results.get(initial.toUpperCase());
+				String initial = entry.getInitial().toUpperCase();
+				List<AZEntry> communitiesForInitial = results.get(initial);
 				communitiesForInitial.add(entry);
 				results.put(initial, communitiesForInitial);
 			}

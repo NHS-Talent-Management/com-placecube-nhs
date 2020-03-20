@@ -154,11 +154,11 @@ public class NotificationSoap implements Serializable {
 		_status = status;
 	}
 
-	public int getNotificationType() {
+	public String getNotificationType() {
 		return _notificationType;
 	}
 
-	public void setNotificationType(int notificationType) {
+	public void setNotificationType(String notificationType) {
 		_notificationType = notificationType;
 	}
 
@@ -193,7 +193,7 @@ public class NotificationSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private int _status;
-	private int _notificationType;
+	private String _notificationType;
 	private String _summary;
 	private String _body;
 	private String _receiverUserIds;

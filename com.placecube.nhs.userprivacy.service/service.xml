@@ -5,21 +5,15 @@
 	<namespace>NHS_Privacy</namespace>
 	
 	<entity local-service="true" name="UserPrivacy" remote-service="false" uuid="true">
-		<column name="userPrivacyId" primary="true" type="long" />
+		<column name="userId" type="long" primary="true" />
+		<column name="fieldId" type="String" primary="true" />
 		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="fieldId" type="String" />
 		<column name="roleIds" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		
 		<finder return-type="Collection" name="UserId">
 			<finder-column name="userId"/>
-		</finder>
-		
-		<finder return-type="UserPrivacy" name="UserIdFieldId">
-			<finder-column name="userId"/>
-			<finder-column name="fieldId"/>
 		</finder>
 		
 		<finder return-type="Collection" name="CompanyIdFieldId">

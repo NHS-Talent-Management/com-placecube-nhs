@@ -5,8 +5,8 @@
 	<namespace>NHS_Notification</namespace>
 	
 	<entity local-service="true" name="UserNotificationPreference" remote-service="false" uuid="true">
-		<column name="userId" primary="true" type="long" />
-		<column name="notificationType" primary="true" type="int" />
+		<column name="userId" type="long" primary="true" />
+		<column name="notificationType" type="String" primary="true" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		<column name="enabled" type="boolean" />
@@ -15,6 +15,10 @@
 			<finder-column name="userId"/>
 			<finder-column name="notificationType"/>
 			<finder-column name="enabled"/>
+		</finder>
+		
+		<finder return-type="Collection" name="userId">
+			<finder-column name="userId"/>
 		</finder>
 	</entity>
 	
@@ -25,7 +29,7 @@
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		<column name="status" type="int" />
-		<column name="notificationType" type="int" />
+		<column name="notificationType" type="String" />
 		<column name="summary" type="String" />
 		<column name="body" type="String" />
 		<column name="receiverUserIds" type="String" />

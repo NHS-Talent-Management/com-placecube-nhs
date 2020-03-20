@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.placecube.nhs.userprivacy.model.UserPrivacy;
+import com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK;
 
 import java.io.Serializable;
 
@@ -77,11 +78,11 @@ public interface UserPrivacyLocalService
 	/**
 	 * Creates a new user privacy with the primary key. Does not add the user privacy to the database.
 	 *
-	 * @param userPrivacyId the primary key for the new user privacy
+	 * @param userPrivacyPK the primary key for the new user privacy
 	 * @return the new user privacy
 	 */
 	@Transactional(enabled = false)
-	public UserPrivacy createUserPrivacy(long userPrivacyId);
+	public UserPrivacy createUserPrivacy(UserPrivacyPK userPrivacyPK);
 
 	/**
 	 * Removes all the privacy settings for the company for the given fieldId
@@ -106,17 +107,6 @@ public interface UserPrivacyLocalService
 		throws PortalException;
 
 	/**
-	 * Deletes the user privacy with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userPrivacyId the primary key of the user privacy
-	 * @return the user privacy that was removed
-	 * @throws PortalException if a user privacy with the primary key could not be found
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	public UserPrivacy deleteUserPrivacy(long userPrivacyId)
-		throws PortalException;
-
-	/**
 	 * Deletes the user privacy from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userPrivacy the user privacy
@@ -124,6 +114,17 @@ public interface UserPrivacyLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public UserPrivacy deleteUserPrivacy(UserPrivacy userPrivacy);
+
+	/**
+	 * Deletes the user privacy with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param userPrivacyPK the primary key of the user privacy
+	 * @return the user privacy that was removed
+	 * @throws PortalException if a user privacy with the primary key could not be found
+	 */
+	@Indexable(type = IndexableType.DELETE)
+	public UserPrivacy deleteUserPrivacy(UserPrivacyPK userPrivacyPK)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
@@ -192,7 +193,7 @@ public interface UserPrivacyLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserPrivacy fetchUserPrivacy(long userPrivacyId);
+	public UserPrivacy fetchUserPrivacy(UserPrivacyPK userPrivacyPK);
 
 	/**
 	 * Returns the user privacy with the matching UUID and company.
@@ -271,12 +272,12 @@ public interface UserPrivacyLocalService
 	/**
 	 * Returns the user privacy with the primary key.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy
 	 * @throws PortalException if a user privacy with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserPrivacy getUserPrivacy(long userPrivacyId)
+	public UserPrivacy getUserPrivacy(UserPrivacyPK userPrivacyPK)
 		throws PortalException;
 
 	/**
@@ -293,26 +294,25 @@ public interface UserPrivacyLocalService
 		throws PortalException;
 
 	/**
-	 * Returns a Long array of privacy roleIds
+	 * Returns a long array of privacy roleIds
 	 *
 	 * @param userId the userId
-	 * @param userPrivacyFieldId the userPrivacyFieldId
+	 * @param fieldId the fieldId
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getUserPrivacyRoleIds(long userId, String userPrivacyFieldId);
+	public long[] getUserPrivacyRoleIds(long userId, String fieldId);
 
 	/**
 	 * Update UserPrivacy or create if not exist
 	 *
-	 * @param userId the userId
-	 * @param userPrivacyFieldId the userPrivacyFieldId
 	 * @param companyId the companyId
+	 * @param userId the userId
+	 * @param fieldId the fieldId
 	 * @param roleIds the roleIds
 	 * @return UserPrivacy model updated or created
 	 */
 	public UserPrivacy updateUserPrivacy(
-		long userId, String userPrivacyFieldId, long companyId,
-		List<Long> roleIds);
+		long companyId, long userId, String fieldId, List<Long> roleIds);
 
 	/**
 	 * Updates the user privacy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -1,6 +1,4 @@
-package com.placecube.nhs.user.settings.userprivacy;
-
-import java.util.List;
+package com.placecube.nhs.user.settings.portlet.privacy;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -14,19 +12,20 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.placecube.nhs.user.settings.constants.MVCCommandKeys;
 import com.placecube.nhs.user.settings.constants.PortletKeys;
-import com.placecube.nhs.user.settings.constants.UserPrivacyPage;
 import com.placecube.nhs.user.settings.service.UserPrivacyService;
 
-@Component(immediate = true, property = { "javax.portlet.name=" + PortletKeys.USER_SETTINGS, "mvc.command.name=" + MVCCommandKeys.USER_PRIVACY_SHARING_VIEW }, service = MVCRenderCommand.class)
-public class UserPrivacySharingMVCRenderCommand implements MVCRenderCommand {
+@Component(immediate = true, property = { "javax.portlet.name=" + PortletKeys.USER_SETTINGS, "mvc.command.name=" + MVCCommandKeys.USER_PRIVACY_OPTIONS }, service = MVCRenderCommand.class)
+public class UserPrivacyMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private UserPrivacyService userPrivacyService;
 
+	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		List<UserPrivacyPage> userPrivacySharingPages = userPrivacyService.getUserPrivacySharingPages(themeDisplay.getCompany());
-		renderRequest.setAttribute("userPrivacySharingPages", userPrivacySharingPages);
-		return "/user-privacy-sharing/view.jsp";
+
+		renderRequest.setAttribute("privacyPages", userPrivacyService.getEnabledPrivacyPages(themeDisplay.getCompany()));
+
+		return "/user-privacy/view.jsp";
 	}
 }

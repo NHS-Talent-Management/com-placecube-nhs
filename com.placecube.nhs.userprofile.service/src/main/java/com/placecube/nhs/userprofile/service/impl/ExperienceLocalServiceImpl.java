@@ -70,6 +70,12 @@ public class ExperienceLocalServiceImpl extends ExperienceLocalServiceBaseImpl {
 		return experienceLocalService.addExperience(experience);
 	}
 
+	@Override
+	public List<Experience> getExperiences(long userId) {
+		return experiencePersistence.findByUserId(userId);
+	}
+
+	@Override
 	public Experience updateExperience(long experienceId, String placeOfWork, String role, boolean current, Date fromDate, Date toDate) throws PortalException {
 		Experience experience = experienceLocalService.getExperience(experienceId);
 		experience.setPlaceOfWork(placeOfWork);
@@ -80,8 +86,4 @@ public class ExperienceLocalServiceImpl extends ExperienceLocalServiceBaseImpl {
 		return experienceLocalService.updateExperience(experience);
 	}
 
-	@Override
-	public List<Experience> getExperiences(long userId) {
-		return experiencePersistence.findByUserId(userId);
-	}
 }

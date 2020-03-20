@@ -1,29 +1,24 @@
 package com.placecube.nhs.user.settings.constants;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
-import java.util.Locale;
-
 public enum UserSettingsPage {
-	PRIVACY_SHARING("privacy-sharing", "/userPrivacySharing/view"), COMMUNICATIONS("communications", "/");
 
-	private final String fieldName;
+	PRIVACY_SHARING("privacy-sharing", MVCCommandKeys.USER_PRIVACY_OPTIONS),
 
+	COMMUNICATIONS("communications", MVCCommandKeys.COMMUNICATIONS_UPDATE);
+
+	private final String fieldLabel;
 	private final String mvcCommandName;
 
-	UserSettingsPage(String fieldName, String mvcCommandName) {
-		this.fieldName = fieldName;
+	private UserSettingsPage(String fieldLabel, String mvcCommandName) {
+		this.fieldLabel = fieldLabel;
 		this.mvcCommandName = mvcCommandName;
 	}
 
-	public String getFieldName() {
-		return this.fieldName;
-	}
-
 	public String getMvcCommandName() {
-		return this.mvcCommandName;
+		return mvcCommandName;
 	}
 
-	public String getFieldLabel(Locale locale) {
-		return LanguageUtil.get(locale, this.fieldName);
+	public String getFieldLabel() {
+		return fieldLabel;
 	}
 }

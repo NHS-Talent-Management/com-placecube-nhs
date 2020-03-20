@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -43,6 +42,7 @@ import com.placecube.nhs.userprivacy.exception.NoSuchUserPrivacyException;
 import com.placecube.nhs.userprivacy.model.UserPrivacy;
 import com.placecube.nhs.userprivacy.model.impl.UserPrivacyImpl;
 import com.placecube.nhs.userprivacy.model.impl.UserPrivacyModelImpl;
+import com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK;
 import com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPersistence;
 import com.placecube.nhs.userprivacy.service.persistence.impl.constants.NHS_PrivacyPersistenceConstants;
 
@@ -395,7 +395,7 @@ public class UserPrivacyPersistenceImpl
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where uuid = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user privacy
@@ -403,13 +403,13 @@ public class UserPrivacyPersistenceImpl
 	 */
 	@Override
 	public UserPrivacy[] findByUuid_PrevAndNext(
-			long userPrivacyId, String uuid,
+			UserPrivacyPK userPrivacyPK, String uuid,
 			OrderByComparator<UserPrivacy> orderByComparator)
 		throws NoSuchUserPrivacyException {
 
 		uuid = Objects.toString(uuid, "");
 
-		UserPrivacy userPrivacy = findByPrimaryKey(userPrivacyId);
+		UserPrivacy userPrivacy = findByPrimaryKey(userPrivacyPK);
 
 		Session session = null;
 
@@ -969,7 +969,7 @@ public class UserPrivacyPersistenceImpl
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -978,13 +978,13 @@ public class UserPrivacyPersistenceImpl
 	 */
 	@Override
 	public UserPrivacy[] findByUuid_C_PrevAndNext(
-			long userPrivacyId, String uuid, long companyId,
+			UserPrivacyPK userPrivacyPK, String uuid, long companyId,
 			OrderByComparator<UserPrivacy> orderByComparator)
 		throws NoSuchUserPrivacyException {
 
 		uuid = Objects.toString(uuid, "");
 
-		UserPrivacy userPrivacy = findByPrimaryKey(userPrivacyId);
+		UserPrivacy userPrivacy = findByPrimaryKey(userPrivacyPK);
 
 		Session session = null;
 
@@ -1515,7 +1515,7 @@ public class UserPrivacyPersistenceImpl
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where userId = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user privacy
@@ -1523,11 +1523,11 @@ public class UserPrivacyPersistenceImpl
 	 */
 	@Override
 	public UserPrivacy[] findByUserId_PrevAndNext(
-			long userPrivacyId, long userId,
+			UserPrivacyPK userPrivacyPK, long userId,
 			OrderByComparator<UserPrivacy> orderByComparator)
 		throws NoSuchUserPrivacyException {
 
-		UserPrivacy userPrivacy = findByPrimaryKey(userPrivacyId);
+		UserPrivacy userPrivacy = findByPrimaryKey(userPrivacyPK);
 
 		Session session = null;
 
@@ -1729,265 +1729,7 @@ public class UserPrivacyPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 =
-		"userPrivacy.userId = ?";
-
-	private FinderPath _finderPathFetchByUserIdFieldId;
-	private FinderPath _finderPathCountByUserIdFieldId;
-
-	/**
-	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or throws a <code>NoSuchUserPrivacyException</code> if it could not be found.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the matching user privacy
-	 * @throws NoSuchUserPrivacyException if a matching user privacy could not be found
-	 */
-	@Override
-	public UserPrivacy findByUserIdFieldId(long userId, String fieldId)
-		throws NoSuchUserPrivacyException {
-
-		UserPrivacy userPrivacy = fetchByUserIdFieldId(userId, fieldId);
-
-		if (userPrivacy == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(", fieldId=");
-			msg.append(fieldId);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchUserPrivacyException(msg.toString());
-		}
-
-		return userPrivacy;
-	}
-
-	/**
-	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the matching user privacy, or <code>null</code> if a matching user privacy could not be found
-	 */
-	@Override
-	public UserPrivacy fetchByUserIdFieldId(long userId, String fieldId) {
-		return fetchByUserIdFieldId(userId, fieldId, true);
-	}
-
-	/**
-	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching user privacy, or <code>null</code> if a matching user privacy could not be found
-	 */
-	@Override
-	public UserPrivacy fetchByUserIdFieldId(
-		long userId, String fieldId, boolean retrieveFromCache) {
-
-		fieldId = Objects.toString(fieldId, "");
-
-		Object[] finderArgs = new Object[] {userId, fieldId};
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUserIdFieldId, finderArgs, this);
-		}
-
-		if (result instanceof UserPrivacy) {
-			UserPrivacy userPrivacy = (UserPrivacy)result;
-
-			if ((userId != userPrivacy.getUserId()) ||
-				!Objects.equals(fieldId, userPrivacy.getFieldId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_USERPRIVACY_WHERE);
-
-			query.append(_FINDER_COLUMN_USERIDFIELDID_USERID_2);
-
-			boolean bindFieldId = false;
-
-			if (fieldId.isEmpty()) {
-				query.append(_FINDER_COLUMN_USERIDFIELDID_FIELDID_3);
-			}
-			else {
-				bindFieldId = true;
-
-				query.append(_FINDER_COLUMN_USERIDFIELDID_FIELDID_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(userId);
-
-				if (bindFieldId) {
-					qPos.add(fieldId);
-				}
-
-				List<UserPrivacy> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUserIdFieldId, finderArgs, list);
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"UserPrivacyPersistenceImpl.fetchByUserIdFieldId(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					UserPrivacy userPrivacy = list.get(0);
-
-					result = userPrivacy;
-
-					cacheResult(userPrivacy);
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByUserIdFieldId, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (UserPrivacy)result;
-		}
-	}
-
-	/**
-	 * Removes the user privacy where userId = &#63; and fieldId = &#63; from the database.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the user privacy that was removed
-	 */
-	@Override
-	public UserPrivacy removeByUserIdFieldId(long userId, String fieldId)
-		throws NoSuchUserPrivacyException {
-
-		UserPrivacy userPrivacy = findByUserIdFieldId(userId, fieldId);
-
-		return remove(userPrivacy);
-	}
-
-	/**
-	 * Returns the number of user privacies where userId = &#63; and fieldId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the number of matching user privacies
-	 */
-	@Override
-	public int countByUserIdFieldId(long userId, String fieldId) {
-		fieldId = Objects.toString(fieldId, "");
-
-		FinderPath finderPath = _finderPathCountByUserIdFieldId;
-
-		Object[] finderArgs = new Object[] {userId, fieldId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_USERPRIVACY_WHERE);
-
-			query.append(_FINDER_COLUMN_USERIDFIELDID_USERID_2);
-
-			boolean bindFieldId = false;
-
-			if (fieldId.isEmpty()) {
-				query.append(_FINDER_COLUMN_USERIDFIELDID_FIELDID_3);
-			}
-			else {
-				bindFieldId = true;
-
-				query.append(_FINDER_COLUMN_USERIDFIELDID_FIELDID_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(userId);
-
-				if (bindFieldId) {
-					qPos.add(fieldId);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_USERIDFIELDID_USERID_2 =
-		"userPrivacy.userId = ? AND ";
-
-	private static final String _FINDER_COLUMN_USERIDFIELDID_FIELDID_2 =
-		"userPrivacy.fieldId = ?";
-
-	private static final String _FINDER_COLUMN_USERIDFIELDID_FIELDID_3 =
-		"(userPrivacy.fieldId IS NULL OR userPrivacy.fieldId = '')";
+		"userPrivacy.id.userId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCompanyIdFieldId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyIdFieldId;
@@ -2321,7 +2063,7 @@ public class UserPrivacyPersistenceImpl
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where companyId = &#63; and fieldId = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param companyId the company ID
 	 * @param fieldId the field ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2330,13 +2072,13 @@ public class UserPrivacyPersistenceImpl
 	 */
 	@Override
 	public UserPrivacy[] findByCompanyIdFieldId_PrevAndNext(
-			long userPrivacyId, long companyId, String fieldId,
+			UserPrivacyPK userPrivacyPK, long companyId, String fieldId,
 			OrderByComparator<UserPrivacy> orderByComparator)
 		throws NoSuchUserPrivacyException {
 
 		fieldId = Objects.toString(fieldId, "");
 
-		UserPrivacy userPrivacy = findByPrimaryKey(userPrivacyId);
+		UserPrivacy userPrivacy = findByPrimaryKey(userPrivacyPK);
 
 		Session session = null;
 
@@ -2579,16 +2321,16 @@ public class UserPrivacyPersistenceImpl
 		"userPrivacy.companyId = ? AND ";
 
 	private static final String _FINDER_COLUMN_COMPANYIDFIELDID_FIELDID_2 =
-		"userPrivacy.fieldId = ?";
+		"userPrivacy.id.fieldId = ?";
 
 	private static final String _FINDER_COLUMN_COMPANYIDFIELDID_FIELDID_3 =
-		"(userPrivacy.fieldId IS NULL OR userPrivacy.fieldId = '')";
+		"(userPrivacy.id.fieldId IS NULL OR userPrivacy.id.fieldId = '')";
 
 	public UserPrivacyPersistenceImpl() {
 		setModelClass(UserPrivacy.class);
 
 		setModelImplClass(UserPrivacyImpl.class);
-		setModelPKClass(long.class);
+		setModelPKClass(UserPrivacyPK.class);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2607,11 +2349,6 @@ public class UserPrivacyPersistenceImpl
 		entityCache.putResult(
 			entityCacheEnabled, UserPrivacyImpl.class,
 			userPrivacy.getPrimaryKey(), userPrivacy);
-
-		finderCache.putResult(
-			_finderPathFetchByUserIdFieldId,
-			new Object[] {userPrivacy.getUserId(), userPrivacy.getFieldId()},
-			userPrivacy);
 
 		userPrivacy.resetOriginalValues();
 	}
@@ -2667,8 +2404,6 @@ public class UserPrivacyPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache((UserPrivacyModelImpl)userPrivacy, true);
 	}
 
 	@Override
@@ -2680,62 +2415,21 @@ public class UserPrivacyPersistenceImpl
 			entityCache.removeResult(
 				entityCacheEnabled, UserPrivacyImpl.class,
 				userPrivacy.getPrimaryKey());
-
-			clearUniqueFindersCache((UserPrivacyModelImpl)userPrivacy, true);
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		UserPrivacyModelImpl userPrivacyModelImpl) {
-
-		Object[] args = new Object[] {
-			userPrivacyModelImpl.getUserId(), userPrivacyModelImpl.getFieldId()
-		};
-
-		finderCache.putResult(
-			_finderPathCountByUserIdFieldId, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByUserIdFieldId, args, userPrivacyModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		UserPrivacyModelImpl userPrivacyModelImpl, boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				userPrivacyModelImpl.getUserId(),
-				userPrivacyModelImpl.getFieldId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUserIdFieldId, args);
-			finderCache.removeResult(_finderPathFetchByUserIdFieldId, args);
-		}
-
-		if ((userPrivacyModelImpl.getColumnBitmask() &
-			 _finderPathFetchByUserIdFieldId.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				userPrivacyModelImpl.getOriginalUserId(),
-				userPrivacyModelImpl.getOriginalFieldId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUserIdFieldId, args);
-			finderCache.removeResult(_finderPathFetchByUserIdFieldId, args);
 		}
 	}
 
 	/**
 	 * Creates a new user privacy with the primary key. Does not add the user privacy to the database.
 	 *
-	 * @param userPrivacyId the primary key for the new user privacy
+	 * @param userPrivacyPK the primary key for the new user privacy
 	 * @return the new user privacy
 	 */
 	@Override
-	public UserPrivacy create(long userPrivacyId) {
+	public UserPrivacy create(UserPrivacyPK userPrivacyPK) {
 		UserPrivacy userPrivacy = new UserPrivacyImpl();
 
 		userPrivacy.setNew(true);
-		userPrivacy.setPrimaryKey(userPrivacyId);
+		userPrivacy.setPrimaryKey(userPrivacyPK);
 
 		String uuid = PortalUUIDUtil.generate();
 
@@ -2749,15 +2443,15 @@ public class UserPrivacyPersistenceImpl
 	/**
 	 * Removes the user privacy with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy that was removed
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
 	@Override
-	public UserPrivacy remove(long userPrivacyId)
+	public UserPrivacy remove(UserPrivacyPK userPrivacyPK)
 		throws NoSuchUserPrivacyException {
 
-		return remove((Serializable)userPrivacyId);
+		return remove((Serializable)userPrivacyPK);
 	}
 
 	/**
@@ -3037,9 +2731,6 @@ public class UserPrivacyPersistenceImpl
 			entityCacheEnabled, UserPrivacyImpl.class,
 			userPrivacy.getPrimaryKey(), userPrivacy, false);
 
-		clearUniqueFindersCache(userPrivacyModelImpl, false);
-		cacheUniqueFindersCache(userPrivacyModelImpl);
-
 		userPrivacy.resetOriginalValues();
 
 		return userPrivacy;
@@ -3073,26 +2764,26 @@ public class UserPrivacyPersistenceImpl
 	/**
 	 * Returns the user privacy with the primary key or throws a <code>NoSuchUserPrivacyException</code> if it could not be found.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
 	@Override
-	public UserPrivacy findByPrimaryKey(long userPrivacyId)
+	public UserPrivacy findByPrimaryKey(UserPrivacyPK userPrivacyPK)
 		throws NoSuchUserPrivacyException {
 
-		return findByPrimaryKey((Serializable)userPrivacyId);
+		return findByPrimaryKey((Serializable)userPrivacyPK);
 	}
 
 	/**
 	 * Returns the user privacy with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy, or <code>null</code> if a user privacy with the primary key could not be found
 	 */
 	@Override
-	public UserPrivacy fetchByPrimaryKey(long userPrivacyId) {
-		return fetchByPrimaryKey((Serializable)userPrivacyId);
+	public UserPrivacy fetchByPrimaryKey(UserPrivacyPK userPrivacyPK) {
+		return fetchByPrimaryKey((Serializable)userPrivacyPK);
 	}
 
 	/**
@@ -3295,13 +2986,18 @@ public class UserPrivacyPersistenceImpl
 	}
 
 	@Override
+	public Set<String> getCompoundPKColumnNames() {
+		return _compoundPKColumnNames;
+	}
+
+	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
 
 	@Override
 	protected String getPKDBName() {
-		return "userPrivacyId";
+		return "userPrivacyPK";
 	}
 
 	@Override
@@ -3394,18 +3090,6 @@ public class UserPrivacyPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()});
-
-		_finderPathFetchByUserIdFieldId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, UserPrivacyImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUserIdFieldId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			UserPrivacyModelImpl.USERID_COLUMN_BITMASK |
-			UserPrivacyModelImpl.FIELDID_COLUMN_BITMASK);
-
-		_finderPathCountByUserIdFieldId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserIdFieldId",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByCompanyIdFieldId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, UserPrivacyImpl.class,
@@ -3506,5 +3190,7 @@ public class UserPrivacyPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
+	private static final Set<String> _compoundPKColumnNames = SetUtil.fromArray(
+		new String[] {"userId", "fieldId"});
 
 }

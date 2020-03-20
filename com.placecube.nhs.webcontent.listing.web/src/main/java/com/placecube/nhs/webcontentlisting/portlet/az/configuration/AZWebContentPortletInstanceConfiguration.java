@@ -4,7 +4,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 import aQute.bnd.annotation.metatype.Meta;
 
-@ExtendedObjectClassDefinition(category = "nhs", scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE)
+@ExtendedObjectClassDefinition(scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE)
 @Meta.OCD(id = "com.placecube.nhs.webcontentlisting.az.configuration.AZWebContentPortletInstanceConfiguration", localization = "content/Language", name = "webcontentlisting-az-portlet-instance-configuration-name")
 public interface AZWebContentPortletInstanceConfiguration {
 

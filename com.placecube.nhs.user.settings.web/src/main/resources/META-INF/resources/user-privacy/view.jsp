@@ -4,9 +4,10 @@
 	<c:when test="${themeDisplay.isSignedIn()}">
 
 		<c:set var="backToName" value="settings"/>
+		<c:set var="showSaveButton" value="false"/>
 		<c:set var="windowState" value="${windowStateMaximized}"/>
-		<c:set var="mvcRenderCommandName" value="<%= MVCCommandKeys.USER_PRIVACY_SETTINGS_VIEW %>"/>
-		<%@ include file="../back.jspf" %>
+		<c:set var="mvcRenderCommandName" value="<%=MVCCommandKeys.VIEW_SETTINGS_OPTIONS%>"/>
+		<%@ include file="../action-bar.jspf" %>
 
 		<div class="nhsuk-care-card__content">
 
@@ -18,21 +19,21 @@
 			</legend>
 					
 			<dl class="nhsuk-summary-list">
-				<c:forEach items="${userPrivacySharingPages}" var="userPrivacySharingPage">
+				<c:forEach items="${privacyPages}" var="userPrivacyPage">
 					<div class="nhsuk-summary-list__row"> 
 						<dt class="nhsuk-summary-list__key">
-							${userPrivacySharingPage.getFieldLabel(locale)}
+							<liferay-ui:message key="${userPrivacyPage.getFieldLabel()}"/>
 						</dt>
 						<dd class="nhsuk-summary-list__actions">
 							<portlet:renderURL var="userPrivacyPageEditRenderUrl">
-								<portlet:param name="mvcRenderCommandName" value="<%= MVCCommandKeys.USER_PRIVACY_SHARING_EDIT %>"/>
-								<portlet:param name="fieldName" value="${userPrivacySharingPage.name()}"/>
+								<portlet:param name="mvcRenderCommandName" value="<%= MVCCommandKeys.USER_PRIVACY_UPDATE %>"/>
+								<portlet:param name="userPrivacyPage" value="${userPrivacyPage.name()}"/>
 							</portlet:renderURL>
 							<a href="${userPrivacyPageEditRenderUrl}">
 								<svg class="nhsuk-icon nhsuk-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
 									<path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
 								</svg>
-								<span class="nhsuk-u-visually-hidden">${userPrivacySharingPage.getFieldLabel(locale)}</span>
+								<span class="nhsuk-u-visually-hidden"><liferay-ui:message key="${userPrivacyPage.getFieldLabel()}"/></span>
 							</a>
 						</dd>
 					</div>

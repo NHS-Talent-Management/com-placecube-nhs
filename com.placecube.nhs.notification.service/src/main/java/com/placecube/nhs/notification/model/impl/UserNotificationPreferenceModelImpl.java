@@ -72,7 +72,7 @@ public class UserNotificationPreferenceModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"uuid_", Types.VARCHAR}, {"userId", Types.BIGINT},
-		{"notificationType", Types.INTEGER}, {"createDate", Types.TIMESTAMP},
+		{"notificationType", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"enabled", Types.BOOLEAN}
 	};
 
@@ -82,14 +82,14 @@ public class UserNotificationPreferenceModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("notificationType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("notificationType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("enabled", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NHS_Notification_UserNotificationPreference (uuid_ VARCHAR(75) null,userId LONG not null,notificationType INTEGER not null,createDate DATE null,modifiedDate DATE null,enabled BOOLEAN,primary key (userId, notificationType))";
+		"create table NHS_Notification_UserNotificationPreference (uuid_ VARCHAR(75) null,userId LONG not null,notificationType VARCHAR(75) not null,createDate DATE null,modifiedDate DATE null,enabled BOOLEAN,primary key (userId, notificationType))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NHS_Notification_UserNotificationPreference";
@@ -273,7 +273,7 @@ public class UserNotificationPreferenceModelImpl
 			UserNotificationPreference::getNotificationType);
 		attributeSetterBiConsumers.put(
 			"notificationType",
-			(BiConsumer<UserNotificationPreference, Integer>)
+			(BiConsumer<UserNotificationPreference, String>)
 				UserNotificationPreference::setNotificationType);
 		attributeGetterFunctions.put(
 			"createDate", UserNotificationPreference::getCreateDate);
@@ -364,25 +364,28 @@ public class UserNotificationPreferenceModelImpl
 	}
 
 	@Override
-	public int getNotificationType() {
-		return _notificationType;
+	public String getNotificationType() {
+		if (_notificationType == null) {
+			return "";
+		}
+		else {
+			return _notificationType;
+		}
 	}
 
 	@Override
-	public void setNotificationType(int notificationType) {
+	public void setNotificationType(String notificationType) {
 		_columnBitmask |= NOTIFICATIONTYPE_COLUMN_BITMASK;
 
-		if (!_setOriginalNotificationType) {
-			_setOriginalNotificationType = true;
-
+		if (_originalNotificationType == null) {
 			_originalNotificationType = _notificationType;
 		}
 
 		_notificationType = notificationType;
 	}
 
-	public int getOriginalNotificationType() {
-		return _originalNotificationType;
+	public String getOriginalNotificationType() {
+		return GetterUtil.getString(_originalNotificationType);
 	}
 
 	@Override
@@ -535,9 +538,6 @@ public class UserNotificationPreferenceModelImpl
 		userNotificationPreferenceModelImpl._originalNotificationType =
 			userNotificationPreferenceModelImpl._notificationType;
 
-		userNotificationPreferenceModelImpl._setOriginalNotificationType =
-			false;
-
 		userNotificationPreferenceModelImpl._setModifiedDate = false;
 
 		userNotificationPreferenceModelImpl._originalEnabled =
@@ -569,6 +569,13 @@ public class UserNotificationPreferenceModelImpl
 
 		userNotificationPreferenceCacheModel.notificationType =
 			getNotificationType();
+
+		String notificationType =
+			userNotificationPreferenceCacheModel.notificationType;
+
+		if ((notificationType != null) && (notificationType.length() == 0)) {
+			userNotificationPreferenceCacheModel.notificationType = null;
+		}
 
 		Date createDate = getCreateDate();
 
@@ -672,9 +679,8 @@ public class UserNotificationPreferenceModelImpl
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
-	private int _notificationType;
-	private int _originalNotificationType;
-	private boolean _setOriginalNotificationType;
+	private String _notificationType;
+	private String _originalNotificationType;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

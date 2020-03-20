@@ -103,7 +103,14 @@ public class UserNotificationPreferenceCacheModel
 		}
 
 		userNotificationPreferenceImpl.setUserId(userId);
-		userNotificationPreferenceImpl.setNotificationType(notificationType);
+
+		if (notificationType == null) {
+			userNotificationPreferenceImpl.setNotificationType("");
+		}
+		else {
+			userNotificationPreferenceImpl.setNotificationType(
+				notificationType);
+		}
 
 		if (createDate == Long.MIN_VALUE) {
 			userNotificationPreferenceImpl.setCreateDate(null);
@@ -132,8 +139,7 @@ public class UserNotificationPreferenceCacheModel
 		uuid = objectInput.readUTF();
 
 		userId = objectInput.readLong();
-
-		notificationType = objectInput.readInt();
+		notificationType = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
@@ -154,7 +160,13 @@ public class UserNotificationPreferenceCacheModel
 
 		objectOutput.writeLong(userId);
 
-		objectOutput.writeInt(notificationType);
+		if (notificationType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(notificationType);
+		}
+
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -163,7 +175,7 @@ public class UserNotificationPreferenceCacheModel
 
 	public String uuid;
 	public long userId;
-	public int notificationType;
+	public String notificationType;
 	public long createDate;
 	public long modifiedDate;
 	public boolean enabled;

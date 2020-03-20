@@ -16,6 +16,42 @@ public class InputTypeTextareaTag extends IncludeTag {
 	private int fieldRows;
 
 	@Override
+	public int doStartTag() {
+		setAttributeNamespace("nhs-forms-ui:input-textarea");
+		return EVAL_BODY_INCLUDE;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public void setFieldLabel(String fieldLabel) {
+		this.fieldLabel = fieldLabel;
+	}
+
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+	}
+
+	public void setFieldRows(int fieldRows) {
+		this.fieldRows = fieldRows;
+	}
+
+	public void setFieldValue(String fieldValue) {
+		this.fieldValue = fieldValue;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+		setServletContext(ServletContextUtil.getServletContext());
+	}
+
+	public void setPortletNamespace(String portletNamespace) {
+		this.portletNamespace = portletNamespace;
+	}
+
+	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 		portletNamespace = null;
@@ -24,12 +60,6 @@ public class InputTypeTextareaTag extends IncludeTag {
 		fieldValue = null;
 		errorMessage = null;
 		fieldRows = 5;
-	}
-
-	@Override
-	public int doStartTag() {
-		setAttributeNamespace("nhs-forms-ui:input-textarea");
-		return EVAL_BODY_INCLUDE;
 	}
 
 	@Override
@@ -45,36 +75,6 @@ public class InputTypeTextareaTag extends IncludeTag {
 		request.setAttribute("fieldValue", fieldValue);
 		request.setAttribute("errorMessage", errorMessage);
 		request.setAttribute("fieldRows", fieldRows <= 0 ? 5 : fieldRows);
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-		setServletContext(ServletContextUtil.getServletContext());
-	}
-
-	public void setPortletNamespace(String portletNamespace) {
-		this.portletNamespace = portletNamespace;
-	}
-
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
-
-	public void setFieldLabel(String fieldLabel) {
-		this.fieldLabel = fieldLabel;
-	}
-
-	public void setFieldValue(String fieldValue) {
-		this.fieldValue = fieldValue;
-	}
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-
-	public void setFieldRows(int fieldRows) {
-		this.fieldRows = fieldRows;
 	}
 
 }

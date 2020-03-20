@@ -76,7 +76,7 @@ public class NotificationModelImpl
 		{"uuid_", Types.VARCHAR}, {"notificationId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"notificationType", Types.INTEGER},
+		{"status", Types.INTEGER}, {"notificationType", Types.VARCHAR},
 		{"summary", Types.VARCHAR}, {"body", Types.VARCHAR},
 		{"receiverUserIds", Types.VARCHAR}
 	};
@@ -92,14 +92,14 @@ public class NotificationModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("notificationType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("notificationType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("summary", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("body", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("receiverUserIds", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NHS_Notification_Notification (uuid_ VARCHAR(75) null,notificationId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,status INTEGER,notificationType INTEGER,summary VARCHAR(200) null,body STRING null,receiverUserIds STRING null)";
+		"create table NHS_Notification_Notification (uuid_ VARCHAR(75) null,notificationId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,status INTEGER,notificationType VARCHAR(75) null,summary VARCHAR(200) null,body STRING null,receiverUserIds STRING null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NHS_Notification_Notification";
@@ -287,7 +287,7 @@ public class NotificationModelImpl
 			"notificationType", Notification::getNotificationType);
 		attributeSetterBiConsumers.put(
 			"notificationType",
-			(BiConsumer<Notification, Integer>)
+			(BiConsumer<Notification, String>)
 				Notification::setNotificationType);
 		attributeGetterFunctions.put("summary", Notification::getSummary);
 		attributeSetterBiConsumers.put(
@@ -428,12 +428,17 @@ public class NotificationModelImpl
 	}
 
 	@Override
-	public int getNotificationType() {
-		return _notificationType;
+	public String getNotificationType() {
+		if (_notificationType == null) {
+			return "";
+		}
+		else {
+			return _notificationType;
+		}
 	}
 
 	@Override
-	public void setNotificationType(int notificationType) {
+	public void setNotificationType(String notificationType) {
 		_notificationType = notificationType;
 	}
 
@@ -645,6 +650,12 @@ public class NotificationModelImpl
 
 		notificationCacheModel.notificationType = getNotificationType();
 
+		String notificationType = notificationCacheModel.notificationType;
+
+		if ((notificationType != null) && (notificationType.length() == 0)) {
+			notificationCacheModel.notificationType = null;
+		}
+
 		notificationCacheModel.summary = getSummary();
 
 		String summary = notificationCacheModel.summary;
@@ -751,7 +762,7 @@ public class NotificationModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private int _status;
-	private int _notificationType;
+	private String _notificationType;
 	private String _summary;
 	private String _body;
 	private String _receiverUserIds;

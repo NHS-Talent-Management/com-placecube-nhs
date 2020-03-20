@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
+	<dynamic-element name="content" type="text_area" index-type="text" instance-id="fbyg">
+		<dynamic-content language-id="[$LOCALE_DEFAULT$]">
+			<![CDATA[
+				<div style="width:100%; height:100%; font-family: 'Open Sans', sans-serif; margin:0px; text-align: center;background-color: #f5f5f5;">
+					<table border="0" width="600" style="border-spacing: 0px;margin: auto;background: #ffffff;">
+						<tr>
+							<td style="padding:0px;">
+								<table border="0" style="width: 100%;border-spacing: 0px;font-family: 'Open Sans', sans-serif; background-color: #f5f5f5;color: #005EB8; padding: 10px 0px 15px;">
+									<tr>
+										<td style="padding-bottom:10px;text-align:left;">
+											<span style="font-family: 'Open Sans', sans-serif;font-size: 20px;font-weight: bold;padding-right: 10px;color: #005EB8;">[$COMPANY_NAME$]</span>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="3" style="border: 0; border-top: 12px solid #005EB8; margin-top: 0px;padding-left: 30px;padding-right: 30px;text-align:left;">
+											<h1 style="color: #454545;margin-top: 7px;margin-bottom: 3px;font-family: 'Open Sans', sans-serif;font-size: 30px;">New Notification</h1>
+											<div style="color: #454545;font-family: 'Open Sans', sans-serif;font-size: 16px;">Hi, there's a new notification for you.</div>
+										</td>
+									</tr>
+								</table>
+								
+								<div style="font-family: 'Open Sans', sans-serif;padding-left: 30px;padding-right: 30px;padding-top: 10px;color: #444c57;font-size: 16px;">
+									[$CUSTOM_BODY$]
+								</div>
+								
+								<div style="font-family: 'Open Sans', sans-serif;padding: 20px;background: #f5f5f5;color: #454545;text-align: center;margin-top: 15px;font-size: 12px;">
+									<span style="font-weight: bold;padding: 3px;">If you have any questions please email us at <a href="mailto:support@nhs.co.uk" style="color: #65B6F0;text-decoration: none;">support@nhs.co.uk</a> </span><br> <span>To update your details or notification preferences please <a href="[$PORTAL_URL$]" style="color: #65B6F0;text-decoration: none;">sign in to your account.</a> </span>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+				<style type="text/css">
+					@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+					@import url(https://fonts.googleapis.com/css?family=Montserrat);
+					body {
+						background: #f5f5f5 none;
+						width: 100% !important; 
+						margin: 0px; 
+						padding: 0px;
+					}
+				</style>
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

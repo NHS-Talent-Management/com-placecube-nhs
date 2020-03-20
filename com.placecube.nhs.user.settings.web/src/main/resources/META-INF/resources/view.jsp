@@ -2,21 +2,23 @@
 
 <c:choose>
 	<c:when test="${themeDisplay.isSignedIn()}">
-		<div class="col-md-4 float-right">
-			<div class="nhsuk-care-card__content">
+		<div class="nhsuk-care-card white-card float-right">
+			<div class="nhsuk-care-card__heading-container">
 				<portlet:renderURL var="settingsUrl" windowState="${windowStateMaximized}">
-					<portlet:param name="mvcRenderCommandName" value="<%= MVCCommandKeys.USER_PRIVACY_SETTINGS_VIEW %>"/>
+					<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandKeys.VIEW_SETTINGS_OPTIONS %>"/>
 				</portlet:renderURL>
 				
-				<a href="${settingsUrl}">
-					<legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
-						<h1 class="nhsuk-fieldset__heading float-left">
+				<h3 class="nhsuk-care-card__heading">
+					<a href="${settingsUrl}" >
+						<span class="text">
 							<liferay-ui:message key="settings"/>
-						</h1>
-						<aui:icon cssClass="icon-monospaced float-right" image="cog" markupView="lexicon" />
-					</legend>
-					<span class="nhsuk-u-visually-hidden"><liferay-ui:message key="settings"/></span>
-				</a>
+						</span>
+						<span class="action-icon">
+							<aui:icon cssClass="icon-monospaced nhsuk-u-padding-left-3" image="cog" markupView="lexicon" />
+						</span>
+						<span class="nhsuk-u-visually-hidden"><liferay-ui:message key="update"/>&nbsp;<liferay-ui:message key="settings"/></span>
+					</a>
+				</h3>
 			</div>
 		</div>
 	</c:when>

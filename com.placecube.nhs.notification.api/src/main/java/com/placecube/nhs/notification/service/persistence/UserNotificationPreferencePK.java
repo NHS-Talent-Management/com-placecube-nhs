@@ -30,12 +30,12 @@ public class UserNotificationPreferencePK
 	implements Comparable<UserNotificationPreferencePK>, Serializable {
 
 	public long userId;
-	public int notificationType;
+	public String notificationType;
 
 	public UserNotificationPreferencePK() {
 	}
 
-	public UserNotificationPreferencePK(long userId, int notificationType) {
+	public UserNotificationPreferencePK(long userId, String notificationType) {
 		this.userId = userId;
 		this.notificationType = notificationType;
 	}
@@ -48,11 +48,11 @@ public class UserNotificationPreferencePK
 		this.userId = userId;
 	}
 
-	public int getNotificationType() {
+	public String getNotificationType() {
 		return notificationType;
 	}
 
-	public void setNotificationType(int notificationType) {
+	public void setNotificationType(String notificationType) {
 		this.notificationType = notificationType;
 	}
 
@@ -78,15 +78,7 @@ public class UserNotificationPreferencePK
 			return value;
 		}
 
-		if (notificationType < pk.notificationType) {
-			value = -1;
-		}
-		else if (notificationType > pk.notificationType) {
-			value = 1;
-		}
-		else {
-			value = 0;
-		}
+		value = notificationType.compareTo(pk.notificationType);
 
 		if (value != 0) {
 			return value;
@@ -108,7 +100,7 @@ public class UserNotificationPreferencePK
 		UserNotificationPreferencePK pk = (UserNotificationPreferencePK)obj;
 
 		if ((userId == pk.userId) &&
-			(notificationType == pk.notificationType)) {
+			notificationType.equals(pk.notificationType)) {
 
 			return true;
 		}

@@ -248,6 +248,21 @@ public class UserNotificationPreferenceLocalServiceWrapper
 			getActionableDynamicQuery();
 	}
 
+	/**
+	 * Returns all the notification preferences for the user
+	 *
+	 * @param userId the userId
+	 * @return list of all configured notification preferences, both enabled and
+	 disabled
+	 */
+	@Override
+	public java.util.List
+		<com.placecube.nhs.notification.model.UserNotificationPreference>
+			getByUserId(long userId) {
+
+		return _userNotificationPreferenceLocalService.getByUserId(userId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
@@ -325,6 +340,14 @@ public class UserNotificationPreferenceLocalServiceWrapper
 			getUserNotificationPreferencesCount();
 	}
 
+	/**
+	 * Checks if the user has a notification enabled for the type
+	 *
+	 * @param userId the userId
+	 * @param notificationType the notificaiton type
+	 * @return true if the user has a notification enabled for the specified
+	 type, false otherwise
+	 */
 	@Override
 	public boolean hasNotificationEnabledForType(
 		long userId,

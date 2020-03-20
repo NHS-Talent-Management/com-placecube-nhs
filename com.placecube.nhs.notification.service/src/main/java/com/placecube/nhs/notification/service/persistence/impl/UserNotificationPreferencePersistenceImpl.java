@@ -672,7 +672,7 @@ public class UserNotificationPreferencePersistenceImpl
 	 */
 	@Override
 	public UserNotificationPreference findByUserIdTypeEnabled(
-			long userId, int notificationType, boolean enabled)
+			long userId, String notificationType, boolean enabled)
 		throws NoSuchUserNotificationPreferenceException {
 
 		UserNotificationPreference userNotificationPreference =
@@ -714,7 +714,7 @@ public class UserNotificationPreferencePersistenceImpl
 	 */
 	@Override
 	public UserNotificationPreference fetchByUserIdTypeEnabled(
-		long userId, int notificationType, boolean enabled) {
+		long userId, String notificationType, boolean enabled) {
 
 		return fetchByUserIdTypeEnabled(
 			userId, notificationType, enabled, true);
@@ -731,8 +731,10 @@ public class UserNotificationPreferencePersistenceImpl
 	 */
 	@Override
 	public UserNotificationPreference fetchByUserIdTypeEnabled(
-		long userId, int notificationType, boolean enabled,
+		long userId, String notificationType, boolean enabled,
 		boolean retrieveFromCache) {
+
+		notificationType = Objects.toString(notificationType, "");
 
 		Object[] finderArgs = new Object[] {userId, notificationType, enabled};
 
@@ -748,7 +750,8 @@ public class UserNotificationPreferencePersistenceImpl
 				(UserNotificationPreference)result;
 
 			if ((userId != userNotificationPreference.getUserId()) ||
-				(notificationType !=
+				!Objects.equals(
+					notificationType,
 					userNotificationPreference.getNotificationType()) ||
 				(enabled != userNotificationPreference.isEnabled())) {
 
@@ -763,7 +766,18 @@ public class UserNotificationPreferencePersistenceImpl
 
 			query.append(_FINDER_COLUMN_USERIDTYPEENABLED_USERID_2);
 
-			query.append(_FINDER_COLUMN_USERIDTYPEENABLED_NOTIFICATIONTYPE_2);
+			boolean bindNotificationType = false;
+
+			if (notificationType.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_USERIDTYPEENABLED_NOTIFICATIONTYPE_3);
+			}
+			else {
+				bindNotificationType = true;
+
+				query.append(
+					_FINDER_COLUMN_USERIDTYPEENABLED_NOTIFICATIONTYPE_2);
+			}
 
 			query.append(_FINDER_COLUMN_USERIDTYPEENABLED_ENABLED_2);
 
@@ -780,7 +794,9 @@ public class UserNotificationPreferencePersistenceImpl
 
 				qPos.add(userId);
 
-				qPos.add(notificationType);
+				if (bindNotificationType) {
+					qPos.add(notificationType);
+				}
 
 				qPos.add(enabled);
 
@@ -796,7 +812,7 @@ public class UserNotificationPreferencePersistenceImpl
 
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"UserNotificationPreferencePersistenceImpl.fetchByUserIdTypeEnabled(long, int, boolean, boolean) with parameters (" +
+								"UserNotificationPreferencePersistenceImpl.fetchByUserIdTypeEnabled(long, String, boolean, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -839,7 +855,7 @@ public class UserNotificationPreferencePersistenceImpl
 	 */
 	@Override
 	public UserNotificationPreference removeByUserIdTypeEnabled(
-			long userId, int notificationType, boolean enabled)
+			long userId, String notificationType, boolean enabled)
 		throws NoSuchUserNotificationPreferenceException {
 
 		UserNotificationPreference userNotificationPreference =
@@ -858,7 +874,9 @@ public class UserNotificationPreferencePersistenceImpl
 	 */
 	@Override
 	public int countByUserIdTypeEnabled(
-		long userId, int notificationType, boolean enabled) {
+		long userId, String notificationType, boolean enabled) {
+
+		notificationType = Objects.toString(notificationType, "");
 
 		FinderPath finderPath = _finderPathCountByUserIdTypeEnabled;
 
@@ -873,7 +891,18 @@ public class UserNotificationPreferencePersistenceImpl
 
 			query.append(_FINDER_COLUMN_USERIDTYPEENABLED_USERID_2);
 
-			query.append(_FINDER_COLUMN_USERIDTYPEENABLED_NOTIFICATIONTYPE_2);
+			boolean bindNotificationType = false;
+
+			if (notificationType.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_USERIDTYPEENABLED_NOTIFICATIONTYPE_3);
+			}
+			else {
+				bindNotificationType = true;
+
+				query.append(
+					_FINDER_COLUMN_USERIDTYPEENABLED_NOTIFICATIONTYPE_2);
+			}
 
 			query.append(_FINDER_COLUMN_USERIDTYPEENABLED_ENABLED_2);
 
@@ -890,7 +919,9 @@ public class UserNotificationPreferencePersistenceImpl
 
 				qPos.add(userId);
 
-				qPos.add(notificationType);
+				if (bindNotificationType) {
+					qPos.add(notificationType);
+				}
 
 				qPos.add(enabled);
 
@@ -918,8 +949,531 @@ public class UserNotificationPreferencePersistenceImpl
 		_FINDER_COLUMN_USERIDTYPEENABLED_NOTIFICATIONTYPE_2 =
 			"userNotificationPreference.id.notificationType = ? AND ";
 
+	private static final String
+		_FINDER_COLUMN_USERIDTYPEENABLED_NOTIFICATIONTYPE_3 =
+			"(userNotificationPreference.id.notificationType IS NULL OR userNotificationPreference.id.notificationType = '') AND ";
+
 	private static final String _FINDER_COLUMN_USERIDTYPEENABLED_ENABLED_2 =
 		"userNotificationPreference.enabled = ?";
+
+	private FinderPath _finderPathWithPaginationFindByuserId;
+	private FinderPath _finderPathWithoutPaginationFindByuserId;
+	private FinderPath _finderPathCountByuserId;
+
+	/**
+	 * Returns all the user notification preferences where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching user notification preferences
+	 */
+	@Override
+	public List<UserNotificationPreference> findByuserId(long userId) {
+		return findByuserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the user notification preferences where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationPreferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user notification preferences
+	 * @param end the upper bound of the range of user notification preferences (not inclusive)
+	 * @return the range of matching user notification preferences
+	 */
+	@Override
+	public List<UserNotificationPreference> findByuserId(
+		long userId, int start, int end) {
+
+		return findByuserId(userId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification preferences where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationPreferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user notification preferences
+	 * @param end the upper bound of the range of user notification preferences (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user notification preferences
+	 */
+	@Override
+	public List<UserNotificationPreference> findByuserId(
+		long userId, int start, int end,
+		OrderByComparator<UserNotificationPreference> orderByComparator) {
+
+		return findByuserId(userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification preferences where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationPreferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user notification preferences
+	 * @param end the upper bound of the range of user notification preferences (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching user notification preferences
+	 */
+	@Override
+	public List<UserNotificationPreference> findByuserId(
+		long userId, int start, int end,
+		OrderByComparator<UserNotificationPreference> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByuserId;
+			finderArgs = new Object[] {userId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByuserId;
+			finderArgs = new Object[] {userId, start, end, orderByComparator};
+		}
+
+		List<UserNotificationPreference> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<UserNotificationPreference>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (UserNotificationPreference userNotificationPreference :
+						list) {
+
+					if ((userId != userNotificationPreference.getUserId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_USERNOTIFICATIONPREFERENCE_WHERE);
+
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(UserNotificationPreferenceModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				if (!pagination) {
+					list = (List<UserNotificationPreference>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<UserNotificationPreference>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first user notification preference in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification preference
+	 * @throws NoSuchUserNotificationPreferenceException if a matching user notification preference could not be found
+	 */
+	@Override
+	public UserNotificationPreference findByuserId_First(
+			long userId,
+			OrderByComparator<UserNotificationPreference> orderByComparator)
+		throws NoSuchUserNotificationPreferenceException {
+
+		UserNotificationPreference userNotificationPreference =
+			fetchByuserId_First(userId, orderByComparator);
+
+		if (userNotificationPreference != null) {
+			return userNotificationPreference;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append("}");
+
+		throw new NoSuchUserNotificationPreferenceException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user notification preference in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification preference, or <code>null</code> if a matching user notification preference could not be found
+	 */
+	@Override
+	public UserNotificationPreference fetchByuserId_First(
+		long userId,
+		OrderByComparator<UserNotificationPreference> orderByComparator) {
+
+		List<UserNotificationPreference> list = findByuserId(
+			userId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user notification preference in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification preference
+	 * @throws NoSuchUserNotificationPreferenceException if a matching user notification preference could not be found
+	 */
+	@Override
+	public UserNotificationPreference findByuserId_Last(
+			long userId,
+			OrderByComparator<UserNotificationPreference> orderByComparator)
+		throws NoSuchUserNotificationPreferenceException {
+
+		UserNotificationPreference userNotificationPreference =
+			fetchByuserId_Last(userId, orderByComparator);
+
+		if (userNotificationPreference != null) {
+			return userNotificationPreference;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append("}");
+
+		throw new NoSuchUserNotificationPreferenceException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user notification preference in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification preference, or <code>null</code> if a matching user notification preference could not be found
+	 */
+	@Override
+	public UserNotificationPreference fetchByuserId_Last(
+		long userId,
+		OrderByComparator<UserNotificationPreference> orderByComparator) {
+
+		int count = countByuserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<UserNotificationPreference> list = findByuserId(
+			userId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the user notification preferences before and after the current user notification preference in the ordered set where userId = &#63;.
+	 *
+	 * @param userNotificationPreferencePK the primary key of the current user notification preference
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user notification preference
+	 * @throws NoSuchUserNotificationPreferenceException if a user notification preference with the primary key could not be found
+	 */
+	@Override
+	public UserNotificationPreference[] findByuserId_PrevAndNext(
+			UserNotificationPreferencePK userNotificationPreferencePK,
+			long userId,
+			OrderByComparator<UserNotificationPreference> orderByComparator)
+		throws NoSuchUserNotificationPreferenceException {
+
+		UserNotificationPreference userNotificationPreference =
+			findByPrimaryKey(userNotificationPreferencePK);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			UserNotificationPreference[] array =
+				new UserNotificationPreferenceImpl[3];
+
+			array[0] = getByuserId_PrevAndNext(
+				session, userNotificationPreference, userId, orderByComparator,
+				true);
+
+			array[1] = userNotificationPreference;
+
+			array[2] = getByuserId_PrevAndNext(
+				session, userNotificationPreference, userId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected UserNotificationPreference getByuserId_PrevAndNext(
+		Session session, UserNotificationPreference userNotificationPreference,
+		long userId,
+		OrderByComparator<UserNotificationPreference> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_USERNOTIFICATIONPREFERENCE_WHERE);
+
+		query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(UserNotificationPreferenceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						userNotificationPreference)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<UserNotificationPreference> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the user notification preferences where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	@Override
+	public void removeByuserId(long userId) {
+		for (UserNotificationPreference userNotificationPreference :
+				findByuserId(
+					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(userNotificationPreference);
+		}
+	}
+
+	/**
+	 * Returns the number of user notification preferences where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching user notification preferences
+	 */
+	@Override
+	public int countByuserId(long userId) {
+		FinderPath finderPath = _finderPathCountByuserId;
+
+		Object[] finderArgs = new Object[] {userId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_USERNOTIFICATIONPREFERENCE_WHERE);
+
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_USERID_USERID_2 =
+		"userNotificationPreference.id.userId = ?";
 
 	public UserNotificationPreferencePersistenceImpl() {
 		setModelClass(UserNotificationPreference.class);
@@ -1301,6 +1855,14 @@ public class UserNotificationPreferencePersistenceImpl
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByUuid, args);
 
+			args = new Object[] {
+				userNotificationPreferenceModelImpl.getUserId()
+			};
+
+			finderCache.removeResult(_finderPathCountByuserId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByuserId, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
@@ -1325,6 +1887,27 @@ public class UserNotificationPreferencePersistenceImpl
 				finderCache.removeResult(_finderPathCountByUuid, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByUuid, args);
+			}
+
+			if ((userNotificationPreferenceModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByuserId.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					userNotificationPreferenceModelImpl.getOriginalUserId()
+				};
+
+				finderCache.removeResult(_finderPathCountByuserId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByuserId, args);
+
+				args = new Object[] {
+					userNotificationPreferenceModelImpl.getUserId()
+				};
+
+				finderCache.removeResult(_finderPathCountByuserId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByuserId, args);
 			}
 		}
 
@@ -1677,7 +2260,7 @@ public class UserNotificationPreferencePersistenceImpl
 			UserNotificationPreferenceImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUserIdTypeEnabled",
 			new String[] {
-				Long.class.getName(), Integer.class.getName(),
+				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
 			UserNotificationPreferenceModelImpl.USERID_COLUMN_BITMASK |
@@ -1690,9 +2273,30 @@ public class UserNotificationPreferencePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUserIdTypeEnabled",
 			new String[] {
-				Long.class.getName(), Integer.class.getName(),
+				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			});
+
+		_finderPathWithPaginationFindByuserId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			UserNotificationPreferenceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByuserId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByuserId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			UserNotificationPreferenceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByuserId",
+			new String[] {Long.class.getName()},
+			UserNotificationPreferenceModelImpl.USERID_COLUMN_BITMASK);
+
+		_finderPathCountByuserId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByuserId",
+			new String[] {Long.class.getName()});
 	}
 
 	@Deactivate

@@ -18,11 +18,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.placecube.nhs.notification.background.service.NotificationBackgroundService;
 import com.placecube.nhs.notification.constants.NotificationType;
 import com.placecube.nhs.notification.model.Notification;
 import com.placecube.nhs.notification.service.base.NotificationLocalServiceBaseImpl;
@@ -59,11 +62,25 @@ public class NotificationLocalServiceImpl extends NotificationLocalServiceBaseIm
 	 * </code>.
 	 */
 
+	@Reference
+	private NotificationBackgroundService notificationBackgroundService;
+
 	@Override
 	public Notification createNotification(User user, NotificationType notificationType, String summary, String body, List<Long> receiverUserIds) throws PortalException {
+		Notification notification = add(user, notificationType, summary, body, receiverUserIds);
+
+		try {
+			notificationBackgroundService.createBackgroundTask(user, notification);
+			return notification;
+		} catch (Exception e) {
+			notificationLocalService.deleteNotification(notification);
+			throw new PortalException(e);
+		}
+	}
+
+	private Notification add(User user, NotificationType notificationType, String summary, String body, List<Long> receiverUserIds) {
 		String receiverIds = receiverUserIds.stream().map(String::valueOf).collect(Collectors.joining(StringPool.SEMICOLON));
 		long notificationId = counterLocalService.increment(Notification.class.getName(), 1);
-
 		Notification notification = notificationLocalService.createNotification(notificationId);
 		notification.setUserId(user.getUserId());
 		notification.setCompanyId(user.getCompanyId());
@@ -71,7 +88,7 @@ public class NotificationLocalServiceImpl extends NotificationLocalServiceBaseIm
 		notification.setBody(body);
 		notification.setNotificationType(notificationType.getKey());
 		notification.setReceiverUserIds(receiverIds);
-
+		notification.setStatus(WorkflowConstants.STATUS_PENDING);
 		return notificationLocalService.addNotification(notification);
 	}
 }

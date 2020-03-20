@@ -125,7 +125,13 @@ public class NotificationCacheModel
 		}
 
 		notificationImpl.setStatus(status);
-		notificationImpl.setNotificationType(notificationType);
+
+		if (notificationType == null) {
+			notificationImpl.setNotificationType("");
+		}
+		else {
+			notificationImpl.setNotificationType(notificationType);
+		}
 
 		if (summary == null) {
 			notificationImpl.setSummary("");
@@ -166,8 +172,7 @@ public class NotificationCacheModel
 		modifiedDate = objectInput.readLong();
 
 		status = objectInput.readInt();
-
-		notificationType = objectInput.readInt();
+		notificationType = objectInput.readUTF();
 		summary = objectInput.readUTF();
 		body = objectInput.readUTF();
 		receiverUserIds = objectInput.readUTF();
@@ -192,7 +197,12 @@ public class NotificationCacheModel
 
 		objectOutput.writeInt(status);
 
-		objectOutput.writeInt(notificationType);
+		if (notificationType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(notificationType);
+		}
 
 		if (summary == null) {
 			objectOutput.writeUTF("");
@@ -223,7 +233,7 @@ public class NotificationCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public int status;
-	public int notificationType;
+	public String notificationType;
 	public String summary;
 	public String body;
 	public String receiverUserIds;

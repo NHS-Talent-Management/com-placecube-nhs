@@ -1,27 +1,30 @@
 package com.placecube.nhs.notification.constants;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 public enum NotificationType {
 
-	EMAIL(1, "email");
+	EMAIL("email");
 
-	private final int key;
-	private final String label;
+	private final String key;
 
-	private NotificationType(int key, String label) {
+	private NotificationType(String key) {
 		this.key = key;
-		this.label = label;
 	}
 
-	public int getKey() {
+	public static NotificationType getByKey(String key) {
+		return Arrays.asList(NotificationType.values()).stream().filter(entry -> entry.getKey().equals(key)).findFirst().get();
+	}
+
+	public String getKey() {
 		return key;
 	}
 
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, label);
+		return LanguageUtil.get(locale, key);
 	}
 
 }

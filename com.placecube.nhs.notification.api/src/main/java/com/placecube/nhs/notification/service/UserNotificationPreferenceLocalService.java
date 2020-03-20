@@ -198,6 +198,16 @@ public interface UserNotificationPreferenceLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	/**
+	 * Returns all the notification preferences for the user
+	 *
+	 * @param userId the userId
+	 * @return list of all configured notification preferences, both enabled and
+	 disabled
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserNotificationPreference> getByUserId(long userId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
@@ -248,6 +258,14 @@ public interface UserNotificationPreferenceLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserNotificationPreferencesCount();
 
+	/**
+	 * Checks if the user has a notification enabled for the type
+	 *
+	 * @param userId the userId
+	 * @param notificationType the notificaiton type
+	 * @return true if the user has a notification enabled for the specified
+	 type, false otherwise
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasNotificationEnabledForType(
 		long userId, NotificationType notificationType);

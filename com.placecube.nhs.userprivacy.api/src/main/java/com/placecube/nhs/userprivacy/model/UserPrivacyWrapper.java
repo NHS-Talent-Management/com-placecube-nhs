@@ -47,10 +47,9 @@ public class UserPrivacyWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("userPrivacyId", getUserPrivacyId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("fieldId", getFieldId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("roleIds", getRoleIds());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -66,18 +65,6 @@ public class UserPrivacyWrapper
 			setUuid(uuid);
 		}
 
-		Long userPrivacyId = (Long)attributes.get("userPrivacyId");
-
-		if (userPrivacyId != null) {
-			setUserPrivacyId(userPrivacyId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
@@ -88,6 +75,12 @@ public class UserPrivacyWrapper
 
 		if (fieldId != null) {
 			setFieldId(fieldId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		String roleIds = (String)attributes.get("roleIds");
@@ -155,7 +148,9 @@ public class UserPrivacyWrapper
 	 * @return the primary key of this user privacy
 	 */
 	@Override
-	public long getPrimaryKey() {
+	public com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK
+		getPrimaryKey() {
+
 		return model.getPrimaryKey();
 	}
 
@@ -177,16 +172,6 @@ public class UserPrivacyWrapper
 	@Override
 	public long getUserId() {
 		return model.getUserId();
-	}
-
-	/**
-	 * Returns the user privacy ID of this user privacy.
-	 *
-	 * @return the user privacy ID of this user privacy
-	 */
-	@Override
-	public long getUserPrivacyId() {
-		return model.getUserPrivacyId();
 	}
 
 	/**
@@ -260,7 +245,10 @@ public class UserPrivacyWrapper
 	 * @param primaryKey the primary key of this user privacy
 	 */
 	@Override
-	public void setPrimaryKey(long primaryKey) {
+	public void setPrimaryKey(
+		com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK
+			primaryKey) {
+
 		model.setPrimaryKey(primaryKey);
 	}
 
@@ -282,16 +270,6 @@ public class UserPrivacyWrapper
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
-	}
-
-	/**
-	 * Sets the user privacy ID of this user privacy.
-	 *
-	 * @param userPrivacyId the user privacy ID of this user privacy
-	 */
-	@Override
-	public void setUserPrivacyId(long userPrivacyId) {
-		model.setUserPrivacyId(userPrivacyId);
 	}
 
 	/**

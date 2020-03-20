@@ -12,8 +12,9 @@
 		<div class="nhsuk-checkboxes">
 			<c:forEach items="${fieldOptions}" var="availableOption" varStatus="loop">
 				<div class="nhsuk-checkboxes__item">
+					<c:set var="isSelected" value="${availableOption.key.equals(fieldValue) || fieldSelectedValues.contains(availableOption.key)}"/>
 					<input class="nhsuk-checkboxes__input" id="${portletNamespace}${fieldName}-${loop.index}" name="${portletNamespace}${fieldName}" type="checkbox" value="${availableOption.key}"
-						${availableOption.key.equals(fieldValue) ? 'checked' : ''}
+						${isSelected ? 'checked' : ''}
 					/>
 					<label class="nhsuk-label nhsuk-checkboxes__label" for="${portletNamespace}${fieldName}-${loop.index}">
 						<liferay-ui:message key="${availableOption.value}"/>

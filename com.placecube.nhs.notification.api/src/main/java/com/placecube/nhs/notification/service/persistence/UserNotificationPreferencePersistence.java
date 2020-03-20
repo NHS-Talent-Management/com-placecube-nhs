@@ -198,7 +198,7 @@ public interface UserNotificationPreferencePersistence
 	 * @throws NoSuchUserNotificationPreferenceException if a matching user notification preference could not be found
 	 */
 	public UserNotificationPreference findByUserIdTypeEnabled(
-			long userId, int notificationType, boolean enabled)
+			long userId, String notificationType, boolean enabled)
 		throws NoSuchUserNotificationPreferenceException;
 
 	/**
@@ -210,7 +210,7 @@ public interface UserNotificationPreferencePersistence
 	 * @return the matching user notification preference, or <code>null</code> if a matching user notification preference could not be found
 	 */
 	public UserNotificationPreference fetchByUserIdTypeEnabled(
-		long userId, int notificationType, boolean enabled);
+		long userId, String notificationType, boolean enabled);
 
 	/**
 	 * Returns the user notification preference where userId = &#63; and notificationType = &#63; and enabled = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -222,7 +222,7 @@ public interface UserNotificationPreferencePersistence
 	 * @return the matching user notification preference, or <code>null</code> if a matching user notification preference could not be found
 	 */
 	public UserNotificationPreference fetchByUserIdTypeEnabled(
-		long userId, int notificationType, boolean enabled,
+		long userId, String notificationType, boolean enabled,
 		boolean retrieveFromCache);
 
 	/**
@@ -234,7 +234,7 @@ public interface UserNotificationPreferencePersistence
 	 * @return the user notification preference that was removed
 	 */
 	public UserNotificationPreference removeByUserIdTypeEnabled(
-			long userId, int notificationType, boolean enabled)
+			long userId, String notificationType, boolean enabled)
 		throws NoSuchUserNotificationPreferenceException;
 
 	/**
@@ -246,7 +246,151 @@ public interface UserNotificationPreferencePersistence
 	 * @return the number of matching user notification preferences
 	 */
 	public int countByUserIdTypeEnabled(
-		long userId, int notificationType, boolean enabled);
+		long userId, String notificationType, boolean enabled);
+
+	/**
+	 * Returns all the user notification preferences where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching user notification preferences
+	 */
+	public java.util.List<UserNotificationPreference> findByuserId(long userId);
+
+	/**
+	 * Returns a range of all the user notification preferences where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationPreferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user notification preferences
+	 * @param end the upper bound of the range of user notification preferences (not inclusive)
+	 * @return the range of matching user notification preferences
+	 */
+	public java.util.List<UserNotificationPreference> findByuserId(
+		long userId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the user notification preferences where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationPreferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user notification preferences
+	 * @param end the upper bound of the range of user notification preferences (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user notification preferences
+	 */
+	public java.util.List<UserNotificationPreference> findByuserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<UserNotificationPreference> orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the user notification preferences where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationPreferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user notification preferences
+	 * @param end the upper bound of the range of user notification preferences (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching user notification preferences
+	 */
+	public java.util.List<UserNotificationPreference> findByuserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<UserNotificationPreference> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first user notification preference in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification preference
+	 * @throws NoSuchUserNotificationPreferenceException if a matching user notification preference could not be found
+	 */
+	public UserNotificationPreference findByuserId_First(
+			long userId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<UserNotificationPreference> orderByComparator)
+		throws NoSuchUserNotificationPreferenceException;
+
+	/**
+	 * Returns the first user notification preference in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification preference, or <code>null</code> if a matching user notification preference could not be found
+	 */
+	public UserNotificationPreference fetchByuserId_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<UserNotificationPreference> orderByComparator);
+
+	/**
+	 * Returns the last user notification preference in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification preference
+	 * @throws NoSuchUserNotificationPreferenceException if a matching user notification preference could not be found
+	 */
+	public UserNotificationPreference findByuserId_Last(
+			long userId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<UserNotificationPreference> orderByComparator)
+		throws NoSuchUserNotificationPreferenceException;
+
+	/**
+	 * Returns the last user notification preference in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification preference, or <code>null</code> if a matching user notification preference could not be found
+	 */
+	public UserNotificationPreference fetchByuserId_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<UserNotificationPreference> orderByComparator);
+
+	/**
+	 * Returns the user notification preferences before and after the current user notification preference in the ordered set where userId = &#63;.
+	 *
+	 * @param userNotificationPreferencePK the primary key of the current user notification preference
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user notification preference
+	 * @throws NoSuchUserNotificationPreferenceException if a user notification preference with the primary key could not be found
+	 */
+	public UserNotificationPreference[] findByuserId_PrevAndNext(
+			UserNotificationPreferencePK userNotificationPreferencePK,
+			long userId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<UserNotificationPreference> orderByComparator)
+		throws NoSuchUserNotificationPreferenceException;
+
+	/**
+	 * Removes all the user notification preferences where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	public void removeByuserId(long userId);
+
+	/**
+	 * Returns the number of user notification preferences where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching user notification preferences
+	 */
+	public int countByuserId(long userId);
 
 	/**
 	 * Caches the user notification preference in the entity cache if it is enabled.

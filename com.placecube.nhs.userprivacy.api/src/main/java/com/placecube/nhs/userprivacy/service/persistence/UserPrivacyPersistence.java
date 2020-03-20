@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.placecube.nhs.userprivacy.exception.NoSuchUserPrivacyException;
 import com.placecube.nhs.userprivacy.model.UserPrivacy;
 
+import java.util.Set;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -157,14 +159,14 @@ public interface UserPrivacyPersistence extends BasePersistence<UserPrivacy> {
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where uuid = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user privacy
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
 	public UserPrivacy[] findByUuid_PrevAndNext(
-			long userPrivacyId, String uuid,
+			UserPrivacyPK userPrivacyPK, String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator<UserPrivacy>
 				orderByComparator)
 		throws NoSuchUserPrivacyException;
@@ -309,7 +311,7 @@ public interface UserPrivacyPersistence extends BasePersistence<UserPrivacy> {
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -317,7 +319,7 @@ public interface UserPrivacyPersistence extends BasePersistence<UserPrivacy> {
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
 	public UserPrivacy[] findByUuid_C_PrevAndNext(
-			long userPrivacyId, String uuid, long companyId,
+			UserPrivacyPK userPrivacyPK, String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<UserPrivacy>
 				orderByComparator)
 		throws NoSuchUserPrivacyException;
@@ -455,14 +457,14 @@ public interface UserPrivacyPersistence extends BasePersistence<UserPrivacy> {
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where userId = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user privacy
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
 	public UserPrivacy[] findByUserId_PrevAndNext(
-			long userPrivacyId, long userId,
+			UserPrivacyPK userPrivacyPK, long userId,
 			com.liferay.portal.kernel.util.OrderByComparator<UserPrivacy>
 				orderByComparator)
 		throws NoSuchUserPrivacyException;
@@ -481,56 +483,6 @@ public interface UserPrivacyPersistence extends BasePersistence<UserPrivacy> {
 	 * @return the number of matching user privacies
 	 */
 	public int countByUserId(long userId);
-
-	/**
-	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or throws a <code>NoSuchUserPrivacyException</code> if it could not be found.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the matching user privacy
-	 * @throws NoSuchUserPrivacyException if a matching user privacy could not be found
-	 */
-	public UserPrivacy findByUserIdFieldId(long userId, String fieldId)
-		throws NoSuchUserPrivacyException;
-
-	/**
-	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the matching user privacy, or <code>null</code> if a matching user privacy could not be found
-	 */
-	public UserPrivacy fetchByUserIdFieldId(long userId, String fieldId);
-
-	/**
-	 * Returns the user privacy where userId = &#63; and fieldId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching user privacy, or <code>null</code> if a matching user privacy could not be found
-	 */
-	public UserPrivacy fetchByUserIdFieldId(
-		long userId, String fieldId, boolean retrieveFromCache);
-
-	/**
-	 * Removes the user privacy where userId = &#63; and fieldId = &#63; from the database.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the user privacy that was removed
-	 */
-	public UserPrivacy removeByUserIdFieldId(long userId, String fieldId)
-		throws NoSuchUserPrivacyException;
-
-	/**
-	 * Returns the number of user privacies where userId = &#63; and fieldId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param fieldId the field ID
-	 * @return the number of matching user privacies
-	 */
-	public int countByUserIdFieldId(long userId, String fieldId);
 
 	/**
 	 * Returns all the user privacies where companyId = &#63; and fieldId = &#63;.
@@ -657,7 +609,7 @@ public interface UserPrivacyPersistence extends BasePersistence<UserPrivacy> {
 	/**
 	 * Returns the user privacies before and after the current user privacy in the ordered set where companyId = &#63; and fieldId = &#63;.
 	 *
-	 * @param userPrivacyId the primary key of the current user privacy
+	 * @param userPrivacyPK the primary key of the current user privacy
 	 * @param companyId the company ID
 	 * @param fieldId the field ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -665,7 +617,7 @@ public interface UserPrivacyPersistence extends BasePersistence<UserPrivacy> {
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
 	public UserPrivacy[] findByCompanyIdFieldId_PrevAndNext(
-			long userPrivacyId, long companyId, String fieldId,
+			UserPrivacyPK userPrivacyPK, long companyId, String fieldId,
 			com.liferay.portal.kernel.util.OrderByComparator<UserPrivacy>
 				orderByComparator)
 		throws NoSuchUserPrivacyException;
@@ -704,19 +656,19 @@ public interface UserPrivacyPersistence extends BasePersistence<UserPrivacy> {
 	/**
 	 * Creates a new user privacy with the primary key. Does not add the user privacy to the database.
 	 *
-	 * @param userPrivacyId the primary key for the new user privacy
+	 * @param userPrivacyPK the primary key for the new user privacy
 	 * @return the new user privacy
 	 */
-	public UserPrivacy create(long userPrivacyId);
+	public UserPrivacy create(UserPrivacyPK userPrivacyPK);
 
 	/**
 	 * Removes the user privacy with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy that was removed
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
-	public UserPrivacy remove(long userPrivacyId)
+	public UserPrivacy remove(UserPrivacyPK userPrivacyPK)
 		throws NoSuchUserPrivacyException;
 
 	public UserPrivacy updateImpl(UserPrivacy userPrivacy);
@@ -724,20 +676,20 @@ public interface UserPrivacyPersistence extends BasePersistence<UserPrivacy> {
 	/**
 	 * Returns the user privacy with the primary key or throws a <code>NoSuchUserPrivacyException</code> if it could not be found.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy
 	 * @throws NoSuchUserPrivacyException if a user privacy with the primary key could not be found
 	 */
-	public UserPrivacy findByPrimaryKey(long userPrivacyId)
+	public UserPrivacy findByPrimaryKey(UserPrivacyPK userPrivacyPK)
 		throws NoSuchUserPrivacyException;
 
 	/**
 	 * Returns the user privacy with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param userPrivacyId the primary key of the user privacy
+	 * @param userPrivacyPK the primary key of the user privacy
 	 * @return the user privacy, or <code>null</code> if a user privacy with the primary key could not be found
 	 */
-	public UserPrivacy fetchByPrimaryKey(long userPrivacyId);
+	public UserPrivacy fetchByPrimaryKey(UserPrivacyPK userPrivacyPK);
 
 	/**
 	 * Returns all the user privacies.
@@ -806,5 +758,7 @@ public interface UserPrivacyPersistence extends BasePersistence<UserPrivacy> {
 	 * @return the number of user privacies
 	 */
 	public int countAll();
+
+	public Set<String> getCompoundPKColumnNames();
 
 }

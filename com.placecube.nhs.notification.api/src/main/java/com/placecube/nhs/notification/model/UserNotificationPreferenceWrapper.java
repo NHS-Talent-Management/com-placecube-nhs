@@ -72,7 +72,7 @@ public class UserNotificationPreferenceWrapper
 			setUserId(userId);
 		}
 
-		Integer notificationType = (Integer)attributes.get("notificationType");
+		String notificationType = (String)attributes.get("notificationType");
 
 		if (notificationType != null) {
 			setNotificationType(notificationType);
@@ -133,7 +133,7 @@ public class UserNotificationPreferenceWrapper
 	 * @return the notification type of this user notification preference
 	 */
 	@Override
-	public int getNotificationType() {
+	public String getNotificationType() {
 		return model.getNotificationType();
 	}
 
@@ -230,7 +230,7 @@ public class UserNotificationPreferenceWrapper
 	 * @param notificationType the notification type of this user notification preference
 	 */
 	@Override
-	public void setNotificationType(int notificationType) {
+	public void setNotificationType(String notificationType) {
 		model.setNotificationType(notificationType);
 	}
 

@@ -60,20 +60,20 @@ public interface UserNotificationPreference
 			}
 
 		};
-	public static final Accessor<UserNotificationPreference, Integer>
+	public static final Accessor<UserNotificationPreference, String>
 		NOTIFICATION_TYPE_ACCESSOR =
-			new Accessor<UserNotificationPreference, Integer>() {
+			new Accessor<UserNotificationPreference, String>() {
 
 				@Override
-				public Integer get(
+				public String get(
 					UserNotificationPreference userNotificationPreference) {
 
 					return userNotificationPreference.getNotificationType();
 				}
 
 				@Override
-				public Class<Integer> getAttributeClass() {
-					return Integer.class;
+				public Class<String> getAttributeClass() {
+					return String.class;
 				}
 
 				@Override

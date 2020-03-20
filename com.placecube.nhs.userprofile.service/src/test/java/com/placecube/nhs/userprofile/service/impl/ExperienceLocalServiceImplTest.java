@@ -19,6 +19,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.placecube.nhs.userprofile.model.Experience;
 import com.placecube.nhs.userprofile.service.ExperienceLocalService;
@@ -128,5 +129,58 @@ public class ExperienceLocalServiceImplTest extends PowerMockito {
 		List<Experience> results = experienceLocalServiceImpl.getExperiences(userId);
 
 		assertThat(results, sameInstance(experiences));
+	}
+
+	@Test(expected = PortalException.class)
+	@Parameters({ "true", "false" })
+	public void updateExperience_WhenExceptionRetrievingExperience_ThenThrowsPortalException(boolean current) throws PortalException {
+		long experienceId = 123;
+		when(mockExperienceLocalService.getExperience(experienceId)).thenThrow(new PortalException());
+
+		experienceLocalServiceImpl.updateExperience(experienceId, "placeOfWorkValue", "roleValue", current, mockDateFrom, mockDateTo);
+	}
+
+	@Test
+	@Parameters({ "true", "false" })
+	public void updateExperience_WhenNoError_ThenReturnsTheUpdatedExperience(boolean current) throws PortalException {
+		long experienceId = 123;
+		when(mockExperienceLocalService.getExperience(experienceId)).thenReturn(mockExperience1);
+		when(mockExperienceLocalService.updateExperience(mockExperience1)).thenReturn(mockExperience2);
+
+		Experience result = experienceLocalServiceImpl.updateExperience(experienceId, "placeOfWorkValue", "roleValue", current, mockDateFrom, mockDateTo);
+
+		assertThat(result, sameInstance(mockExperience2));
+	}
+
+	@Test
+	public void updateExperience_WhenNoErrorAndIsCurrent_ThenUpdatesTheExperienceWithoutTheToDate() throws PortalException {
+		long experienceId = 123;
+		when(mockExperienceLocalService.getExperience(experienceId)).thenReturn(mockExperience1);
+
+		experienceLocalServiceImpl.updateExperience(experienceId, "placeOfWorkValue", "roleValue", true, mockDateFrom, mockDateTo);
+
+		InOrder inOrder = Mockito.inOrder(mockExperience1, mockExperienceLocalService);
+		inOrder.verify(mockExperience1, times(1)).setPlaceOfWork("placeOfWorkValue");
+		inOrder.verify(mockExperience1, times(1)).setRole("roleValue");
+		inOrder.verify(mockExperience1, times(1)).setCurrent(true);
+		inOrder.verify(mockExperience1, times(1)).setFromDate(mockDateFrom);
+		inOrder.verify(mockExperience1, times(1)).setToDate(null);
+		inOrder.verify(mockExperienceLocalService, times(1)).updateExperience(mockExperience1);
+	}
+
+	@Test
+	public void updateExperience_WhenNoErrorAndIsNotCurrent_ThenUpdatesTheExperienceWithTheToDate() throws PortalException {
+		long experienceId = 123;
+		when(mockExperienceLocalService.getExperience(experienceId)).thenReturn(mockExperience1);
+
+		experienceLocalServiceImpl.updateExperience(experienceId, "placeOfWorkValue", "roleValue", false, mockDateFrom, mockDateTo);
+
+		InOrder inOrder = Mockito.inOrder(mockExperience1, mockExperienceLocalService);
+		inOrder.verify(mockExperience1, times(1)).setPlaceOfWork("placeOfWorkValue");
+		inOrder.verify(mockExperience1, times(1)).setRole("roleValue");
+		inOrder.verify(mockExperience1, times(1)).setCurrent(false);
+		inOrder.verify(mockExperience1, times(1)).setFromDate(mockDateFrom);
+		inOrder.verify(mockExperience1, times(1)).setToDate(mockDateTo);
+		inOrder.verify(mockExperienceLocalService, times(1)).updateExperience(mockExperience1);
 	}
 }

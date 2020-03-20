@@ -6,7 +6,7 @@ create table NHS_Notification_Notification (
 	createDate DATE null,
 	modifiedDate DATE null,
 	status INTEGER,
-	notificationType INTEGER,
+	notificationType VARCHAR(75) null,
 	summary VARCHAR(200) null,
 	body STRING null,
 	receiverUserIds STRING null
@@ -15,7 +15,7 @@ create table NHS_Notification_Notification (
 create table NHS_Notification_UserNotificationPreference (
 	uuid_ VARCHAR(75) null,
 	userId LONG not null,
-	notificationType INTEGER not null,
+	notificationType VARCHAR(75) not null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	enabled BOOLEAN,

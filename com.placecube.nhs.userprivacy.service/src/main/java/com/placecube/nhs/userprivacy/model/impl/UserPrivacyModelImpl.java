@@ -14,8 +14,6 @@
 
 package com.placecube.nhs.userprivacy.model.impl;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
@@ -24,7 +22,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -32,6 +29,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import com.placecube.nhs.userprivacy.model.UserPrivacy;
 import com.placecube.nhs.userprivacy.model.UserPrivacyModel;
+import com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK;
 
 import java.io.Serializable;
 
@@ -73,10 +71,10 @@ public class UserPrivacyModelImpl
 	public static final String TABLE_NAME = "NHS_Privacy_UserPrivacy";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"userPrivacyId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"fieldId", Types.VARCHAR}, {"roleIds", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"userId", Types.BIGINT},
+		{"fieldId", Types.VARCHAR}, {"companyId", Types.BIGINT},
+		{"roleIds", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -84,26 +82,25 @@ public class UserPrivacyModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("userPrivacyId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fieldId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("roleIds", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NHS_Privacy_UserPrivacy (uuid_ VARCHAR(75) null,userPrivacyId LONG not null primary key,companyId LONG,userId LONG,fieldId VARCHAR(500) null,roleIds VARCHAR(500) null,createDate DATE null,modifiedDate DATE null)";
+		"create table NHS_Privacy_UserPrivacy (uuid_ VARCHAR(75) null,userId LONG not null,fieldId VARCHAR(500) not null,companyId LONG,roleIds VARCHAR(500) null,createDate DATE null,modifiedDate DATE null,primary key (userId, fieldId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NHS_Privacy_UserPrivacy";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY userPrivacy.userPrivacyId ASC";
+		" ORDER BY userPrivacy.id.userId ASC, userPrivacy.id.fieldId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY NHS_Privacy_UserPrivacy.userPrivacyId ASC";
+		" ORDER BY NHS_Privacy_UserPrivacy.userId ASC, NHS_Privacy_UserPrivacy.fieldId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -119,8 +116,6 @@ public class UserPrivacyModelImpl
 
 	public static final long UUID_COLUMN_BITMASK = 8L;
 
-	public static final long USERPRIVACYID_COLUMN_BITMASK = 16L;
-
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
 	}
@@ -133,23 +128,24 @@ public class UserPrivacyModelImpl
 	}
 
 	@Override
-	public long getPrimaryKey() {
-		return _userPrivacyId;
+	public UserPrivacyPK getPrimaryKey() {
+		return new UserPrivacyPK(_userId, _fieldId);
 	}
 
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		setUserPrivacyId(primaryKey);
+	public void setPrimaryKey(UserPrivacyPK primaryKey) {
+		setUserId(primaryKey.userId);
+		setFieldId(primaryKey.fieldId);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _userPrivacyId;
+		return new UserPrivacyPK(_userId, _fieldId);
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Long)primaryKeyObj).longValue());
+		setPrimaryKey((UserPrivacyPK)primaryKeyObj);
 	}
 
 	@Override
@@ -257,15 +253,6 @@ public class UserPrivacyModelImpl
 		attributeGetterFunctions.put("uuid", UserPrivacy::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<UserPrivacy, String>)UserPrivacy::setUuid);
-		attributeGetterFunctions.put(
-			"userPrivacyId", UserPrivacy::getUserPrivacyId);
-		attributeSetterBiConsumers.put(
-			"userPrivacyId",
-			(BiConsumer<UserPrivacy, Long>)UserPrivacy::setUserPrivacyId);
-		attributeGetterFunctions.put("companyId", UserPrivacy::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<UserPrivacy, Long>)UserPrivacy::setCompanyId);
 		attributeGetterFunctions.put("userId", UserPrivacy::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId", (BiConsumer<UserPrivacy, Long>)UserPrivacy::setUserId);
@@ -273,6 +260,10 @@ public class UserPrivacyModelImpl
 		attributeSetterBiConsumers.put(
 			"fieldId",
 			(BiConsumer<UserPrivacy, String>)UserPrivacy::setFieldId);
+		attributeGetterFunctions.put("companyId", UserPrivacy::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<UserPrivacy, Long>)UserPrivacy::setCompanyId);
 		attributeGetterFunctions.put("roleIds", UserPrivacy::getRoleIds);
 		attributeSetterBiConsumers.put(
 			"roleIds",
@@ -316,38 +307,6 @@ public class UserPrivacyModelImpl
 
 	public String getOriginalUuid() {
 		return GetterUtil.getString(_originalUuid);
-	}
-
-	@Override
-	public long getUserPrivacyId() {
-		return _userPrivacyId;
-	}
-
-	@Override
-	public void setUserPrivacyId(long userPrivacyId) {
-		_userPrivacyId = userPrivacyId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -414,6 +373,28 @@ public class UserPrivacyModelImpl
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
 	public String getRoleIds() {
 		if (_roleIds == null) {
 			return "";
@@ -465,19 +446,6 @@ public class UserPrivacyModelImpl
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), UserPrivacy.class.getName(), getPrimaryKey());
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
-	}
-
-	@Override
 	public UserPrivacy toEscapedModel() {
 		if (_escapedModel == null) {
 			_escapedModel = _escapedModelProxyProviderFunction.apply(
@@ -492,10 +460,9 @@ public class UserPrivacyModelImpl
 		UserPrivacyImpl userPrivacyImpl = new UserPrivacyImpl();
 
 		userPrivacyImpl.setUuid(getUuid());
-		userPrivacyImpl.setUserPrivacyId(getUserPrivacyId());
-		userPrivacyImpl.setCompanyId(getCompanyId());
 		userPrivacyImpl.setUserId(getUserId());
 		userPrivacyImpl.setFieldId(getFieldId());
+		userPrivacyImpl.setCompanyId(getCompanyId());
 		userPrivacyImpl.setRoleIds(getRoleIds());
 		userPrivacyImpl.setCreateDate(getCreateDate());
 		userPrivacyImpl.setModifiedDate(getModifiedDate());
@@ -507,17 +474,9 @@ public class UserPrivacyModelImpl
 
 	@Override
 	public int compareTo(UserPrivacy userPrivacy) {
-		long primaryKey = userPrivacy.getPrimaryKey();
+		UserPrivacyPK primaryKey = userPrivacy.getPrimaryKey();
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
-		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+		return getPrimaryKey().compareTo(primaryKey);
 	}
 
 	@Override
@@ -532,9 +491,9 @@ public class UserPrivacyModelImpl
 
 		UserPrivacy userPrivacy = (UserPrivacy)obj;
 
-		long primaryKey = userPrivacy.getPrimaryKey();
+		UserPrivacyPK primaryKey = userPrivacy.getPrimaryKey();
 
-		if (getPrimaryKey() == primaryKey) {
+		if (getPrimaryKey().equals(primaryKey)) {
 			return true;
 		}
 		else {
@@ -544,7 +503,7 @@ public class UserPrivacyModelImpl
 
 	@Override
 	public int hashCode() {
-		return (int)getPrimaryKey();
+		return getPrimaryKey().hashCode();
 	}
 
 	@Override
@@ -563,16 +522,16 @@ public class UserPrivacyModelImpl
 
 		userPrivacyModelImpl._originalUuid = userPrivacyModelImpl._uuid;
 
-		userPrivacyModelImpl._originalCompanyId =
-			userPrivacyModelImpl._companyId;
-
-		userPrivacyModelImpl._setOriginalCompanyId = false;
-
 		userPrivacyModelImpl._originalUserId = userPrivacyModelImpl._userId;
 
 		userPrivacyModelImpl._setOriginalUserId = false;
 
 		userPrivacyModelImpl._originalFieldId = userPrivacyModelImpl._fieldId;
+
+		userPrivacyModelImpl._originalCompanyId =
+			userPrivacyModelImpl._companyId;
+
+		userPrivacyModelImpl._setOriginalCompanyId = false;
 
 		userPrivacyModelImpl._setModifiedDate = false;
 
@@ -584,6 +543,8 @@ public class UserPrivacyModelImpl
 		UserPrivacyCacheModel userPrivacyCacheModel =
 			new UserPrivacyCacheModel();
 
+		userPrivacyCacheModel.userPrivacyPK = getPrimaryKey();
+
 		userPrivacyCacheModel.uuid = getUuid();
 
 		String uuid = userPrivacyCacheModel.uuid;
@@ -591,10 +552,6 @@ public class UserPrivacyModelImpl
 		if ((uuid != null) && (uuid.length() == 0)) {
 			userPrivacyCacheModel.uuid = null;
 		}
-
-		userPrivacyCacheModel.userPrivacyId = getUserPrivacyId();
-
-		userPrivacyCacheModel.companyId = getCompanyId();
 
 		userPrivacyCacheModel.userId = getUserId();
 
@@ -605,6 +562,8 @@ public class UserPrivacyModelImpl
 		if ((fieldId != null) && (fieldId.length() == 0)) {
 			userPrivacyCacheModel.fieldId = null;
 		}
+
+		userPrivacyCacheModel.companyId = getCompanyId();
 
 		userPrivacyCacheModel.roleIds = getRoleIds();
 
@@ -705,15 +664,14 @@ public class UserPrivacyModelImpl
 
 	private String _uuid;
 	private String _originalUuid;
-	private long _userPrivacyId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private String _fieldId;
 	private String _originalFieldId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _roleIds;
 	private Date _createDate;
 	private Date _modifiedDate;

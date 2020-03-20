@@ -184,14 +184,15 @@ public interface NotificationModel
 	 *
 	 * @return the notification type of this notification
 	 */
-	public int getNotificationType();
+	@AutoEscape
+	public String getNotificationType();
 
 	/**
 	 * Sets the notification type of this notification.
 	 *
 	 * @param notificationType the notification type of this notification
 	 */
-	public void setNotificationType(int notificationType);
+	public void setNotificationType(String notificationType);
 
 	/**
 	 * Returns the summary of this notification.

@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
 
 import com.placecube.nhs.userprivacy.model.UserPrivacy;
+import com.placecube.nhs.userprivacy.service.persistence.UserPrivacyPK;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class UserPrivacyCacheModel
 		UserPrivacyCacheModel userPrivacyCacheModel =
 			(UserPrivacyCacheModel)obj;
 
-		if (userPrivacyId == userPrivacyCacheModel.userPrivacyId) {
+		if (userPrivacyPK.equals(userPrivacyCacheModel.userPrivacyPK)) {
 			return true;
 		}
 
@@ -61,23 +62,21 @@ public class UserPrivacyCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, userPrivacyId);
+		return HashUtil.hash(0, userPrivacyPK);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", userPrivacyId=");
-		sb.append(userPrivacyId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", fieldId=");
 		sb.append(fieldId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", roleIds=");
 		sb.append(roleIds);
 		sb.append(", createDate=");
@@ -100,8 +99,6 @@ public class UserPrivacyCacheModel
 			userPrivacyImpl.setUuid(uuid);
 		}
 
-		userPrivacyImpl.setUserPrivacyId(userPrivacyId);
-		userPrivacyImpl.setCompanyId(companyId);
 		userPrivacyImpl.setUserId(userId);
 
 		if (fieldId == null) {
@@ -110,6 +107,8 @@ public class UserPrivacyCacheModel
 		else {
 			userPrivacyImpl.setFieldId(fieldId);
 		}
+
+		userPrivacyImpl.setCompanyId(companyId);
 
 		if (roleIds == null) {
 			userPrivacyImpl.setRoleIds("");
@@ -141,15 +140,15 @@ public class UserPrivacyCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 
-		userPrivacyId = objectInput.readLong();
-
-		companyId = objectInput.readLong();
-
 		userId = objectInput.readLong();
 		fieldId = objectInput.readUTF();
+
+		companyId = objectInput.readLong();
 		roleIds = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		userPrivacyPK = new UserPrivacyPK(userId, fieldId);
 	}
 
 	@Override
@@ -161,10 +160,6 @@ public class UserPrivacyCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(userPrivacyId);
-
-		objectOutput.writeLong(companyId);
-
 		objectOutput.writeLong(userId);
 
 		if (fieldId == null) {
@@ -173,6 +168,8 @@ public class UserPrivacyCacheModel
 		else {
 			objectOutput.writeUTF(fieldId);
 		}
+
+		objectOutput.writeLong(companyId);
 
 		if (roleIds == null) {
 			objectOutput.writeUTF("");
@@ -186,12 +183,12 @@ public class UserPrivacyCacheModel
 	}
 
 	public String uuid;
-	public long userPrivacyId;
-	public long companyId;
 	public long userId;
 	public String fieldId;
+	public long companyId;
 	public String roleIds;
 	public long createDate;
 	public long modifiedDate;
+	public transient UserPrivacyPK userPrivacyPK;
 
 }

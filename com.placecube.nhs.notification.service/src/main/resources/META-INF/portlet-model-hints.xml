@@ -9,7 +9,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="status" type="int" />
-		<field name="notificationType" type="int" />
+		<field name="notificationType" type="String" />
 		<field name="summary" type="String">
 			<hint name="max-length">200</hint>
 		</field>
@@ -23,7 +23,7 @@
 	<model name="com.placecube.nhs.notification.model.UserNotificationPreference">
 		<field name="uuid" type="String" />
 		<field name="userId" type="long" />
-		<field name="notificationType" type="int" />
+		<field name="notificationType" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="enabled" type="boolean" />
