@@ -5,6 +5,11 @@
 		<span class="nhsuk-details__summary-text">
 			<liferay-ui:message key="${fieldLabel}"/>
 		</span>
+		<c:if test="${fieldSelectedValues.size() gt 0}">
+			<div class="app-c-option-select__selected-counter js-selected-counter">
+				<liferay-ui:message key="filters-selected" arguments="${fieldSelectedValues.size()}"/>
+			</div>
+		</c:if>
 	</summary>
 	<div class="nhsuk-details__text">
 		<div class="nhsuk-checkboxes">
