@@ -46,25 +46,29 @@ public class UserPrivacyService {
 		return results;
 	}
 
-	public Long getSelectedValue(long userId, UserPrivacyPage userPrivacyPage, Company company) {
-		String userPrivacyFieldId;
-		switch (userPrivacyPage) {
-		case CAREER_READINESS:
-			userPrivacyFieldId = settingsConfigurationService.getCareerReadinessPrivacyFieldId(company);
-			break;
-		case PROFILE:
-			userPrivacyFieldId = settingsConfigurationService.getProfilePrivacyFieldId(company);
-			break;
-		default:
-			userPrivacyFieldId = userPrivacyPage.getClassNameId();
-			break;
-		}
+	public Long getSelectedValue(long userId, UserPrivacyPage userPrivacyPage, Company company) throws PortletException {
+		try {
+			String userPrivacyFieldId;
+			switch (userPrivacyPage) {
+			case CAREER_READINESS:
+				userPrivacyFieldId = settingsConfigurationService.getCareerReadinessPrivacyFieldId(company);
+				break;
+			case PROFILE:
+				userPrivacyFieldId = settingsConfigurationService.getProfilePrivacyFieldId(company);
+				break;
+			default:
+				userPrivacyFieldId = userPrivacyPage.getClassNameId();
+				break;
+			}
 
-		long[] privacyRoleIdsSelected = userPrivacyLocalService.getUserPrivacyRoleIds(userId, userPrivacyFieldId);
-		if (ArrayUtil.isNotEmpty(privacyRoleIdsSelected)) {
-			return privacyRoleIdsSelected[0];
+			long[] privacyRoleIdsSelected = userPrivacyLocalService.getUserPrivacyRoleIds(userId, userPrivacyFieldId);
+			if (ArrayUtil.isNotEmpty(privacyRoleIdsSelected)) {
+				return privacyRoleIdsSelected[0];
+			}
+			return roleLocalService.getRole(company.getCompanyId(), RoleConstants.USER).getRoleId();
+		} catch (Exception e) {
+			throw new PortletException(e);
 		}
-		return 0l;
 	}
 
 	public Map<String, String> getUserPrivacyOptions(long companyId) throws PortletException {

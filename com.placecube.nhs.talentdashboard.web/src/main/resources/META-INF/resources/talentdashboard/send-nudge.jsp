@@ -11,7 +11,7 @@
  
 <nhs-forms-ui:errorSummary portletNamespace="${portletNamespace}" errors="${validationErrors}"/>
 
-<aui:form action="${sendNudgeURL}" method="post" name="talentSearchForm">
+<aui:form action="${sendNudgeURL}" method="post" name="talentSearchForm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
 	
 	<span class="nhsuk-hint">
 		<liferay-ui:message key="send-nudge-info"/>
@@ -45,12 +45,23 @@
 			errorMessage="${validationErrors.get('emailSubject')}" 
 			showAsPassword="false" />
 	
-	<nhs-forms-ui:input-textarea portletNamespace="${portletNamespace}" 
-		fieldName="emailBody" 
-		fieldLabel="body"
-		fieldValue="${nudgeNotification.emailBody}" 
-		errorMessage="${validationErrors.get('emailBody')}" 
-		fieldRows="10" />
+
+	<c:set var="hasError" value="${not empty validationErrors.get('emailBody')}"/>
+	<div class="nhsuk-form-group ${hasError ? 'nhsuk-form-group--error' : ''}" id="${portletNamespace}_field_emailBody">
+		<label class="nhsuk-label" for="${portletNamespace}emailBody">
+			<liferay-ui:message key="body"/>
+		</label>
+		
+		<c:if test="${hasError}">
+			<span class="nhsuk-error-message" id="${portletNamespace}_error_emailBody">
+				<span class="nhsuk-u-visually-hidden"><liferay-ui:message key="error"/></span> <liferay-ui:message key="${validationErrors.get('emailBody')}"/>
+			</span>
+		</c:if>
+		
+		<liferay-ui:input-editor contents="${nudgeNotification.emailBody}" editorName="alloyeditor" name="contentEditor" cssClass="nhsuk-textarea ${hasError ? 'nhsuk-textarea--error' : ''}"  />
+
+		<aui:input name="emailBody" type="hidden" />
+	</div>
 	
 	<aui:button-row cssClass="nhsuk-u-margin-top-8">	
 		<aui:button type="cancel" href="${cancelURL}" cssClass="nhsuk-button nhsuk-button--secondary pull-left" value="cancel"/>
@@ -58,3 +69,15 @@
 	</aui:button-row>		
 	
 </aui:form>
+
+
+<aui:script>
+	function <portlet:namespace />getDescription() {
+		return window.<portlet:namespace />contentEditor.getHTML();
+	}
+
+	function <portlet:namespace />saveEntry() {
+		document.<portlet:namespace />talentSearchForm.<portlet:namespace />emailBody.value = <portlet:namespace />getDescription();
+		submitForm(document.<portlet:namespace />talentSearchForm);
+	}
+</aui:script>

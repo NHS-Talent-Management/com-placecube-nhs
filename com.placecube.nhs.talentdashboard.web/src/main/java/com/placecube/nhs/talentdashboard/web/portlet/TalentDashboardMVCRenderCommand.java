@@ -44,6 +44,7 @@ public class TalentDashboardMVCRenderCommand implements MVCRenderCommand {
 		if (shouldExecuteSearch) {
 			executeSearch(renderRequest, renderResponse, themeDisplay, searchFilters);
 		}
+		renderRequest.setAttribute("selectedRemovableFilters", talentDashboardService.getSelectedRemovableFilters(searchFilters));
 		renderRequest.setAttribute("searchExecuted", shouldExecuteSearch);
 		renderRequest.setAttribute("validationErrors", renderRequest.getAttribute("validationErrors"));
 		renderRequest.setAttribute("talentSearchContext", talentDashboardService.getTalentSearchContext(renderRequest, keepFilters));

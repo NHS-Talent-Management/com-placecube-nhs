@@ -1,9 +1,11 @@
 package com.placecube.nhs.talentdashboard.web.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.portlet.PortletException;
@@ -57,6 +59,10 @@ public class TalentDashboardService {
 	@Reference
 	private TalentSearchLocalService talentSearchLocalService;
 
+	public void createEmailNotification(User user, NudgeNotification nudgeNotification, List<Long> userIds) throws PortalException {
+		notificationLocalService.createNotification(user, NotificationType.EMAIL, nudgeNotification.getEmailSubject(), nudgeNotification.getEmailBody(), userIds);
+	}
+
 	public Hits executeSearch(ThemeDisplay themeDisplay, List<SearchFilter> searchFilters, int start, int end) throws PortletException {
 		try {
 			SearchContext searchContext = retrievalUtil.getSearchContext(themeDisplay, start, end);
@@ -85,6 +91,15 @@ public class TalentDashboardService {
 		return userIds;
 	}
 
+	public NudgeNotification getNudgeNotification(PortletRequest portletRequest) {
+		NudgeNotification nudgeNotification = (NudgeNotification) portletRequest.getAttribute("nudgeNotification");
+		if (Validator.isNull(nudgeNotification)) {
+			long totalResults = ParamUtil.getLong(portletRequest, "totalResults");
+			nudgeNotification = new NudgeNotification(totalResults);
+		}
+		return nudgeNotification;
+	}
+
 	public SearchContainer<User> getSearchContainer(RenderRequest renderRequest, RenderResponse renderResponse) {
 		RenderURL createRenderURL = renderResponse.createRenderURL();
 		createRenderURL.setParameter("keepFilters", "true");
@@ -98,6 +113,16 @@ public class TalentDashboardService {
 		}
 		sessionUtil.saveSearchFiltersInSession(portletRequest, searchFilters);
 		return searchFilters;
+	}
+
+	public Map<String, List<String>> getSelectedRemovableFilters(List<SearchFilter> searchFilters) {
+		Map<String, List<String>> results = new LinkedHashMap<>();
+		for (SearchFilter searchFilter : searchFilters) {
+			if (searchFilter.isActive()) {
+				results.put(searchFilter.getSearchableFieldName(), searchFilter.getFieldSelectedValuesList());
+			}
+		}
+		return results;
 	}
 
 	public TalentSearchContext getTalentSearchContext(PortletRequest portletRequest, boolean readFromSession) {
@@ -153,29 +178,16 @@ public class TalentDashboardService {
 		}
 	}
 
-	public void updateTalentSearchWithSelectedValues(PortletRequest portletRequest, TalentSearchContext talentSearchContext) {
-		talentSearchContext.setTalentSearchName(ParamUtil.getString(portletRequest, "talentSearchName"));
-		talentSearchContext.setTalentSearchCategoryId(ParamUtil.getLong(portletRequest, "talentSearchCategoryId"));
-		talentSearchContext.setTalentSearchTypeId(ParamUtil.getLong(portletRequest, "talentSearchTypeId"));
-		sessionUtil.saveTalentSearchInSession(portletRequest, talentSearchContext);
-	}
-
-	public NudgeNotification getNudgeNotification(PortletRequest portletRequest) {
-		NudgeNotification nudgeNotification = (NudgeNotification) portletRequest.getAttribute("nudgeNotification");
-		if (Validator.isNull(nudgeNotification)) {
-			long totalResults = ParamUtil.getLong(portletRequest, "totalResults");
-			nudgeNotification = new NudgeNotification(totalResults);
-		}
-		return nudgeNotification;
-	}
-
 	public void updateNudgeNotificationWithSelectedValues(PortletRequest portletRequest, NudgeNotification nudgeNotification) {
 		nudgeNotification.setEmailBody(ParamUtil.getString(portletRequest, "emailBody"));
 		nudgeNotification.setEmailSubject(ParamUtil.getString(portletRequest, "emailSubject"));
 	}
 
-	public void createEmailNotification(User user, NudgeNotification nudgeNotification, List<Long> userIds) throws PortalException {
-		notificationLocalService.createNotification(user, NotificationType.EMAIL, nudgeNotification.getEmailSubject(), nudgeNotification.getEmailBody(), userIds);
+	public void updateTalentSearchWithSelectedValues(PortletRequest portletRequest, TalentSearchContext talentSearchContext) {
+		talentSearchContext.setTalentSearchName(ParamUtil.getString(portletRequest, "talentSearchName"));
+		talentSearchContext.setTalentSearchCategoryId(ParamUtil.getLong(portletRequest, "talentSearchCategoryId"));
+		talentSearchContext.setTalentSearchTypeId(ParamUtil.getLong(portletRequest, "talentSearchTypeId"));
+		sessionUtil.saveTalentSearchInSession(portletRequest, talentSearchContext);
 	}
 
 }
