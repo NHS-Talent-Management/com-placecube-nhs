@@ -29,7 +29,8 @@ public class ViewUserDetailsMVCRenderCommand implements MVCRenderCommand {
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		try {
 			ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-			renderRequest.setAttribute("user", userLocalService.getUser(ParamUtil.getLong(renderRequest, "userId")));
+			long userId = ParamUtil.getLong(renderRequest, "userId");
+			renderRequest.setAttribute("userResult", userLocalService.getUser(userId));
 			renderRequest.setAttribute("availableFilters", talentDashboardService.getSearchFilters(renderRequest, themeDisplay.getCompany(), themeDisplay.getLocale(), true));
 			return "/talentdashboard/user-details.jsp";
 		} catch (Exception e) {

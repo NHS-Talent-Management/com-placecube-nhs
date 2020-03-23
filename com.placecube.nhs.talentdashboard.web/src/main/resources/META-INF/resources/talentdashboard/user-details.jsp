@@ -21,14 +21,14 @@
 <div class="nhsuk-care-card nhsuk-care-card--non-urgent white-card">
 	<div class="nhsuk-care-card__heading-container">
 		<h1 class="nhsuk-care-card__heading">
-			${user.getFullName()}
+			${userResult.getFullName()}
 		</h1>
 	</div>
 	
 	<div class="nhsuk-care-card__content">
 		<dl class="nhsuk-summary-list">
 			<c:forEach items="${availableFilters}" var="availableFilter">
-				<nhs-user-ui:view-expando expandoFieldName="${availableFilter.getFieldName()}" expandoFieldLabel="${availableFilter.getFieldLabel()}" user="${user}"/>
+				<nhs-user-ui:view-expando expandoFieldName="${availableFilter.getFieldName()}" expandoFieldLabel="${availableFilter.getFieldLabel()}" user="${userResult}"/>
 			</c:forEach>
 		</dl>
 	</div>

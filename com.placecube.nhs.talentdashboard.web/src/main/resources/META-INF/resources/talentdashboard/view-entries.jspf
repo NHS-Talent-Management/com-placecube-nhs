@@ -1,15 +1,15 @@
 <div class="search-results-container">
 	<liferay-ui:search-container id="talentDashboardSearch" searchContainer="${searchContainer}" compactEmptyResultsMessage="true">
-		<liferay-ui:search-container-row className="com.liferay.portal.kernel.model.User" escapedModel="true" keyProperty="userId"  modelVar="user"> 
+		<liferay-ui:search-container-row className="com.liferay.portal.kernel.model.User" escapedModel="true" keyProperty="userId"  modelVar="userResult"> 
 			
 			<portlet:renderURL var="viewUserDetailsURL"  windowState="${windowStateMaximized}">
 				<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandKeys.USER_DETAILS %>"/>
-				<portlet:param name="userId" value="${user.getUserId()}"/>
+				<portlet:param name="userId" value="${userResult.getUserId()}"/>
 			</portlet:renderURL>
 			
 			<div class="search-result-entry">
 				<span class="entry-title">
-					${user.getFullName()}
+					${userResult.getFullName()}
 				</span>
 				<a href="${viewUserDetailsURL}" class="entry-button">
 					<liferay-ui:message key="view-profile"/>
