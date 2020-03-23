@@ -19,21 +19,21 @@
 					<liferay-ui:message key="select-filters-to-execute-search"/>
 				</c:when>
 				<c:otherwise>
-					<div class="row">
-						<div class="col-md-12">
-							<h2 class="nhsuk-heading-xs">
-								<c:set var="messageKey" value="${searchContainer.getTotal() gt 1 ? 'x-results-found' : 'x-result-found'}"/>
-								<liferay-ui:message key="${messageKey}" arguments="${searchContainer.getTotal()}"/>
-							</h2>
-							
-							<portlet:actionURL name="<%=MVCCommandKeys.UPDATE_FILTER%>" var="removeFilterSearchURL">
-								<portlet:param name="cmd" value="remove"/>
-								<portlet:param name="fieldName" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_FIELD_NAME %>"/>
-								<portlet:param name="fieldValue" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_FIELD_VALUE %>"/>
-							</portlet:actionURL>
-							<nhs-search-ui:active-filters portletNamespace="${portletNamespace}" updateFilterSearchURL="${removeFilterSearchURL}" filtersSelected="${selectedRemovableFilters}"/>
-						</div>
+				
+					<div class="search-results-header">
+						<h2 class="nhsuk-heading-xs">
+							<c:set var="messageKey" value="${searchContainer.getTotal() gt 1 ? 'x-results-found' : 'x-result-found'}"/>
+							<liferay-ui:message key="${messageKey}" arguments="${searchContainer.getTotal()}"/>
+						</h2>
+						
+						<portlet:actionURL name="<%=MVCCommandKeys.UPDATE_FILTER%>" var="removeFilterSearchURL">
+							<portlet:param name="cmd" value="remove"/>
+							<portlet:param name="fieldName" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_FIELD_NAME %>"/>
+							<portlet:param name="fieldValue" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_FIELD_VALUE %>"/>
+						</portlet:actionURL>
+						<nhs-search-ui:active-filters portletNamespace="${portletNamespace}" updateFilterSearchURL="${removeFilterSearchURL}" filtersSelected="${selectedRemovableFilters}"/>
 					</div>
+					
 					<%@ include file="view-entries.jspf" %>
 				</c:otherwise>
 			</c:choose>

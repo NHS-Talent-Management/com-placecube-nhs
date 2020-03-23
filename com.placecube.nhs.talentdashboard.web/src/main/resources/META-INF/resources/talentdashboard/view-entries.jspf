@@ -1,24 +1,23 @@
-<liferay-ui:search-container id="talentDashboardSearch" searchContainer="${searchContainer}" compactEmptyResultsMessage="true">
-	<liferay-ui:search-container-row className="com.liferay.portal.kernel.model.User" escapedModel="true" keyProperty="userId"  modelVar="user"> 
-		
-		<details class="nhsuk-details nhsuk-expander">
-			<summary class="nhsuk-details__summary">
-				<span class="nhsuk-details__summary-text">
+<div class="search-results-container">
+	<liferay-ui:search-container id="talentDashboardSearch" searchContainer="${searchContainer}" compactEmptyResultsMessage="true">
+		<liferay-ui:search-container-row className="com.liferay.portal.kernel.model.User" escapedModel="true" keyProperty="userId"  modelVar="user"> 
+			
+			<portlet:renderURL var="viewUserDetailsURL"  windowState="${windowStateMaximized}">
+				<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandKeys.USER_DETAILS %>"/>
+				<portlet:param name="userId" value="${user.getUserId()}"/>
+			</portlet:renderURL>
+			
+			<div class="search-result-entry">
+				<span class="entry-title">
 					${user.getFullName()}
 				</span>
-			</summary>
-			
-			<div class="nhsuk-details__text">
-				<dl class="nhsuk-summary-list">
-					<c:forEach items="${availableFilters}" var="availableFilter">
-						<nhs-user-ui:view-expando expandoFieldName="${availableFilter.getFieldName()}" expandoFieldLabel="${availableFilter.getFieldLabel()}" user="${user}"/>
-					</c:forEach>
-				</dl>
+				<a href="${viewUserDetailsURL}" class="entry-button">
+					<liferay-ui:message key="view-profile"/>
+				</a>
 			</div>
-		</details>
-			
-	</liferay-ui:search-container-row>
-	
-	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
-</liferay-ui:search-container>
-
+				
+		</liferay-ui:search-container-row>
+		
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>
