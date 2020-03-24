@@ -1,6 +1,6 @@
 <%@ include file="../init.jsp"%>
 
-<details class="nhsuk-details search-filter search-filter-checkbox" ${fieldSelectedValues.isEmpty() ? '' : 'open'}>
+<details class="nhsuk-details search-filter search-filter-checkbox" open>
 	<summary class="nhsuk-details__summary">
 		<span class="nhsuk-details__summary-text">
 			<liferay-ui:message key="${fieldLabel}"/>
