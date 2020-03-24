@@ -1,7 +1,7 @@
 Bundle-SymbolicName: com.placecube.nhs.override.commenttaglib.jsp
 Bundle-Name: NHS Override Comment taglib JSP
 Bundle-Category: Placecube
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1.SNAPSHOT
 
 Fragment-Host: com.liferay.comment.taglib;bundle-version="2.1.8"
 -sources: true
