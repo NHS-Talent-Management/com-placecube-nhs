@@ -5,7 +5,7 @@
 		<dynamic-content language-id="[$LOCALE_DEFAULT$]">
 			<![CDATA[
 				<p class="nhsuk-body">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat finibus neque vel luctus. Fusce accumsan mauris a imperdiet accumsan. Nam mollis rhoncus sem, vitae efficitur magna imperdiet id. Integer sed lacus nec mi pulvinar aliquet. Maecenas ultrices felis risus. Integer pellentesque nisi eget consectetur sollicitudin. Aliquam viverra sapien vel orci commodo, malesuada pulvinar sapien aliquam. Pellentesque fringilla pulvinar posuere. Suspendisse molestie efficitur suscipit. Curabitur non aliquam risus, et pretium leo. Sed porttitor ornare turpis sit amet fermentum.
+					Create a new talent campaign before starting your search
 				</p>
 			]]>
 		</dynamic-content>

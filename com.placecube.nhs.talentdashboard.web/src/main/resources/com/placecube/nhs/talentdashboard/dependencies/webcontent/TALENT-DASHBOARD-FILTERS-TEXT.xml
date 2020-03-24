@@ -5,7 +5,7 @@
 		<dynamic-content language-id="[$LOCALE_DEFAULT$]">
 			<![CDATA[
 				<p class="nhsuk-body">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat finibus neque vel luctus.
+					Refine your search criteria for this campaign
 				</p>
 			]]>
 		</dynamic-content>
