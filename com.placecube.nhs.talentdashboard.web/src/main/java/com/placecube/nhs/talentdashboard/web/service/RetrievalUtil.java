@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
 import com.placecube.nhs.readiness.service.ReadinessService;
 import com.placecube.nhs.search.utils.SearchService;
-import com.placecube.nhs.talentdashboard.web.model.SearchFilter;
+import com.placecube.nhs.taglibs.model.SearchFilter;
 import com.placecube.nhs.talentsearch.constants.Category;
 import com.placecube.nhs.talentsearch.constants.Type;
 
@@ -113,9 +113,17 @@ public class RetrievalUtil {
 	public void populateSearchFiltersWithReadinessQuestions(Company company, List<SearchFilter> searchFilters) {
 		try {
 			List<ReadinessQuestion> questionnaire = readinessService.getQuestionnaire(company);
-			searchFilters.addAll(questionnaire.stream().map(redinessQuestion -> new SearchFilter(redinessQuestion)).collect(Collectors.toList()));
+			searchFilters.addAll(questionnaire.stream().map(readinessQuestion -> getSearchFilter(readinessQuestion)).collect(Collectors.toList()));
 		} catch (Exception e) {
 			LOG.debug(e);
 		}
+	}
+
+	private SearchFilter getSearchFilter(ReadinessQuestion readinessQuestion) {
+		Map<String, String> fieldValues = new LinkedHashMap<>();
+		for (String answer : readinessQuestion.getAvailableAnswers()) {
+			fieldValues.put(answer, answer);
+		}
+		return new SearchFilter(readinessQuestion.getQuestionName(), readinessQuestion.getQuestionSearchableName(), readinessQuestion.getQuestionShortTitle(), fieldValues);
 	}
 }

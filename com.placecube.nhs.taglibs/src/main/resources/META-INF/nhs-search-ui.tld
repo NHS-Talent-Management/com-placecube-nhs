@@ -67,7 +67,7 @@
 			<name>filtersSelected</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.Map</type>
+			<type>java.util.List</type>
 		</attribute>
 		<attribute>
 			<name>updateFilterSearchURL</name>

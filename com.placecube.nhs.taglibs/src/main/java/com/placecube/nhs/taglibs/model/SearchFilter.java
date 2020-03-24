@@ -1,13 +1,11 @@
-package com.placecube.nhs.talentdashboard.web.model;
+package com.placecube.nhs.taglibs.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.placecube.nhs.readiness.model.ReadinessQuestion;
 
 public class SearchFilter implements Serializable {
 
@@ -19,15 +17,12 @@ public class SearchFilter implements Serializable {
 	private final Map<String, String> fieldValues;
 	private String[] fieldSelectedValues;
 
-	public SearchFilter(ReadinessQuestion readinessQuestion) {
-		fieldName = readinessQuestion.getQuestionName();
-		searchableFieldName = readinessQuestion.getQuestionSearchableName();
-		fieldLabel = readinessQuestion.getQuestionShortTitle();
+	public SearchFilter(String fieldName, String searchableFieldName, String fieldLabel, Map<String, String> fieldValues) {
+		this.fieldName = fieldName;
+		this.searchableFieldName = searchableFieldName;
+		this.fieldLabel = fieldLabel;
 		fieldSelectedValues = new String[0];
-		fieldValues = new LinkedHashMap<>();
-		for (String answer : readinessQuestion.getAvailableAnswers()) {
-			fieldValues.put(answer, answer);
-		}
+		this.fieldValues = fieldValues;
 	}
 
 	public void addSelectedValue(String fieldValue) {

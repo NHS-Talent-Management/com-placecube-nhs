@@ -1,11 +1,9 @@
 package com.placecube.nhs.talentdashboard.web.service;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.portlet.PortletException;
@@ -37,8 +35,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.placecube.nhs.notification.constants.NotificationType;
 import com.placecube.nhs.notification.service.NotificationLocalService;
 import com.placecube.nhs.taglibs.constants.SearchFilterConstants;
+import com.placecube.nhs.taglibs.model.SearchFilter;
 import com.placecube.nhs.talentdashboard.web.model.NudgeNotification;
-import com.placecube.nhs.talentdashboard.web.model.SearchFilter;
 import com.placecube.nhs.talentdashboard.web.model.TalentSearchContext;
 import com.placecube.nhs.talentsearch.service.TalentSearchLocalService;
 
@@ -113,16 +111,6 @@ public class TalentDashboardService {
 		}
 		sessionUtil.saveSearchFiltersInSession(portletRequest, searchFilters);
 		return searchFilters;
-	}
-
-	public Map<String, List<String>> getSelectedRemovableFilters(List<SearchFilter> searchFilters) {
-		Map<String, List<String>> results = new LinkedHashMap<>();
-		for (SearchFilter searchFilter : searchFilters) {
-			if (searchFilter.isActive()) {
-				results.put(searchFilter.getSearchableFieldName(), searchFilter.getFieldSelectedValuesList());
-			}
-		}
-		return results;
 	}
 
 	public TalentSearchContext getTalentSearchContext(PortletRequest portletRequest, boolean readFromSession) {

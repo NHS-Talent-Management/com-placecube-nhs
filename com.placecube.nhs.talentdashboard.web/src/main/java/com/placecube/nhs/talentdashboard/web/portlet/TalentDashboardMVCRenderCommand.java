@@ -17,9 +17,9 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.placecube.nhs.taglibs.model.SearchFilter;
 import com.placecube.nhs.talentdashboard.web.constants.MVCCommandKeys;
 import com.placecube.nhs.talentdashboard.web.constants.PortletKeys;
-import com.placecube.nhs.talentdashboard.web.model.SearchFilter;
 import com.placecube.nhs.talentdashboard.web.service.RetrievalUtil;
 import com.placecube.nhs.talentdashboard.web.service.TalentDashboardService;
 
@@ -44,7 +44,6 @@ public class TalentDashboardMVCRenderCommand implements MVCRenderCommand {
 		if (shouldExecuteSearch) {
 			executeSearch(renderRequest, renderResponse, themeDisplay, searchFilters);
 		}
-		renderRequest.setAttribute("selectedRemovableFilters", talentDashboardService.getSelectedRemovableFilters(searchFilters));
 		renderRequest.setAttribute("searchExecuted", shouldExecuteSearch);
 		renderRequest.setAttribute("validationErrors", renderRequest.getAttribute("validationErrors"));
 		renderRequest.setAttribute("talentSearchContext", talentDashboardService.getTalentSearchContext(renderRequest, keepFilters));

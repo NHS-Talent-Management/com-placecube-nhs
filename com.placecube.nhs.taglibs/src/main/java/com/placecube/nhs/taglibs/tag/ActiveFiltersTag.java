@@ -1,20 +1,20 @@
 package com.placecube.nhs.taglibs.tag;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 import com.liferay.taglib.util.IncludeTag;
 import com.placecube.nhs.taglibs.context.ServletContextUtil;
+import com.placecube.nhs.taglibs.model.SearchFilter;
 
 public class ActiveFiltersTag extends IncludeTag {
 
 	private String portletNamespace;
 	private String updateFilterSearchURL;
-	private Map<String, List<String>> filtersSelected;
+	private List<SearchFilter> filtersSelected;
 
 	@Override
 	public int doStartTag() {
@@ -22,7 +22,7 @@ public class ActiveFiltersTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public void setFiltersSelected(Map<String, List<String>> filtersSelected) {
+	public void setFiltersSelected(List<SearchFilter> filtersSelected) {
 		this.filtersSelected = filtersSelected;
 	}
 
@@ -44,7 +44,7 @@ public class ActiveFiltersTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 		portletNamespace = null;
-		filtersSelected = new HashMap<>();
+		filtersSelected = new ArrayList<>();
 		updateFilterSearchURL = null;
 	}
 
@@ -55,6 +55,7 @@ public class ActiveFiltersTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("showActiveFilters", filtersSelected.stream().filter(SearchFilter::isActive).findFirst().isPresent());
 		request.setAttribute("portletNamespace", portletNamespace);
 		request.setAttribute("filtersSelected", filtersSelected);
 		request.setAttribute("updateFilterSearchURL", updateFilterSearchURL);

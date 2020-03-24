@@ -51,7 +51,7 @@
 							<portlet:param name="fieldName" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_FIELD_NAME %>"/>
 							<portlet:param name="fieldValue" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_FIELD_VALUE %>"/>
 						</portlet:actionURL>
-						<nhs-search-ui:active-filters portletNamespace="${portletNamespace}" updateFilterSearchURL="${removeFilterSearchURL}" filtersSelected="${selectedRemovableFilters}"/>
+						<nhs-search-ui:active-filters portletNamespace="${portletNamespace}" updateFilterSearchURL="${removeFilterSearchURL}" filtersSelected="${availableFilters}"/>
 					</div>
 					
 					<%@ include file="view-entries.jspf" %>

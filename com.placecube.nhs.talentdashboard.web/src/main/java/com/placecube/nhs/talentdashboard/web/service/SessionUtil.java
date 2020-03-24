@@ -8,7 +8,7 @@ import javax.portlet.PortletRequest;
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.util.Validator;
-import com.placecube.nhs.talentdashboard.web.model.SearchFilter;
+import com.placecube.nhs.taglibs.model.SearchFilter;
 import com.placecube.nhs.talentdashboard.web.model.TalentSearchContext;
 
 @Component(immediate = true, service = SessionUtil.class)
