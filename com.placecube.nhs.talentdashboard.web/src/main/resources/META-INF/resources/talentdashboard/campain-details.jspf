@@ -24,11 +24,11 @@
 					errorMessage="${validationErrors.get('talentSearchCategoryId')}" />
 			
 			<aui:button-row cssClass="pull-right">
-				<aui:button type="submit" cssClass="nhsuk-button btn-primary" value="save-campaign" />
+				<aui:button type="submit" cssClass="nhsuk-button btn-primary" value="save-campaign" onClick="submitTalentSearchForm('${saveTalentSearchURL}')"/>
 				
 				<c:if test="${searchExecuted and searchContainer.getTotal() gt 0}">
 					<a class="nhsuk-button nhsuk-button--secondary nhsuk-u-margin-left-5" href="${sendNudgeURL}">
-						<liferay-ui:message key="send-nudge"/>
+						<liferay-ui:message key="notify-these-people"/>
 					</a>
 				</c:if>
 			</aui:button-row>

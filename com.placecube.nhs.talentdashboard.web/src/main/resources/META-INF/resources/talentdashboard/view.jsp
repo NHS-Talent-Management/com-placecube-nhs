@@ -1,6 +1,10 @@
 <%@ include file="init.jsp"%>
 
-<portlet:actionURL name="<%=MVCCommandKeys.SAVE%>" var="saveTalentSearchURL"/>
+<portlet:actionURL name="<%=MVCCommandKeys.SAVE%>" var="saveTalentSearchURL">
+	<portlet:param name="cmd" value="save"/>
+</portlet:actionURL>
+
+<portlet:actionURL name="<%=MVCCommandKeys.SAVE%>" var="updateFiltersURL"/>
  
 <portlet:renderURL var="sendNudgeURL">
 	<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandKeys.SEND_NUDGE %>"/>
@@ -9,7 +13,7 @@
 
 <nhs-forms-ui:errorSummary portletNamespace="${portletNamespace}" errors="${validationErrors}"/>
 
-<aui:form action="${saveTalentSearchURL}" method="post" name="talentSearchForm">
+<aui:form method="post" name="talentSearchForm" onSubmit='<%= "event.preventDefault(); "%>'>
 	<div class="row">
 		<div class="col-md-12">
 			<liferay-journal:journal-article 
@@ -62,10 +66,18 @@
 	
 	<c:if test="${searchExecuted and searchContainer.getTotal() gt 0}">
 		<aui:button-row cssClass="pull-right">
-			<a class="nhsuk-button nhsuk-button--secondary nhsuk-u-margin-left-5" href="${sendNudgeURL}">
-				<liferay-ui:message key="send-nudge"/>
+			<a class="nhsuk-button nhsuk-button--secondary" href="${sendNudgeURL}">
+				<liferay-ui:message key="notify-these-people"/>
 			</a>
 		</aui:button-row>
 	</c:if>
 	
 </aui:form>
+
+
+<aui:script>
+	function submitTalentSearchForm(formAction) {
+		document.<portlet:namespace />talentSearchForm.action = formAction;
+		submitForm(document.<portlet:namespace />talentSearchForm);
+	}
+</aui:script>

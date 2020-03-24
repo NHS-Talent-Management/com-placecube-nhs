@@ -74,7 +74,7 @@
 	
 	<aui:button-row cssClass="nhsuk-u-margin-top-8">	
 		<aui:button type="cancel" href="${cancelURL}" cssClass="nhsuk-button nhsuk-button--secondary pull-left" value="cancel"/>
-		<aui:button type="submit" cssClass="nhsuk-button pull-right" value="send-nudge"/>
+		<aui:button type="submit" cssClass="nhsuk-button pull-right" value="send-notification"/>
 	</aui:button-row>		
 	
 </aui:form>
