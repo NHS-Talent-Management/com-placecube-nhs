@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.language
 Bundle-Name: Placecube NHS Language
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2.SNAPSHOT
 
 -sources: true
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
