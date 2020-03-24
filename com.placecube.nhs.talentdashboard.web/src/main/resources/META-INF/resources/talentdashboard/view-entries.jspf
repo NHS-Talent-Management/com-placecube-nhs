@@ -2,18 +2,20 @@
 	<liferay-ui:search-container id="talentDashboardSearch" searchContainer="${searchContainer}" compactEmptyResultsMessage="true">
 		<liferay-ui:search-container-row className="com.liferay.portal.kernel.model.User" escapedModel="true" keyProperty="userId"  modelVar="userResult"> 
 			
-			<portlet:renderURL var="viewUserDetailsURL"  windowState="${windowStateMaximized}">
-				<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandKeys.USER_DETAILS %>"/>
-				<portlet:param name="userId" value="${userResult.getUserId()}"/>
-			</portlet:renderURL>
-			
-			<div class="search-result-entry">
-				<span class="entry-title">
-					${userResult.getFullName()}
-				</span>
-				<a href="${viewUserDetailsURL}" class="entry-button">
-					<liferay-ui:message key="view-profile"/>
-				</a>
+			<div class="nhsuk-care-card nhsuk-care-card--non-urgent white-card">
+				<div class="nhsuk-care-card__heading-container">
+					<h2 class="nhsuk-care-card__heading">
+						${userResult.getFullName()}
+					</h2>
+				</div>
+				
+				<div class="nhsuk-care-card__content">
+					<dl class="nhsuk-summary-list">
+						<c:forEach items="${availableFilters}" var="availableFilter">
+							<nhs-user-ui:view-expando expandoFieldName="${availableFilter.getFieldName()}" expandoFieldLabel="${availableFilter.getFieldLabel()}" user="${userResult}"/>
+						</c:forEach>
+					</dl>
+				</div>
 			</div>
 				
 		</liferay-ui:search-container-row>

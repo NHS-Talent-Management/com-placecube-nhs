@@ -13,13 +13,22 @@
 
 <aui:form action="${sendNudgeURL}" method="post" name="talentSearchForm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
 	
-	<span class="nhsuk-hint">
-		<liferay-ui:message key="send-nudge-info"/>
-	</span>
-	<span class="nhsuk-hint">
-		<strong><liferay-ui:message key="send-nudge-users" arguments="${nudgeNotification.totalResults}"/></strong>
-	</span>
-	
+	<div class="row">
+		<div class="col-md-12">
+			<liferay-journal:journal-article 
+				articleId="<%= WebContentArticles.TALENT_DASHBOARD_NUDGE_TEXT.getArticleId() %>" 
+				groupId="${webContentGroupId}" 
+				showTitle="false" />
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<span class="nhsuk-hint">
+				<strong><liferay-ui:message key="send-nudge-users" arguments="${nudgeNotification.totalResults}"/></strong>
+			</span>
+		</div>
+	</div>
 	
 	<dl class="nhsuk-summary-list nhsuk-summary-list--no-border selected-filters">
 		<c:forEach items="${availableFilters}" var="availableFilter">

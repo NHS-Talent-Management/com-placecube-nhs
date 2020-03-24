@@ -2,18 +2,38 @@
 
 <portlet:actionURL name="<%=MVCCommandKeys.SAVE%>" var="saveTalentSearchURL"/>
  
+<portlet:renderURL var="sendNudgeURL">
+	<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandKeys.SEND_NUDGE %>"/>
+	<portlet:param name="totalResults" value="${searchContainer.getTotal()}"/>
+</portlet:renderURL>
+
 <nhs-forms-ui:errorSummary portletNamespace="${portletNamespace}" errors="${validationErrors}"/>
 
 <aui:form action="${saveTalentSearchURL}" method="post" name="talentSearchForm">
+	<div class="row">
+		<div class="col-md-12">
+			<liferay-journal:journal-article 
+				articleId="<%= WebContentArticles.TALENT_DASHBOARD_INTRO_TEXT.getArticleId() %>" 
+				groupId="${webContentGroupId}" 
+				showTitle="false" />
+		</div>
+	</div>
 	
 	<%@ include file="campain-details.jspf" %>
 	
 	<div class="row">
-		<div class="col-md-4">
-			<%@ include file="campaign-filters.jspf" %>
+		<div class="col-md-12">
+			<liferay-journal:journal-article 
+				articleId="<%= WebContentArticles.TALENT_DASHBOARD_FILTERS_TEXT.getArticleId() %>" 
+				groupId="${webContentGroupId}" 
+				showTitle="false" />
 		</div>
+	</div>
+	
+	<%@ include file="campaign-filters.jspf" %>
 		
-		<div class="col-md-8">
+	<div class="row">
+		<div class="col-md-12">
 			<c:choose>
 				<c:when test="${not searchExecuted}">
 					<liferay-ui:message key="select-filters-to-execute-search"/>
@@ -39,5 +59,13 @@
 			</c:choose>
 		</div>
 	</div>
+	
+	<c:if test="${searchExecuted and searchContainer.getTotal() gt 0}">
+		<aui:button-row cssClass="pull-right">
+			<a class="nhsuk-button nhsuk-button--secondary nhsuk-u-margin-left-5" href="${sendNudgeURL}">
+				<liferay-ui:message key="send-nudge"/>
+			</a>
+		</aui:button-row>
+	</c:if>
 	
 </aui:form>

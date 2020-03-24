@@ -4,14 +4,18 @@
 	<portlet:param name="fieldValue" value="<%=SearchFilterConstants.PLACEHOLDER_FILTER_FIELD_VALUE %>"/>
 </portlet:actionURL>
 
-<div class="nhsuk-fieldset talent-search-filters">
-	<c:forEach items="${availableFilters}" var="availableFilter">
-		<nhs-search-ui:filter-checkbox 
-				fieldLabel="${availableFilter.getFieldLabel()}" 
-				fieldOptions="${availableFilter.getFieldValues()}" 
-				fieldSelectedValues="${availableFilter.getFieldSelectedValuesList()}"
-				portletNamespace="${portletNamespace}" 
-				fieldName="${availableFilter.getSearchableFieldName()}"
-				updateFilterSearchURL="${updateFilterSearchURL}"/>
-	</c:forEach>
+<div class="row">
+	<div class="col-md-12">
+		<div class="nhsuk-fieldset talent-search-filters">
+			<c:forEach items="${availableFilters}" var="availableFilter">
+				<nhs-search-ui:filter-checkbox 
+						fieldLabel="${availableFilter.getFieldLabel()}" 
+						fieldOptions="${availableFilter.getFieldValues()}" 
+						fieldSelectedValues="${availableFilter.getFieldSelectedValuesList()}"
+						portletNamespace="${portletNamespace}" 
+						fieldName="${availableFilter.getSearchableFieldName()}"
+						updateFilterSearchURL="${updateFilterSearchURL}"/>
+			</c:forEach>
+		</div>
+	</div>
 </div>
