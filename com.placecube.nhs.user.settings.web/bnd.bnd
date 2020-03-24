@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.user.settings.web
 Bundle-Name: Placecube NHS User Settings Web
-Bundle-Version: 1.1.2
+Bundle-Version: 1.1.3.SNAPSHOT
 
 Require-Capability: \
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://placecube.com/tld/nhs-forms-ui))"
