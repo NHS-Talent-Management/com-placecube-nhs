@@ -1,4 +1,4 @@
-package com.placecube.digitalplace.local.language;
+package com.placecube.nhs.language;
 
 import java.util.Enumeration;
 import java.util.ResourceBundle;
