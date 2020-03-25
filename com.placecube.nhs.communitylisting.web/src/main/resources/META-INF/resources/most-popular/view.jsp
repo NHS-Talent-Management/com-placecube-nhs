@@ -40,7 +40,7 @@
 						
 							<div class="nhsuk-grid-column-full nhsuk-promo-group__item nhsuk-u-margin-bottom-3">
 								<div class="nhsuk-promo">
-									<a href="${group.getDisplayURL(themeDisplay)}" class="nhsuk-promo__link-wrapper">
+									<div class="nhsuk-promo__link-wrapper">
 										<c:set var="logoURL" value="${group.getLogoURL(themeDisplay, false)}"/>
 										<c:if test="${empty logoURL}">
 											<c:set var="logoURL" value="${renderRequest.contextPath}/images/icon-community.png"/>	
@@ -50,14 +50,14 @@
 											<img class="community-listing-logo" src="${logoURL}" alt="logo">
 											<div class="col-md-9">
 												<h3 class="nhsuk-promo__heading">
-													${group.getName(locale)}
+													<a href="${group.getDisplayURL(themeDisplay)}">${group.getName(locale)}</a>
 												</h3>
 												<div class="nhsuk-promo__description">
 													${group.getDescription(locale)}
 												</div>
 											</div>
 										</div>
-									</a>
+									</div>
 								</div>
 							</div>
 						
