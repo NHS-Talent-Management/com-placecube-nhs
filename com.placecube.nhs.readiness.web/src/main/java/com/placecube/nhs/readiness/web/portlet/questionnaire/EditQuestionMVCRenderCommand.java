@@ -55,6 +55,7 @@ public class EditQuestionMVCRenderCommand implements MVCRenderCommand {
 		Optional<ReadinessQuestion> readinessQuestion = readinessQuestionnaireService.getQuestionWithIndex(questions, questionIndex);
 
 		if (readinessQuestion.isPresent()) {
+			renderRequest.setAttribute("validationErrorMessage", renderRequest.getAttribute("validationErrorMessage"));
 			renderRequest.setAttribute("question", readinessQuestion.get());
 			renderRequest.setAttribute("totalQuestions", questions.size());
 			return ViewKeys.QUESTIONNAIRE_EDIT;

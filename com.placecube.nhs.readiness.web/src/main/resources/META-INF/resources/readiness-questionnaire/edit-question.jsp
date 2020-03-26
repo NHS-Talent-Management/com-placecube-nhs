@@ -21,10 +21,19 @@
 		</liferay-portlet:renderURL>
 		
 		<aui:form action="${saveAndContinueURL}" method="post" name="saveAndContinueForm">
+			
+			<c:set var="hasError" value="${not empty validationErrorMessage}"/>
 		
-			<div class="nhsuk-form-group">
+			<div class="nhsuk-form-group ${hasError ? 'nhsuk-form-group--error' : ''}">
 			
 				<fieldset class="nhsuk-fieldset">
+					
+					<c:if test="${hasError}">
+						<span class="nhsuk-error-message">
+							<span class="nhsuk-u-visually-hidden"><liferay-ui:message key="error"/></span> <liferay-ui:message key="${validationErrorMessage}"/>
+						</span>
+					</c:if>
+				
 					<legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
 						<h1 class="nhsuk-fieldset__heading">
 							${question.getQuestionTitle()}

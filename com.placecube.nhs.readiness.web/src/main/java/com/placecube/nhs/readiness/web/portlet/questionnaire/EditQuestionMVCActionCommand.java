@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.placecube.nhs.readiness.service.ReadinessService;
 import com.placecube.nhs.readiness.web.constants.MVCCommandKeys;
@@ -30,11 +31,16 @@ public class EditQuestionMVCActionCommand extends BaseMVCActionCommand {
 		long currentQuestionId = ParamUtil.getLong(actionRequest, "currentQuestionId");
 		String userAnswer = ParamUtil.getString(actionRequest, "userAnswer");
 
-		readinessService.updateAnswer(currentQuestionId, themeDisplay.getUserId(), userAnswer);
-
-		actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.QUESTIONNAIRE_EDIT_ANSWER);
-		actionResponse.getRenderParameters().setValue("currentQuestionIndex", String.valueOf(currentQuestionIndex));
-		actionResponse.getRenderParameters().setValue("cmd", "next");
+		if (Validator.isNotNull(userAnswer)) {
+			readinessService.updateAnswer(currentQuestionId, themeDisplay.getUserId(), userAnswer);
+			actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.QUESTIONNAIRE_EDIT_ANSWER);
+			actionResponse.getRenderParameters().setValue("currentQuestionIndex", String.valueOf(currentQuestionIndex));
+			actionResponse.getRenderParameters().setValue("cmd", "next");
+		} else {
+			actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.QUESTIONNAIRE_EDIT_ANSWER);
+			actionResponse.getRenderParameters().setValue("currentQuestionIndex", String.valueOf(currentQuestionIndex));
+			actionRequest.setAttribute("validationErrorMessage", "select-an-answer");
+		}
 	}
 
 }
