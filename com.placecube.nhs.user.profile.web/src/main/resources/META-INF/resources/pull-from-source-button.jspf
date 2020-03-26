@@ -2,9 +2,9 @@
 	<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandKeys.PULL_FROM_SOURCE %>"/>
 </portlet:renderURL>
 
-<div class="row">
+<div class="row pull-from-source-button">
 	<div class="col-md-12">
-		<div class="text-center nhsuk-u-margin-bottom-3">
+		<div class="text-center nhsuk-u-margin-bottom-5">
 		
 			<div class="nhsuk-action-link">
 				<a class="nhsuk-action-link__link" href="${pullFromSourceURL}">
@@ -15,7 +15,7 @@
 					<span class="nhsuk-action-link__text"><liferay-ui:message key="${pullFromSourceLabel}"/></span>
 				</a>
 			</div>
-			<span class="nhsuk-u-font-size-24">
+			<span class="nhsuk-u-font-size-48">
 				<liferay-ui:message key="or"/>
 			</span>		
 		</div>
