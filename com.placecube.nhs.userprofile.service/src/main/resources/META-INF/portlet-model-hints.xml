@@ -29,8 +29,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="title" type="String" />
-		<field name="location" type="String" />
-		<field name="expiryDate" type="Date" />
+		<field name="registrationNumber" type="String" />
+		<field name="lastUpdateDate" type="Date" />
+		<field name="revalidationDate" type="Date" />
 		<field name="validated" type="boolean" />
 	</model>
 	<model name="com.placecube.nhs.userprofile.model.Qualification">

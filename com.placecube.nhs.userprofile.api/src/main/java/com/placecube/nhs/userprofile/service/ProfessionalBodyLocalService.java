@@ -86,7 +86,8 @@ public interface ProfessionalBodyLocalService
 	public ProfessionalBody createProfessionalBody(long professionalBodyId);
 
 	public ProfessionalBody createProfessionalBody(
-		User user, String title, String location, Date expiryDate);
+		User user, String title, String registrationNumber, Date lastUpdateDate,
+		Date revalidationDate);
 
 	/**
 	 * @throws PortalException

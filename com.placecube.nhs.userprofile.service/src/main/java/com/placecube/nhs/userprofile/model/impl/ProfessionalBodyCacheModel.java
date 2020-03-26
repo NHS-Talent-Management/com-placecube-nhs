@@ -68,7 +68,7 @@ public class ProfessionalBodyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -86,10 +86,12 @@ public class ProfessionalBodyCacheModel
 		sb.append(modifiedDate);
 		sb.append(", title=");
 		sb.append(title);
-		sb.append(", location=");
-		sb.append(location);
-		sb.append(", expiryDate=");
-		sb.append(expiryDate);
+		sb.append(", registrationNumber=");
+		sb.append(registrationNumber);
+		sb.append(", lastUpdateDate=");
+		sb.append(lastUpdateDate);
+		sb.append(", revalidationDate=");
+		sb.append(revalidationDate);
 		sb.append(", validated=");
 		sb.append(validated);
 		sb.append("}");
@@ -140,18 +142,26 @@ public class ProfessionalBodyCacheModel
 			professionalBodyImpl.setTitle(title);
 		}
 
-		if (location == null) {
-			professionalBodyImpl.setLocation("");
+		if (registrationNumber == null) {
+			professionalBodyImpl.setRegistrationNumber("");
 		}
 		else {
-			professionalBodyImpl.setLocation(location);
+			professionalBodyImpl.setRegistrationNumber(registrationNumber);
 		}
 
-		if (expiryDate == Long.MIN_VALUE) {
-			professionalBodyImpl.setExpiryDate(null);
+		if (lastUpdateDate == Long.MIN_VALUE) {
+			professionalBodyImpl.setLastUpdateDate(null);
 		}
 		else {
-			professionalBodyImpl.setExpiryDate(new Date(expiryDate));
+			professionalBodyImpl.setLastUpdateDate(new Date(lastUpdateDate));
+		}
+
+		if (revalidationDate == Long.MIN_VALUE) {
+			professionalBodyImpl.setRevalidationDate(null);
+		}
+		else {
+			professionalBodyImpl.setRevalidationDate(
+				new Date(revalidationDate));
 		}
 
 		professionalBodyImpl.setValidated(validated);
@@ -174,8 +184,9 @@ public class ProfessionalBodyCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		title = objectInput.readUTF();
-		location = objectInput.readUTF();
-		expiryDate = objectInput.readLong();
+		registrationNumber = objectInput.readUTF();
+		lastUpdateDate = objectInput.readLong();
+		revalidationDate = objectInput.readLong();
 
 		validated = objectInput.readBoolean();
 	}
@@ -212,14 +223,15 @@ public class ProfessionalBodyCacheModel
 			objectOutput.writeUTF(title);
 		}
 
-		if (location == null) {
+		if (registrationNumber == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(location);
+			objectOutput.writeUTF(registrationNumber);
 		}
 
-		objectOutput.writeLong(expiryDate);
+		objectOutput.writeLong(lastUpdateDate);
+		objectOutput.writeLong(revalidationDate);
 
 		objectOutput.writeBoolean(validated);
 	}
@@ -232,8 +244,9 @@ public class ProfessionalBodyCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String title;
-	public String location;
-	public long expiryDate;
+	public String registrationNumber;
+	public long lastUpdateDate;
+	public long revalidationDate;
 	public boolean validated;
 
 }

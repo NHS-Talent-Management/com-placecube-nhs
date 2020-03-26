@@ -24,14 +24,20 @@
 				errorMessage="${validationErrors.get('role')}" />
 
 			<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
-				fieldName="place"
-				fieldLabel="location"
+				fieldName="registrationNumber"
+				fieldLabel="registration-number"
 				fieldValue="${extraInfoContext.getPlace()}"
-				errorMessage="${validationErrors.get('place')}" />
+				errorMessage="${validationErrors.get('registrationNumber')}" />
+			
+			<nhs-forms-ui:input-date portletNamespace="${portletNamespace}" 
+				fieldName="fromDate"
+				fieldLabel="last-update-date"
+				fieldValue="${extraInfoContext.getFromDate()}"
+				errorMessage="${validationErrors.get('fromDate')}" />
 			
 			<nhs-forms-ui:input-date portletNamespace="${portletNamespace}" 
 				fieldName="toDate"
-				fieldLabel="expiry-date"
+				fieldLabel="revalidation-date"
 				fieldValue="${extraInfoContext.getToDate()}"
 				errorMessage="${validationErrors.get('toDate')}" />
 				

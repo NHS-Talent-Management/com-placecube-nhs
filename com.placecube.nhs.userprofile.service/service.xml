@@ -71,12 +71,13 @@
 		<column name="modifiedDate" type="Date" />
 
 		<column name="title" type="String" />
-		<column name="location" type="String" />
-		<column name="expiryDate" type="Date" />
+		<column name="registrationNumber" type="String" />
+		<column name="lastUpdateDate" type="Date" />
+		<column name="revalidationDate" type="Date" />
 		<column name="validated" type="boolean" />
 		
 		<order>
-			<order-column name="expiryDate" order-by="desc"/>
+			<order-column name="title" order-by="asc"/>
 		</order>
 
 		<finder name="UserId" return-type="Collection">

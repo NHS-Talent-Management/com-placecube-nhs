@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -78,8 +77,9 @@ public class ProfessionalBodyModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"title", Types.VARCHAR},
-		{"location", Types.VARCHAR}, {"expiryDate", Types.TIMESTAMP},
-		{"validated", Types.BOOLEAN}
+		{"registrationNumber", Types.VARCHAR},
+		{"lastUpdateDate", Types.TIMESTAMP},
+		{"revalidationDate", Types.TIMESTAMP}, {"validated", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,22 +94,23 @@ public class ProfessionalBodyModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("location", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("expiryDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("registrationNumber", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastUpdateDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("revalidationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("validated", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NHS_ProfessionalBody (uuid_ VARCHAR(75) null,professionalBodyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,location VARCHAR(75) null,expiryDate DATE null,validated BOOLEAN)";
+		"create table NHS_ProfessionalBody (uuid_ VARCHAR(75) null,professionalBodyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,registrationNumber VARCHAR(75) null,lastUpdateDate DATE null,revalidationDate DATE null,validated BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NHS_ProfessionalBody";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY professionalBody.expiryDate DESC";
+		" ORDER BY professionalBody.title ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY NHS_ProfessionalBody.expiryDate DESC";
+		" ORDER BY NHS_ProfessionalBody.title ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -123,7 +124,7 @@ public class ProfessionalBodyModelImpl
 
 	public static final long UUID_COLUMN_BITMASK = 4L;
 
-	public static final long EXPIRYDATE_COLUMN_BITMASK = 8L;
+	public static final long TITLE_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -300,17 +301,24 @@ public class ProfessionalBodyModelImpl
 		attributeSetterBiConsumers.put(
 			"title",
 			(BiConsumer<ProfessionalBody, String>)ProfessionalBody::setTitle);
-		attributeGetterFunctions.put("location", ProfessionalBody::getLocation);
-		attributeSetterBiConsumers.put(
-			"location",
-			(BiConsumer<ProfessionalBody, String>)
-				ProfessionalBody::setLocation);
 		attributeGetterFunctions.put(
-			"expiryDate", ProfessionalBody::getExpiryDate);
+			"registrationNumber", ProfessionalBody::getRegistrationNumber);
 		attributeSetterBiConsumers.put(
-			"expiryDate",
+			"registrationNumber",
+			(BiConsumer<ProfessionalBody, String>)
+				ProfessionalBody::setRegistrationNumber);
+		attributeGetterFunctions.put(
+			"lastUpdateDate", ProfessionalBody::getLastUpdateDate);
+		attributeSetterBiConsumers.put(
+			"lastUpdateDate",
 			(BiConsumer<ProfessionalBody, Date>)
-				ProfessionalBody::setExpiryDate);
+				ProfessionalBody::setLastUpdateDate);
+		attributeGetterFunctions.put(
+			"revalidationDate", ProfessionalBody::getRevalidationDate);
+		attributeSetterBiConsumers.put(
+			"revalidationDate",
+			(BiConsumer<ProfessionalBody, Date>)
+				ProfessionalBody::setRevalidationDate);
 		attributeGetterFunctions.put(
 			"validated", ProfessionalBody::getValidated);
 		attributeSetterBiConsumers.put(
@@ -472,34 +480,44 @@ public class ProfessionalBodyModelImpl
 
 	@Override
 	public void setTitle(String title) {
+		_columnBitmask = -1L;
+
 		_title = title;
 	}
 
 	@Override
-	public String getLocation() {
-		if (_location == null) {
+	public String getRegistrationNumber() {
+		if (_registrationNumber == null) {
 			return "";
 		}
 		else {
-			return _location;
+			return _registrationNumber;
 		}
 	}
 
 	@Override
-	public void setLocation(String location) {
-		_location = location;
+	public void setRegistrationNumber(String registrationNumber) {
+		_registrationNumber = registrationNumber;
 	}
 
 	@Override
-	public Date getExpiryDate() {
-		return _expiryDate;
+	public Date getLastUpdateDate() {
+		return _lastUpdateDate;
 	}
 
 	@Override
-	public void setExpiryDate(Date expiryDate) {
-		_columnBitmask = -1L;
+	public void setLastUpdateDate(Date lastUpdateDate) {
+		_lastUpdateDate = lastUpdateDate;
+	}
 
-		_expiryDate = expiryDate;
+	@Override
+	public Date getRevalidationDate() {
+		return _revalidationDate;
+	}
+
+	@Override
+	public void setRevalidationDate(Date revalidationDate) {
+		_revalidationDate = revalidationDate;
 	}
 
 	@Override
@@ -562,8 +580,9 @@ public class ProfessionalBodyModelImpl
 		professionalBodyImpl.setCreateDate(getCreateDate());
 		professionalBodyImpl.setModifiedDate(getModifiedDate());
 		professionalBodyImpl.setTitle(getTitle());
-		professionalBodyImpl.setLocation(getLocation());
-		professionalBodyImpl.setExpiryDate(getExpiryDate());
+		professionalBodyImpl.setRegistrationNumber(getRegistrationNumber());
+		professionalBodyImpl.setLastUpdateDate(getLastUpdateDate());
+		professionalBodyImpl.setRevalidationDate(getRevalidationDate());
 		professionalBodyImpl.setValidated(isValidated());
 
 		professionalBodyImpl.resetOriginalValues();
@@ -575,10 +594,7 @@ public class ProfessionalBodyModelImpl
 	public int compareTo(ProfessionalBody professionalBody) {
 		int value = 0;
 
-		value = DateUtil.compareTo(
-			getExpiryDate(), professionalBody.getExpiryDate());
-
-		value = value * -1;
+		value = getTitle().compareTo(professionalBody.getTitle());
 
 		if (value != 0) {
 			return value;
@@ -699,21 +715,35 @@ public class ProfessionalBodyModelImpl
 			professionalBodyCacheModel.title = null;
 		}
 
-		professionalBodyCacheModel.location = getLocation();
+		professionalBodyCacheModel.registrationNumber = getRegistrationNumber();
 
-		String location = professionalBodyCacheModel.location;
+		String registrationNumber =
+			professionalBodyCacheModel.registrationNumber;
 
-		if ((location != null) && (location.length() == 0)) {
-			professionalBodyCacheModel.location = null;
+		if ((registrationNumber != null) &&
+			(registrationNumber.length() == 0)) {
+
+			professionalBodyCacheModel.registrationNumber = null;
 		}
 
-		Date expiryDate = getExpiryDate();
+		Date lastUpdateDate = getLastUpdateDate();
 
-		if (expiryDate != null) {
-			professionalBodyCacheModel.expiryDate = expiryDate.getTime();
+		if (lastUpdateDate != null) {
+			professionalBodyCacheModel.lastUpdateDate =
+				lastUpdateDate.getTime();
 		}
 		else {
-			professionalBodyCacheModel.expiryDate = Long.MIN_VALUE;
+			professionalBodyCacheModel.lastUpdateDate = Long.MIN_VALUE;
+		}
+
+		Date revalidationDate = getRevalidationDate();
+
+		if (revalidationDate != null) {
+			professionalBodyCacheModel.revalidationDate =
+				revalidationDate.getTime();
+		}
+		else {
+			professionalBodyCacheModel.revalidationDate = Long.MIN_VALUE;
 		}
 
 		professionalBodyCacheModel.validated = isValidated();
@@ -803,8 +833,9 @@ public class ProfessionalBodyModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _title;
-	private String _location;
-	private Date _expiryDate;
+	private String _registrationNumber;
+	private Date _lastUpdateDate;
+	private Date _revalidationDate;
 	private boolean _validated;
 	private long _columnBitmask;
 	private ProfessionalBody _escapedModel;

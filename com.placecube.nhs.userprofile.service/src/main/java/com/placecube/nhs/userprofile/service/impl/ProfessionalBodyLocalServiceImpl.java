@@ -57,13 +57,14 @@ public class ProfessionalBodyLocalServiceImpl extends ProfessionalBodyLocalServi
 	 */
 
 	@Override
-	public ProfessionalBody createProfessionalBody(User user, String title, String location, Date expiryDate) {
+	public ProfessionalBody createProfessionalBody(User user, String title, String registrationNumber, Date lastUpdateDate, Date revalidationDate) {
 		ProfessionalBody professionalBody = professionalBodyLocalService.createProfessionalBody(counterLocalService.increment(ProfessionalBody.class.getName(), 1));
 		professionalBody.setUserId(user.getUserId());
 		professionalBody.setUserName(user.getFullName());
 		professionalBody.setTitle(title);
-		professionalBody.setLocation(location);
-		professionalBody.setExpiryDate(expiryDate);
+		professionalBody.setRegistrationNumber(registrationNumber);
+		professionalBody.setLastUpdateDate(lastUpdateDate);
+		professionalBody.setRevalidationDate(revalidationDate);
 		return professionalBodyLocalService.addProfessionalBody(professionalBody);
 	}
 

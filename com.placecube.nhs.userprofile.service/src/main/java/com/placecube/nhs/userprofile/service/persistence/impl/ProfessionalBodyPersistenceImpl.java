@@ -2433,7 +2433,7 @@ public class ProfessionalBodyPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			ProfessionalBodyModelImpl.UUID_COLUMN_BITMASK |
-			ProfessionalBodyModelImpl.EXPIRYDATE_COLUMN_BITMASK);
+			ProfessionalBodyModelImpl.TITLE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
@@ -2455,7 +2455,7 @@ public class ProfessionalBodyPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			ProfessionalBodyModelImpl.UUID_COLUMN_BITMASK |
 			ProfessionalBodyModelImpl.COMPANYID_COLUMN_BITMASK |
-			ProfessionalBodyModelImpl.EXPIRYDATE_COLUMN_BITMASK);
+			ProfessionalBodyModelImpl.TITLE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
@@ -2475,7 +2475,7 @@ public class ProfessionalBodyPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] {Long.class.getName()},
 			ProfessionalBodyModelImpl.USERID_COLUMN_BITMASK |
-			ProfessionalBodyModelImpl.EXPIRYDATE_COLUMN_BITMASK);
+			ProfessionalBodyModelImpl.TITLE_COLUMN_BITMASK);
 
 		_finderPathCountByUserId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,

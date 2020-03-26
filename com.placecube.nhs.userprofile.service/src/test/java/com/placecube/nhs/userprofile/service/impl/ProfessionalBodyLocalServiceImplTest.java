@@ -47,7 +47,10 @@ public class ProfessionalBodyLocalServiceImplTest extends PowerMockito {
 	private User mockUser;
 
 	@Mock
-	private Date mockDate;
+	private Date mockDateLastUpdate;
+
+	@Mock
+	private Date mockDateRevalidation;
 
 	@Before
 	public void setUp() {
@@ -61,7 +64,7 @@ public class ProfessionalBodyLocalServiceImplTest extends PowerMockito {
 		when(mockProfessionalBodyLocalService.createProfessionalBody(nextId)).thenReturn(mockProfessionalBody1);
 		when(mockProfessionalBodyLocalService.addProfessionalBody(mockProfessionalBody1)).thenReturn(mockProfessionalBody2);
 
-		ProfessionalBody result = professionalBodyLocalServiceImpl.createProfessionalBody(mockUser, "titleValue", "locationValue", mockDate);
+		ProfessionalBody result = professionalBodyLocalServiceImpl.createProfessionalBody(mockUser, "titleValue", "registrationNumberValue", mockDateLastUpdate, mockDateRevalidation);
 
 		assertThat(result, sameInstance(mockProfessionalBody2));
 	}
@@ -76,14 +79,15 @@ public class ProfessionalBodyLocalServiceImplTest extends PowerMockito {
 		when(mockCounterLocalService.increment(ProfessionalBody.class.getName(), 1)).thenReturn(nextId);
 		when(mockProfessionalBodyLocalService.createProfessionalBody(nextId)).thenReturn(mockProfessionalBody1);
 
-		professionalBodyLocalServiceImpl.createProfessionalBody(mockUser, "titleValue", "locationValue", mockDate);
+		professionalBodyLocalServiceImpl.createProfessionalBody(mockUser, "titleValue", "registrationNumberValue", mockDateLastUpdate, mockDateRevalidation);
 
 		InOrder inOrder = Mockito.inOrder(mockProfessionalBody1, mockProfessionalBodyLocalService);
 		inOrder.verify(mockProfessionalBody1, times(1)).setUserId(userId);
 		inOrder.verify(mockProfessionalBody1, times(1)).setUserName(userName);
 		inOrder.verify(mockProfessionalBody1, times(1)).setTitle("titleValue");
-		inOrder.verify(mockProfessionalBody1, times(1)).setLocation("locationValue");
-		inOrder.verify(mockProfessionalBody1, times(1)).setExpiryDate(mockDate);
+		inOrder.verify(mockProfessionalBody1, times(1)).setRegistrationNumber("registrationNumberValue");
+		inOrder.verify(mockProfessionalBody1, times(1)).setLastUpdateDate(mockDateLastUpdate);
+		inOrder.verify(mockProfessionalBody1, times(1)).setRevalidationDate(mockDateRevalidation);
 		inOrder.verify(mockProfessionalBodyLocalService, times(1)).addProfessionalBody(mockProfessionalBody1);
 	}
 

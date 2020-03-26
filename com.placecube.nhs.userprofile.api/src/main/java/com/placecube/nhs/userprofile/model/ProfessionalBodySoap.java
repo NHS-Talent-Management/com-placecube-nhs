@@ -42,8 +42,9 @@ public class ProfessionalBodySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setTitle(model.getTitle());
-		soapModel.setLocation(model.getLocation());
-		soapModel.setExpiryDate(model.getExpiryDate());
+		soapModel.setRegistrationNumber(model.getRegistrationNumber());
+		soapModel.setLastUpdateDate(model.getLastUpdateDate());
+		soapModel.setRevalidationDate(model.getRevalidationDate());
 		soapModel.setValidated(model.isValidated());
 
 		return soapModel;
@@ -170,20 +171,28 @@ public class ProfessionalBodySoap implements Serializable {
 		_title = title;
 	}
 
-	public String getLocation() {
-		return _location;
+	public String getRegistrationNumber() {
+		return _registrationNumber;
 	}
 
-	public void setLocation(String location) {
-		_location = location;
+	public void setRegistrationNumber(String registrationNumber) {
+		_registrationNumber = registrationNumber;
 	}
 
-	public Date getExpiryDate() {
-		return _expiryDate;
+	public Date getLastUpdateDate() {
+		return _lastUpdateDate;
 	}
 
-	public void setExpiryDate(Date expiryDate) {
-		_expiryDate = expiryDate;
+	public void setLastUpdateDate(Date lastUpdateDate) {
+		_lastUpdateDate = lastUpdateDate;
+	}
+
+	public Date getRevalidationDate() {
+		return _revalidationDate;
+	}
+
+	public void setRevalidationDate(Date revalidationDate) {
+		_revalidationDate = revalidationDate;
 	}
 
 	public boolean getValidated() {
@@ -206,8 +215,9 @@ public class ProfessionalBodySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _title;
-	private String _location;
-	private Date _expiryDate;
+	private String _registrationNumber;
+	private Date _lastUpdateDate;
+	private Date _revalidationDate;
 	private boolean _validated;
 
 }

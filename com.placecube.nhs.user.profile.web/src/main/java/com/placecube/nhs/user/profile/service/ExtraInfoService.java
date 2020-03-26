@@ -51,7 +51,7 @@ public class ExtraInfoService {
 	}
 
 	public void addProfessionalBody(User user, ExtraInfoContext extraInfoContext) {
-		professionalBodyLocalService.createProfessionalBody(user, extraInfoContext.getRole(), extraInfoContext.getPlace(), extraInfoContext.getToDate());
+		professionalBodyLocalService.createProfessionalBody(user, extraInfoContext.getRole(), extraInfoContext.getPlace(), extraInfoContext.getFromDate(), extraInfoContext.getToDate());
 	}
 
 	public void addQualification(User user, ExtraInfoContext extraInfoContext) {
@@ -74,8 +74,9 @@ public class ExtraInfoService {
 	public ExtraInfoContext getExtraInfoFromProfessionalBody(ProfessionalBody professionalBody) {
 		ExtraInfoContext extraInfoContext = new ExtraInfoContext();
 		if (Validator.isNotNull(professionalBody)) {
-			extraInfoContext.setToDate(professionalBody.getExpiryDate());
-			extraInfoContext.setPlace(professionalBody.getLocation());
+			extraInfoContext.setFromDate(professionalBody.getLastUpdateDate());
+			extraInfoContext.setToDate(professionalBody.getRevalidationDate());
+			extraInfoContext.setPlace(professionalBody.getRegistrationNumber());
 			extraInfoContext.setRole(professionalBody.getTitle());
 			extraInfoContext.setId(professionalBody.getProfessionalBodyId());
 		}
@@ -108,10 +109,11 @@ public class ExtraInfoService {
 
 	public Map<String, String> getValidationErrorsForProfessionalBody(ExtraInfoContext extraInfoContext, Locale locale) {
 		Map<String, String> errors = new LinkedHashMap<>();
-		validationService.validateMandatoryField(errors, locale, extraInfoContext.getPlace(), "location", "enter-the-location", 100, "enter-a-location-that-is-100-characters-or-fewer");
 		validationService.validateMandatoryField(errors, locale, extraInfoContext.getRole(), "title", "enter-the-professional-body-name", 100,
 				"enter-a-professional-body-name-that-is-100-characters-or-fewer");
-		validationService.validateMandatoryField(errors, locale, extraInfoContext.getToDate(), "toDate", "enter-the-expiry-date");
+		validationService.validateMandatoryField(errors, locale, extraInfoContext.getPlace(), "registrationNumber", "enter-the-registration-number", 100,
+				"enter-a-registration-number-that-is-100-characters-or-fewer");
+		validationService.validateMandatoryField(errors, locale, extraInfoContext.getFromDate(), "fromDate", "enter-the-last-updated-date");
 		return errors;
 	}
 
@@ -137,7 +139,7 @@ public class ExtraInfoService {
 		} else {
 			extraInfoContext.setToDate(getDateFromRequest(actionRequest, "toDate", timeZone));
 		}
-		extraInfoContext.setPlace(ParamUtil.getString(actionRequest, "place"));
+		extraInfoContext.setPlace(ParamUtil.getString(actionRequest, "registrationNumber"));
 		extraInfoContext.setRole(ParamUtil.getString(actionRequest, "role"));
 		return extraInfoContext;
 	}
@@ -147,9 +149,13 @@ public class ExtraInfoService {
 				extraInfoContext.getToDate());
 	}
 
-	public void updateProfessionalBody(ExtraInfoContext extraInfoContext) {
-		// TODO Auto-generated method stub
-
+	public void updateProfessionalBody(ExtraInfoContext extraInfoContext) throws PortalException {
+		ProfessionalBody professionalBody = professionalBodyLocalService.getProfessionalBody(extraInfoContext.getId());
+		professionalBody.setRegistrationNumber(extraInfoContext.getPlace());
+		professionalBody.setTitle(extraInfoContext.getRole());
+		professionalBody.setLastUpdateDate(extraInfoContext.getFromDate());
+		professionalBody.setRevalidationDate(extraInfoContext.getToDate());
+		professionalBodyLocalService.updateProfessionalBody(professionalBody);
 	}
 
 	public void updateQualification(ExtraInfoContext extraInfoContext) throws PortalException {

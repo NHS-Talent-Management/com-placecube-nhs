@@ -54,8 +54,9 @@ public class ProfessionalBodyWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("title", getTitle());
-		attributes.put("location", getLocation());
-		attributes.put("expiryDate", getExpiryDate());
+		attributes.put("registrationNumber", getRegistrationNumber());
+		attributes.put("lastUpdateDate", getLastUpdateDate());
+		attributes.put("revalidationDate", getRevalidationDate());
 		attributes.put("validated", isValidated());
 
 		return attributes;
@@ -111,16 +112,23 @@ public class ProfessionalBodyWrapper
 			setTitle(title);
 		}
 
-		String location = (String)attributes.get("location");
+		String registrationNumber = (String)attributes.get(
+			"registrationNumber");
 
-		if (location != null) {
-			setLocation(location);
+		if (registrationNumber != null) {
+			setRegistrationNumber(registrationNumber);
 		}
 
-		Date expiryDate = (Date)attributes.get("expiryDate");
+		Date lastUpdateDate = (Date)attributes.get("lastUpdateDate");
 
-		if (expiryDate != null) {
-			setExpiryDate(expiryDate);
+		if (lastUpdateDate != null) {
+			setLastUpdateDate(lastUpdateDate);
+		}
+
+		Date revalidationDate = (Date)attributes.get("revalidationDate");
+
+		if (revalidationDate != null) {
+			setRevalidationDate(revalidationDate);
 		}
 
 		Boolean validated = (Boolean)attributes.get("validated");
@@ -151,23 +159,13 @@ public class ProfessionalBodyWrapper
 	}
 
 	/**
-	 * Returns the expiry date of this professional body.
+	 * Returns the last update date of this professional body.
 	 *
-	 * @return the expiry date of this professional body
+	 * @return the last update date of this professional body
 	 */
 	@Override
-	public Date getExpiryDate() {
-		return model.getExpiryDate();
-	}
-
-	/**
-	 * Returns the location of this professional body.
-	 *
-	 * @return the location of this professional body
-	 */
-	@Override
-	public String getLocation() {
-		return model.getLocation();
+	public Date getLastUpdateDate() {
+		return model.getLastUpdateDate();
 	}
 
 	/**
@@ -198,6 +196,26 @@ public class ProfessionalBodyWrapper
 	@Override
 	public long getProfessionalBodyId() {
 		return model.getProfessionalBodyId();
+	}
+
+	/**
+	 * Returns the registration number of this professional body.
+	 *
+	 * @return the registration number of this professional body
+	 */
+	@Override
+	public String getRegistrationNumber() {
+		return model.getRegistrationNumber();
+	}
+
+	/**
+	 * Returns the revalidation date of this professional body.
+	 *
+	 * @return the revalidation date of this professional body
+	 */
+	@Override
+	public Date getRevalidationDate() {
+		return model.getRevalidationDate();
 	}
 
 	/**
@@ -296,23 +314,13 @@ public class ProfessionalBodyWrapper
 	}
 
 	/**
-	 * Sets the expiry date of this professional body.
+	 * Sets the last update date of this professional body.
 	 *
-	 * @param expiryDate the expiry date of this professional body
+	 * @param lastUpdateDate the last update date of this professional body
 	 */
 	@Override
-	public void setExpiryDate(Date expiryDate) {
-		model.setExpiryDate(expiryDate);
-	}
-
-	/**
-	 * Sets the location of this professional body.
-	 *
-	 * @param location the location of this professional body
-	 */
-	@Override
-	public void setLocation(String location) {
-		model.setLocation(location);
+	public void setLastUpdateDate(Date lastUpdateDate) {
+		model.setLastUpdateDate(lastUpdateDate);
 	}
 
 	/**
@@ -343,6 +351,26 @@ public class ProfessionalBodyWrapper
 	@Override
 	public void setProfessionalBodyId(long professionalBodyId) {
 		model.setProfessionalBodyId(professionalBodyId);
+	}
+
+	/**
+	 * Sets the registration number of this professional body.
+	 *
+	 * @param registrationNumber the registration number of this professional body
+	 */
+	@Override
+	public void setRegistrationNumber(String registrationNumber) {
+		model.setRegistrationNumber(registrationNumber);
+	}
+
+	/**
+	 * Sets the revalidation date of this professional body.
+	 *
+	 * @param revalidationDate the revalidation date of this professional body
+	 */
+	@Override
+	public void setRevalidationDate(Date revalidationDate) {
+		model.setRevalidationDate(revalidationDate);
 	}
 
 	/**

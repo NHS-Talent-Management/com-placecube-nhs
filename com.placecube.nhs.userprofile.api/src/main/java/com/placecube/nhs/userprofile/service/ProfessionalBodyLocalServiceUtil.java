@@ -69,10 +69,11 @@ public class ProfessionalBodyLocalServiceUtil {
 	public static com.placecube.nhs.userprofile.model.ProfessionalBody
 		createProfessionalBody(
 			com.liferay.portal.kernel.model.User user, String title,
-			String location, java.util.Date expiryDate) {
+			String registrationNumber, java.util.Date lastUpdateDate,
+			java.util.Date revalidationDate) {
 
 		return getService().createProfessionalBody(
-			user, title, location, expiryDate);
+			user, title, registrationNumber, lastUpdateDate, revalidationDate);
 	}
 
 	/**

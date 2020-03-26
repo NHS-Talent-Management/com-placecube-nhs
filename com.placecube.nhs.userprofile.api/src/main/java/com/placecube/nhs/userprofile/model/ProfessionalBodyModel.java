@@ -202,33 +202,47 @@ public interface ProfessionalBodyModel
 	public void setTitle(String title);
 
 	/**
-	 * Returns the location of this professional body.
+	 * Returns the registration number of this professional body.
 	 *
-	 * @return the location of this professional body
+	 * @return the registration number of this professional body
 	 */
 	@AutoEscape
-	public String getLocation();
+	public String getRegistrationNumber();
 
 	/**
-	 * Sets the location of this professional body.
+	 * Sets the registration number of this professional body.
 	 *
-	 * @param location the location of this professional body
+	 * @param registrationNumber the registration number of this professional body
 	 */
-	public void setLocation(String location);
+	public void setRegistrationNumber(String registrationNumber);
 
 	/**
-	 * Returns the expiry date of this professional body.
+	 * Returns the last update date of this professional body.
 	 *
-	 * @return the expiry date of this professional body
+	 * @return the last update date of this professional body
 	 */
-	public Date getExpiryDate();
+	public Date getLastUpdateDate();
 
 	/**
-	 * Sets the expiry date of this professional body.
+	 * Sets the last update date of this professional body.
 	 *
-	 * @param expiryDate the expiry date of this professional body
+	 * @param lastUpdateDate the last update date of this professional body
 	 */
-	public void setExpiryDate(Date expiryDate);
+	public void setLastUpdateDate(Date lastUpdateDate);
+
+	/**
+	 * Returns the revalidation date of this professional body.
+	 *
+	 * @return the revalidation date of this professional body
+	 */
+	public Date getRevalidationDate();
+
+	/**
+	 * Sets the revalidation date of this professional body.
+	 *
+	 * @param revalidationDate the revalidation date of this professional body
+	 */
+	public void setRevalidationDate(Date revalidationDate);
 
 	/**
 	 * Returns the validated of this professional body.

@@ -23,8 +23,9 @@ create table NHS_ProfessionalBody (
 	createDate DATE null,
 	modifiedDate DATE null,
 	title VARCHAR(75) null,
-	location VARCHAR(75) null,
-	expiryDate DATE null,
+	registrationNumber VARCHAR(75) null,
+	lastUpdateDate DATE null,
+	revalidationDate DATE null,
 	validated BOOLEAN
 );
 
