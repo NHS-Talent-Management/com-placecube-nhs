@@ -15,7 +15,7 @@
 					<span class="nhsuk-action-link__text"><liferay-ui:message key="${pullFromSourceLabel}"/></span>
 				</a>
 			</div>
-			<span class="nhsuk-u-font-size-48">
+			<span class="nhsuk-u-font-size-48 text-uppercase">
 				<liferay-ui:message key="or"/>
 			</span>		
 		</div>
