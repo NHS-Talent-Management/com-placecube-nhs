@@ -19,6 +19,7 @@ def modules = [
 	'com.placecube.nhs.talentdashboard.web',
 	'com.placecube.nhs.talentsearch.api',
 	'com.placecube.nhs.talentsearch.service',
+	'com.placecube.nhs.setup',
 	'com.placecube.nhs.taglibs',
 	'com.placecube.nhs.template.utils',
 	'com.placecube.nhs.user.expando',
