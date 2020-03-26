@@ -9,6 +9,11 @@
 	<c:set var="backToProfileCommand" value="<%=MVCCommandKeys.LEARNING_SKILLS_VIEW%>"/>
 	<%@ include file="../back-to-profile.jspf" %>
 	
+	<c:if test="${extraInfoContext.getId() le 0}">
+		<c:set var="pullFromSourceLabel" value="pull-qualification-from-source"/>
+		<%@ include file="../pull-from-source-button.jspf" %>
+	</c:if>
+	
 	<c:set var="titleMessageKey" value="${extraInfoContext.getId() gt 0 ? 'update-learning-skills' : 'add-learning-skills'}"/>
 	<%@ include file="../edit-title.jspf" %>
 	

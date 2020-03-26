@@ -6,6 +6,9 @@
 	<c:set var="backToProfileCommand" value="<%=MVCCommandKeys.DETAILS_VIEW%>"/>
 	<%@ include file="../back-to-profile.jspf" %>
 	
+	<c:set var="pullFromSourceLabel" value="pull-profile-from-source"/>
+	<%@ include file="../pull-from-source-button.jspf" %>
+	
 	<c:set var="titleMessageKey" value="add-intro"/>
 	<%@ include file="../edit-title.jspf" %>
 

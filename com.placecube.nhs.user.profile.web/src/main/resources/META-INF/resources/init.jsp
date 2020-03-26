@@ -4,6 +4,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/journal" prefix="liferay-journal" %>
 <%@ taglib uri="http://placecube.com/tld/nhs-forms-ui" prefix="nhs-forms-ui" %>
 <%@ taglib uri="http://placecube.com/tld/nhs-dates-ui" prefix="nhs-dates-ui" %>
 

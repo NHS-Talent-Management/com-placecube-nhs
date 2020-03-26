@@ -4,7 +4,9 @@ dependencies {
 	compile project (':com.placecube.nhs.userprofile.api')
 	
 	compile group: 'biz.aQute.bnd', name: 'biz.aQute.bndlib'
+	compile group: 'com.liferay', name: 'com.liferay.portal.instance.lifecycle.api'
 	compile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel'
+	compile group: 'com.placecube.digitalplace', name: 'com.placecube.digitalplace.journal.api', version: '1.2.0'
 	compile group: 'javax.portlet', name: 'portlet-api'
 	compile group: 'javax.servlet', name: 'javax.servlet-api'
 	compile group: 'org.osgi', name: 'org.osgi.service.component.annotations'

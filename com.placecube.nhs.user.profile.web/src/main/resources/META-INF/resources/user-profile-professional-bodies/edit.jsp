@@ -4,10 +4,17 @@
 	<portlet:param name="id" value="${extraInfoContext.getId()}"/>
 </portlet:actionURL>
 
+
 <aui:form action="${editProfessionalBodyURL}" method="post" name="editProfessionalBodyForm">
+
 	
 	<c:set var="backToProfileCommand" value="<%=MVCCommandKeys.PROFESSIONAL_BODIES_VIEW%>"/>
 	<%@ include file="../back-to-profile.jspf" %>
+
+	<c:if test="${extraInfoContext.getId() le 0}">
+		<c:set var="pullFromSourceLabel" value="pull-professionalbody-from-source"/>
+		<%@ include file="../pull-from-source-button.jspf" %>
+	</c:if>
 	
 	<c:set var="titleMessageKey" value="${extraInfoContext.getId() gt 0 ? 'update-professional-body' : 'add-professional-body'}"/>
 	<%@ include file="../edit-title.jspf" %>

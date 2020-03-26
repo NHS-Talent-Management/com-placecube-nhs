@@ -18,6 +18,8 @@ public final class MVCCommandKeys {
 
 	public static final String PROFESSIONAL_BODIES_VIEW = "/userProfileProfessionalBodies/view";
 
+	public static final String PULL_FROM_SOURCE = "/userprofilePullFromSource";
+
 	private MVCCommandKeys() {
 		return;
 	}

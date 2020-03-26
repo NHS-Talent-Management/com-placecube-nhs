@@ -9,6 +9,11 @@
 	<c:set var="backToProfileCommand" value="<%=MVCCommandKeys.EXPERIENCE_VIEW%>"/>
 	<%@ include file="../back-to-profile.jspf" %>
 	
+	<c:if test="${extraInfoContext.getId() le 0}">
+		<c:set var="pullFromSourceLabel" value="pull-experience-from-source"/>
+		<%@ include file="../pull-from-source-button.jspf" %>
+	</c:if>
+	
 	<c:set var="titleMessageKey" value="${extraInfoContext.getId() gt 0 ? 'update-experience' : 'add-experience'}"/>
 	<%@ include file="../edit-title.jspf" %>
 	
