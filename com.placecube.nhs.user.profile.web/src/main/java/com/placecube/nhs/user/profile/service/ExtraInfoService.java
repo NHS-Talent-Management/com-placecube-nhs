@@ -139,7 +139,7 @@ public class ExtraInfoService {
 		} else {
 			extraInfoContext.setToDate(getDateFromRequest(actionRequest, "toDate", timeZone));
 		}
-		extraInfoContext.setPlace(ParamUtil.getString(actionRequest, "registrationNumber"));
+		extraInfoContext.setPlace(ParamUtil.getString(actionRequest, "place"));
 		extraInfoContext.setRole(ParamUtil.getString(actionRequest, "role"));
 		return extraInfoContext;
 	}

@@ -19,6 +19,8 @@ public class UserProfileProfessionalBodiesPullFromSourceMVCRenderCommand impleme
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 
 		renderRequest.setAttribute("webcontentArticleId", WebContentArticles.PROFESSIONAL_BODY.getArticleId());
+		renderRequest.setAttribute("backToLabel", "back-to-professional-body");
+		renderRequest.setAttribute("backToCommand", MVCCommandKeys.PROFESSIONAL_BODIES_EDIT);
 
 		return "/pull-from-source.jsp";
 	}

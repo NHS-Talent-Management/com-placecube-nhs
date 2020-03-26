@@ -1,9 +1,9 @@
 <%@ include file="../init.jsp"%>
 
-<portlet:actionURL name="<%=MVCCommandKeys.DETAILS_EDIT%>" var="userProfilEditURL" />
+<portlet:actionURL name="<%=MVCCommandKeys.PROFILE_DETAILS_EDIT%>" var="userProfilEditURL" />
 
 <aui:form action="${userProfilEditURL}" method="post" name="userProfilForm">
-	<c:set var="backToProfileCommand" value="<%=MVCCommandKeys.DETAILS_VIEW%>"/>
+	<c:set var="backToProfileCommand" value="<%=MVCCommandKeys.PROFILE_DETAILS_VIEW%>"/>
 	<%@ include file="../back-to-profile.jspf" %>
 	
 	<c:set var="pullFromSourceLabel" value="pull-profile-from-source"/>

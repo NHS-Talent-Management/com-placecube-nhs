@@ -5,7 +5,7 @@
 		<dynamic-content language-id="[$LOCALE_DEFAULT$]">
 			<![CDATA[
 				<div>
-					<h2>Integrate with your professional body</h2>
+					<h2 class="text-center">Integrate with your professional body</h2>
 						
 					<ul class="nhsuk-list">
 						<li><a class="nhsuk-button" href="#">NHS Life</a></li>

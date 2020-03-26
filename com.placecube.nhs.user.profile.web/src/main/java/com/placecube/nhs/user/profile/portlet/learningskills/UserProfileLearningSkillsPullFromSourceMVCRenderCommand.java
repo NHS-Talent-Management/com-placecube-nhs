@@ -18,6 +18,8 @@ public class UserProfileLearningSkillsPullFromSourceMVCRenderCommand implements 
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 
 		renderRequest.setAttribute("webcontentArticleId", WebContentArticles.QUALIFICATION.getArticleId());
+		renderRequest.setAttribute("backToLabel", "back-to-learning");
+		renderRequest.setAttribute("backToCommand", MVCCommandKeys.LEARNING_SKILLS_EDIT);
 
 		return "/pull-from-source.jsp";
 	}

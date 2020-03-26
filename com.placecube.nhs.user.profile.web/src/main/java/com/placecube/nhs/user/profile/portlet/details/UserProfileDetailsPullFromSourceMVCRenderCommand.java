@@ -18,6 +18,8 @@ public class UserProfileDetailsPullFromSourceMVCRenderCommand implements MVCRend
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 
 		renderRequest.setAttribute("webcontentArticleId", WebContentArticles.PROFILE_DETAILS.getArticleId());
+		renderRequest.setAttribute("backToLabel", "back-to-intro");
+		renderRequest.setAttribute("backToCommand", MVCCommandKeys.PROFILE_DETAILS_EDIT);
 
 		return "/pull-from-source.jsp";
 	}

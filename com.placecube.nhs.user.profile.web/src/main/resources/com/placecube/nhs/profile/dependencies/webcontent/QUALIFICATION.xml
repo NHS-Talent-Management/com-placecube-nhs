@@ -5,7 +5,7 @@
 		<dynamic-content language-id="[$LOCALE_DEFAULT$]">
 			<![CDATA[
 				<div>
-					<h2>Pull in Learning from Source...</h2>
+					<h2 class="text-center">Pull in Learning from Source...</h2>
 						
 					<ul class="nhsuk-list">
 						<li><a class="nhsuk-button" href="#">LinkedIn</a></li>

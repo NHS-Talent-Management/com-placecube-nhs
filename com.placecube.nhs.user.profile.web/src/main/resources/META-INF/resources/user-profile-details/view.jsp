@@ -3,7 +3,7 @@
 <c:if test="${themeDisplay.isSignedIn()}">
 	
 	<portlet:renderURL var="editProfileUrl" windowState="${windowStateMaximized}">
-		<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandKeys.DETAILS_EDIT%>"/>
+		<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandKeys.PROFILE_DETAILS_EDIT%>"/>
 	</portlet:renderURL>
 	
 	<div class="nhsuk-care-card nhsuk-care-card--non-urgent white-card">

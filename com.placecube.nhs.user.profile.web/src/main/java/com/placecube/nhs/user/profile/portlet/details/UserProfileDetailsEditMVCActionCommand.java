@@ -18,7 +18,7 @@ import com.placecube.nhs.user.profile.constants.PortletKeys;
 import com.placecube.nhs.user.profile.model.UserProfileContext;
 import com.placecube.nhs.user.profile.service.UserProfileService;
 
-@Component(immediate = true, property = { "javax.portlet.name=" + PortletKeys.USER_PROFILE_DETAILS, "mvc.command.name=" + MVCCommandKeys.DETAILS_EDIT }, service = MVCActionCommand.class)
+@Component(immediate = true, property = { "javax.portlet.name=" + PortletKeys.USER_PROFILE_DETAILS, "mvc.command.name=" + MVCCommandKeys.PROFILE_DETAILS_EDIT }, service = MVCActionCommand.class)
 
 public class UserProfileDetailsEditMVCActionCommand extends BaseMVCActionCommand {
 
@@ -37,11 +37,11 @@ public class UserProfileDetailsEditMVCActionCommand extends BaseMVCActionCommand
 
 			userProfileService.updateUserProfile(userProfileContext, themeDisplay.getUser());
 
-			actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.DETAILS_VIEW);
+			actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.PROFILE_DETAILS_VIEW);
 			actionResponse.setWindowState(WindowState.NORMAL);
 
 		} else {
-			actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.DETAILS_EDIT);
+			actionResponse.getRenderParameters().setValue("mvcRenderCommandName", MVCCommandKeys.PROFILE_DETAILS_EDIT);
 			actionRequest.setAttribute("userProfileContext", userProfileContext);
 			actionRequest.setAttribute("validationErrors", validationErrors);
 		}

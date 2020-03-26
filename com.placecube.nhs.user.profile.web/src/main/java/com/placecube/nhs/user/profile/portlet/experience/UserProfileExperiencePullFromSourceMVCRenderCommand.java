@@ -18,6 +18,8 @@ public class UserProfileExperiencePullFromSourceMVCRenderCommand implements MVCR
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 
 		renderRequest.setAttribute("webcontentArticleId", WebContentArticles.EXPERIENCE.getArticleId());
+		renderRequest.setAttribute("backToLabel", "back-to-experience");
+		renderRequest.setAttribute("backToCommand", MVCCommandKeys.EXPERIENCE_EDIT);
 
 		return "/pull-from-source.jsp";
 	}

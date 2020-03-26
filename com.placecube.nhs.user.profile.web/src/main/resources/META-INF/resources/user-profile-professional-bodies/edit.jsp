@@ -31,7 +31,7 @@
 				errorMessage="${validationErrors.get('role')}" />
 
 			<nhs-forms-ui:input-text portletNamespace="${portletNamespace}" 
-				fieldName="registrationNumber"
+				fieldName="place"
 				fieldLabel="registration-number"
 				fieldValue="${extraInfoContext.getPlace()}"
 				errorMessage="${validationErrors.get('registrationNumber')}" />
