@@ -5,10 +5,11 @@
 		<dynamic-content language-id="[$LOCALE_DEFAULT$]">
 			<![CDATA[
 				<div class="readiness-intro-message">
-					<h1>Thank you for completing your readiness questionnaire</h1>
-					<p class="nhsuk-body">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat finibus neque vel luctus. Fusce accumsan mauris a imperdiet accumsan. Nam mollis rhoncus sem, vitae efficitur magna imperdiet id. Integer sed lacus nec mi pulvinar aliquet. Maecenas ultrices felis risus. Integer pellentesque nisi eget consectetur sollicitudin. Aliquam viverra sapien vel orci commodo, malesuada pulvinar sapien aliquam. Pellentesque fringilla pulvinar posuere. Suspendisse molestie efficitur suscipit. Curabitur non aliquam risus, et pretium leo. Sed porttitor ornare turpis sit amet fermentum.
-					</p>
+					<h1>Thank you</h1>
+					
+					<p class="nhsuk-body">Thank you for updating your NHS Career Readiness questions. Why not take a few moments to review your findings in the Talent Platform or on one of your chosen IT systems.</p>
+					
+					<p class="nhsuk-body">This information is subject to continuous change so it is recommended that you review / refresh this information at least every 3 months.</p>
 				</div>
 			]]>
 		</dynamic-content>

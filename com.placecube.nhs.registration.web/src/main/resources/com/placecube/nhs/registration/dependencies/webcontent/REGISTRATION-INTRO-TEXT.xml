@@ -4,11 +4,12 @@
 	<dynamic-element name="content" type="text_area" index-type="text" instance-id="fbyg">
 		<dynamic-content language-id="[$LOCALE_DEFAULT$]">
 			<![CDATA[
-				<div class="registration-intro-message">
-					<p class="nhsuk-body">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat finibus neque vel luctus. Fusce accumsan mauris a imperdiet accumsan. Nam mollis rhoncus sem, vitae efficitur magna imperdiet id. Integer sed lacus nec mi pulvinar aliquet. Maecenas ultrices felis risus. Integer pellentesque nisi eget consectetur sollicitudin. Aliquam viverra sapien vel orci commodo, malesuada pulvinar sapien aliquam. Pellentesque fringilla pulvinar posuere. Suspendisse molestie efficitur suscipit. Curabitur non aliquam risus, et pretium leo. Sed porttitor ornare turpis sit amet fermentum.
-					</p>
-				</div>
+				<p>Joining the NHS Talent Platform will support you to achieve your NHS potential by:</p>
+				<ul>
+					<li>Providing easy access, in one place, to an array health communities and integrated health IT systems</li>
+					<li>A One Stop NHS Profile where you can add or pull together your knowledge, skills and experience</li>
+					<li>Giving you the control to customise your NHS insights, development and career opportunities</li>
+				</ul>
 			]]>
 		</dynamic-content>
 	</dynamic-element>

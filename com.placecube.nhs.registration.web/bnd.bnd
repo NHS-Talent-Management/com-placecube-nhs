@@ -1,6 +1,6 @@
 Bundle-SymbolicName: com.placecube.nhs.registration.web
 Bundle-Name: Placecube NHS Registration Web
-Bundle-Version: 1.1.9.SNAPSHOT
+Bundle-Version: 1.1.9
 
 Require-Capability: \
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://placecube.com/tld/nhs-forms-ui))"
