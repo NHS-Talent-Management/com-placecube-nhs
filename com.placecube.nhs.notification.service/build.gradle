@@ -11,7 +11,7 @@ dependencies {
 	compile group: 'com.liferay', name: 'com.liferay.portal.instance.lifecycle.api'
 	compile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel'
 	compile group: 'com.pfiks.mail', name: 'com.pfiks.mail.api', version: '2.0.0'
-	compile group: 'com.placecube.digitalplace', name: 'com.placecube.digitalplace.journal.api', version: '1.2.0'
+	compile group: 'placecube-liferay-bridge', name: 'com.placecube.journal.api', version: '1.0.0'
 	compile group: 'javax.servlet', name: 'javax.servlet-api'
 	compile group: 'org.osgi', name: 'org.osgi.annotation', version: '6.0.0'
 	

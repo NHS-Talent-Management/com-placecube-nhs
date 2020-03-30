@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.placecube.digitalplace.journal.service.JournalArticleCreationService;
+import com.placecube.journal.service.JournalArticleCreationService;
 import com.placecube.nhs.readiness.constants.WebContentArticles;
 
 @RunWith(PowerMockRunner.class)

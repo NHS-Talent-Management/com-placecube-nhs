@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.pfiks.mail.service.MailService;
-import com.placecube.digitalplace.journal.service.JournalArticleCreationService;
+import com.placecube.journal.service.JournalArticleCreationService;
 import com.placecube.nhs.notification.background.constants.NotificationBackgroundConstants;
 import com.placecube.nhs.notification.background.task.NotificationBackgroundTaskExecutor;
 import com.placecube.nhs.notification.constants.NotificationType;

@@ -12,7 +12,7 @@ dependencies {
 	compile group: 'javax.portlet', name: 'portlet-api'
 	compile group: 'javax.servlet', name: 'javax.servlet-api'
 	compile group: 'org.osgi', name: 'org.osgi.service.component.annotations'
-	compile group: 'com.placecube.digitalplace', name: 'com.placecube.digitalplace.journal.api', version: '1.2.0'
+	compile group: 'placecube-liferay-bridge', name: 'com.placecube.journal.api', version: '1.0.0'
 	
 	testCompile group:'junit', name:'junit', version:'4.12'
 	testCompile group:'org.hamcrest', name:'hamcrest-all', version:'1.3'

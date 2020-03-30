@@ -9,8 +9,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.placecube.digitalplace.initializer.service.DigitalPlaceInitializer;
-import com.placecube.digitalplace.journal.service.JournalArticleCreationService;
+import com.placecube.initializer.service.DDMWidgetTemplateInitializer;
+import com.placecube.journal.service.JournalArticleCreationService;
 import com.placecube.nhs.setup.constants.WebContentArticles;
 import com.placecube.nhs.setup.constants.WidgetTemplates;
 
@@ -21,7 +21,7 @@ public class NHSSetupService {
 	private JournalArticleCreationService journalArticleCreationService;
 
 	@Reference
-	private DigitalPlaceInitializer digitalPlaceInitializer;
+	private DDMWidgetTemplateInitializer ddmWidgetTemplateInitializer;
 
 	@Reference
 	private Portal portal;
@@ -49,7 +49,7 @@ public class NHSSetupService {
 		try {
 			String script = StringUtil.read(getClass().getClassLoader(), "com/placecube/nhs/setup/dependencies/widgettemplate/" + widgetTemplate.getKey() + ".ftl");
 			long classNameId = portal.getClassNameId(widgetTemplate.getClassName());
-			digitalPlaceInitializer.getOrCreateWidgetTemplate(classNameId, widgetTemplate.getKey(), widgetTemplate.getTitle(), script, serviceContext);
+			ddmWidgetTemplateInitializer.getOrCreateWidgetTemplate(classNameId, widgetTemplate.getKey(), widgetTemplate.getTitle(), script, serviceContext);
 		} catch (Exception e) {
 			throw new PortalException(e);
 		}

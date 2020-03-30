@@ -8,7 +8,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.placecube.digitalplace.journal.service.JournalArticleCreationService;
+import com.placecube.journal.service.JournalArticleCreationService;
 import com.placecube.nhs.talentdashboard.web.constants.WebContentArticles;
 
 @Component(immediate = true, service = TalentDashboardWebcontentService.class)
