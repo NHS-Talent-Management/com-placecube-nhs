@@ -1,11 +1,11 @@
 def modules = [
+	'com.placecube.nhs.announcementsbanner.web',
 	'com.placecube.nhs.assetpublisher.provider',
 	'com.placecube.nhs.communitylisting.web',
 	'com.placecube.nhs.fragmentcollection',
 	'com.placecube.nhs.grouptypes',
 	'com.placecube.nhs.indexer.group',
 	'com.placecube.nhs.language',
-	'com.placecube.nhs.navigationmenu',
 	'com.placecube.nhs.notification.api',
 	'com.placecube.nhs.notification.service',
 	'com.placecube.nhs.override.commenttaglib.jsp',

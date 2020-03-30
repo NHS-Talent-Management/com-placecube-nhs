@@ -1,9 +1,0 @@
-dependencies {
-	compile group: 'com.liferay', name: 'com.liferay.layout.page.template.api'
-	compile group: 'com.liferay', name: 'com.liferay.portal.instance.lifecycle.api'
-	compile group: 'com.liferay', name: 'com.liferay.site.navigation.api'
-	compile group: 'com.liferay.portal', name: 'com.liferay.portal.kernel'
-	compile group: 'com.placecube.digitalplace', name: 'com.placecube.digitalplace.initializer.api', version: '4.5.1'
-	compile group: 'javax.portlet', name: 'portlet-api'
-	compile group: 'javax.servlet', name: 'javax.servlet-api'
-}
