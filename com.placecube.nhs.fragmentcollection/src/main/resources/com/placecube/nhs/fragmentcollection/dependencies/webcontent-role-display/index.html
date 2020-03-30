@@ -1,0 +1,13 @@
+<div class="fragment-webcontent-article-display">
+	[#if themeDisplay.isSignedIn() && configuration.loggedinArticleId?has_content]
+		[@liferay_journal["journal-article"]
+			articleId=configuration.loggedinArticleId
+			groupId=themeDisplay.scopeGroupId
+		/]
+	[#elseif !themeDisplay.isSignedIn() && configuration.guestArticleId?has_content]
+		[@liferay_journal["journal-article"]
+			articleId=configuration.guestArticleId
+			groupId=themeDisplay.scopeGroupId
+		/]
+	[/#if]
+</div>

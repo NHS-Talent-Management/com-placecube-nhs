@@ -1,0 +1,22 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "guest-article-id",
+					"name": "guestArticleId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "loggedin-article-id",
+					"name": "loggedinArticleId",
+					"type": "text"
+				}
+			]
+		}
+	]
+}
