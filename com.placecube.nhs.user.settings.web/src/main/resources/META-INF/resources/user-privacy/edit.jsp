@@ -15,6 +15,7 @@
 		
 		<nhs-forms-ui:input-radio
 			fieldLabel="${userPrivacyPage.getFieldLabel()}" 
+			fieldHint="${userPrivacyPage.getFieldIntro()}"
 			fieldOptions="${privacyOptions}"
 			fieldValue="${privacySelectedValue}"  
 			portletNamespace="${portletNamespace}"

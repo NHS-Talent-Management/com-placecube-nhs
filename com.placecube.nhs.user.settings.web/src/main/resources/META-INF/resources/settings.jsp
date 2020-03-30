@@ -17,7 +17,11 @@
 			</h1>
 			<aui:icon cssClass="icon-monospaced float-right" image="cog" markupView="lexicon" />
 		</legend>
-
+		
+		<p class="nhsuk-body">
+			<liferay-ui:message key="settings-intro"/>
+		</p>
+			
 		<ul class="list-options">
 			<c:forEach items="<%= UserSettingsPage.values() %>" var="userSettingsPage">
 				<li class="list-option-entry"> 
