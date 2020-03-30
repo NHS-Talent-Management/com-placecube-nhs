@@ -6,9 +6,9 @@ import com.liferay.portal.kernel.theme.NavItem;
 
 public enum WidgetTemplates {
 
-	ASSET_PUBLISHER_BLOGS_CARD_LISTING("ASSET_PUBLISHER_BLOGS_CARD_LISTING", "Asset Entry Blogs Card Listing", AssetEntry.class.getName()),
+	ASSET_PUBLISHER_BLOGS_CARD_LISTING("ASSET-PUBLISHER-BLOGS-CARD-LISTING", "Asset Entry Blogs Card Listing", AssetEntry.class.getName()),
 
-	BLOG_CARDS("BLOG_CARDS", "Blogs Card Listing", BlogsEntry.class.getName()),
+	BLOG_CARDS("BLOG-CARDS", "Blogs Card Listing", BlogsEntry.class.getName()),
 
 	NAVIGATION_HEADER("NAV-MENU-HEADER", "Navigation Menu Header", NavItem.class.getName());
 
