@@ -9,7 +9,37 @@ Liferay 7.2 SP1 + Fix Pack 4
 Java JDK 8
 
 
+##External Placecube dependencies used
+###com-pfiks-expando
+Repo URL: https://bitbucket.org/pfiks/com-pfiks-expando/
+
+Dependency used:
+* group: 'com.pfiks.expando', name: 'com.pfiks.expando.api', version: '2.0.0'
+
+###com-pfiks-mail
+Repo URL: https://bitbucket.org/pfiks/com-pfiks-mail/
+
+Dependency used:
+* group: 'com.pfiks.mail', name: 'com.pfiks.mail.api', version: '2.0.0'
+
+###com-pfiks-journal
+Repo URL: https://bitbucket.org/pfiks/com-pfiks-journal
+
+Dependency used:
+* group: 'com.pfiks.journal', name: 'com.pfiks.journalcontent.renderer.web', version: '3.0.0'
+
+###liferay-bridge
+Repo URL: https://bitbucket.org/pfiks/liferay-bridge
+
+Dependency used:
+* group: 'placecube-liferay-bridge', name: 'com.placecube.journal.api', version: '1.0.0'
+* group: 'placecube-liferay-bridge', name: 'com.placecube.initializer.api', version: '1.0.0'
+
+
 ##Modules
+
+###com.placecube.nhs.announcementsbanner.web
+Portlet to display announcements to the user.
 
 ###com.placecube.nhs.assetpublisher.provider
 An Asset publisher Content provider has been implemented to retrieve blogs from the whole company. This can be configured in the liferay asset publisher portlet. This was to avoid having custom portlets for blogs listing.
